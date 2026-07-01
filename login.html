@@ -726,9 +726,23 @@
     }
 
     function init() {
-      setupEvents();
-      els.nomorHpInput.focus();
-    }
+  const isLoggedIn = localStorage.getItem(CONFIG.storageKeys.isLoggedIn);
+  const status = localStorage.getItem(CONFIG.storageKeys.status);
+
+  if (isLoggedIn === "true" && status === "umkm") {
+    window.location.href = CONFIG.routes.umkm;
+    return;
+  }
+
+  if (isLoggedIn === "true" && status === "client") {
+    window.location.href = CONFIG.routes.client;
+    return;
+  }
+
+  setupEvents();
+  els.nomorHpInput.focus();
+}
+
 
     init();
   </script>

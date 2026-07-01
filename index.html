@@ -2681,8 +2681,22 @@
       });
 
       els.loginBtn.addEventListener("click", () => {
-        window.location.href = "login.html";
-      });
+  const isLoggedIn = localStorage.getItem("is_logged_in");
+  const status = localStorage.getItem("logged_in_status");
+
+  if (isLoggedIn === "true" && status === "umkm") {
+    window.location.href = "halaman_umkm.html";
+    return;
+  }
+
+  if (isLoggedIn === "true" && status === "client") {
+    window.location.href = "halaman_client.html";
+    return;
+  }
+
+  window.location.href = "login.html";
+});
+
 
       els.searchInput.addEventListener("input", (event) => {
         state.keyword = event.target.value;

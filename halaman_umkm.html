@@ -69,6 +69,7 @@
       white-space: nowrap;
       word-wrap: normal;
       direction: ltr;
+      font-feature-settings: "liga";
       -webkit-font-feature-settings: "liga";
       -webkit-font-smoothing: antialiased;
     }
@@ -451,6 +452,7 @@
       text-align: center;
       color: #222222;
       display: -webkit-box;
+      line-clamp: 2;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
@@ -584,6 +586,7 @@
       font-weight: 600;
       color: #222;
       display: -webkit-box;
+      line-clamp: 2;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
@@ -1301,7 +1304,22 @@
 
   <div class="toast" id="toast"></div>
 
+<script src="auth.js"></script>
   <script>
+    const session = AuthService.getSession();
+
+if (session.is_logged_in !== 'true') {
+  window.location.href = 'login.html';
+}
+
+if (session.status === 'client') {
+  window.location.href = 'halaman_client.html';
+}
+
+if (session.status !== 'umkm') {
+  window.location.href = 'login.html';
+}
+
     /* ===========================================================
        KONFIGURASI GOOGLE SHEET
     =========================================================== */
@@ -1424,8 +1442,10 @@
       });
 
       logoutBtn.addEventListener("click", () => {
-        showToast("Logout ditekan. Pada HTML statis ini, arahkan sendiri ke halaman login/beranda.");
-      });
+  AuthService.logout();
+  window.location.href = "index.html";
+});
+
 
       refreshKontakBtn.addEventListener("click", loadKontak);
 
@@ -2752,5 +2772,6 @@
       return escapeHtml(value).replace(/`/g, "&#096;");
     }
   </script>
+  
 </body>
 </html>

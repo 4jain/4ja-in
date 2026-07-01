@@ -97,14 +97,27 @@
     <script>
         const session = AuthService.getSession();
 
-        if (session.is_logged_in === 'true' && session.nama) {
-            document.getElementById('welcomeText').textContent = `Selamat datang di Halaman Client, ${session.nama}`;
-        }
+if (session.is_logged_in !== 'true') {
+    window.location.href = 'login.html';
+}
 
-        document.getElementById('logoutButton').addEventListener('click', () => {
-            AuthService.logout();
-            window.location.href = 'index.html';
-        });
+if (session.status === 'umkm') {
+    window.location.href = 'halaman_umkm.html';
+}
+
+if (session.status !== 'client') {
+    window.location.href = 'login.html';
+}
+
+if (session.nama) {
+    document.getElementById('welcomeText').textContent = `Selamat datang di Halaman Client, ${session.nama}`;
+}
+
+document.getElementById('logoutButton').addEventListener('click', () => {
+    AuthService.logout();
+    window.location.href = 'index.html';
+});
+
     </script>
 </body>
 </html>
