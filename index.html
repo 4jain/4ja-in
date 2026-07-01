@@ -1,0 +1,2839 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>4ja in - Beranda UMKM</title>
+
+  <style>
+    :root {
+      --blue: #087bd8;
+      --green: #42a93b;
+      --yellow: #f5b700;
+      --brown: #8b5e34;
+      --soft-bg: #f7fafc;
+      --text-dark: #1e293b;
+      --text-grey: #64748b;
+      --white: #ffffff;
+      --border: #e5e7eb;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --radius-sm: 14px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --bottom-height: 72px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #e5e7eb;
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: var(--soft-bg);
+      padding-bottom: calc(var(--bottom-height) + 34px);
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    .header-card {
+      margin: 14px 16px 12px;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(8, 123, 216, 0.36),
+          rgba(8, 123, 216, 0.08),
+          rgba(66, 169, 59, 0.08)
+        );
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-wrap {
+      flex: 1;
+      min-width: 0;
+      height: clamp(48px, 13vw, 86px);
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img {
+      width: clamp(120px, 36vw, 230px);
+      max-height: 100%;
+      object-fit: contain;
+      object-position: left center;
+      display: block;
+    }
+
+    .logo-fallback {
+      display: none;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--blue);
+      letter-spacing: -1px;
+    }
+
+    .circle-btn {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--yellow);
+      font-size: 21px;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+    }
+
+    .login-btn {
+      height: 42px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 8px 16px rgba(8, 123, 216, 0.24);
+    }
+
+    .header-title {
+      margin-top: 14px;
+      font-size: 21px;
+      line-height: 1.18;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .header-subtitle {
+      margin-top: 7px;
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 600;
+      color: var(--text-grey);
+    }
+
+    .animated-info {
+      margin-top: 14px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #e5e7eb;
+    }
+
+    .animated-icon {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: rgba(245, 183, 0, 0.18);
+      color: var(--yellow);
+      font-size: 22px;
+    }
+
+    .animated-text {
+      min-height: 22px;
+      font-size: 14px;
+      color: var(--text-dark);
+      font-weight: 800;
+      opacity: 1;
+      transition: opacity 0.28s ease;
+    }
+
+    .animated-text.hide {
+      opacity: 0;
+    }
+
+    .search-card {
+      margin: 4px 16px 12px;
+      display: flex;
+      align-items: center;
+      border-radius: 22px;
+      background: var(--white);
+      box-shadow: 0 7px 16px rgba(15, 23, 42, 0.045);
+      overflow: hidden;
+    }
+
+    .search-icon {
+      width: 52px;
+      color: var(--blue);
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 0;
+      height: 54px;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: var(--text-dark);
+      background: transparent;
+    }
+
+    .search-input::placeholder {
+      color: #9ca3af;
+    }
+
+    .clear-btn {
+      width: 46px;
+      height: 54px;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 20px;
+      display: none;
+    }
+
+    .clear-btn.show {
+      display: block;
+    }
+
+    .location-card {
+  margin: 0 16px 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 18px;
+  background: var(--white);
+  border: 1px solid #e5e7eb;
+}
+
+.location-icon {
+  color: var(--blue);
+  font-size: 20px;
+}
+
+.location-message {
+  flex: 1;
+  font-size: 11.5px;
+  line-height: 1.3;
+  color: var(--text-grey);
+  font-weight: 600;
+}
+
+.location-refresh {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: var(--blue);
+  font-size: 17px;
+}
+
+    .category-scroll {
+      height: 104px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 0 16px;
+      scrollbar-width: none;
+    }
+
+    .category-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-card {
+      width: 112px;
+      min-width: 112px;
+      height: 92px;
+      padding: 12px;
+      border-radius: 22px;
+      background: var(--white);
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 7px 14px rgba(15, 23, 42, 0.035);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: 0.22s ease;
+    }
+
+    .category-card.active {
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 7px 18px rgba(15, 23, 42, 0.13);
+    }
+
+    .category-icon {
+      font-size: 25px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .category-name {
+      font-size: 12px;
+      line-height: 1.15;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .promo-section {
+      margin-top: 8px;
+    }
+
+    .promo-viewport {
+      overflow: hidden;
+      padding-left: 16px;
+    }
+
+    .promo-track {
+      display: flex;
+      transition: transform 0.35s ease;
+    }
+
+    .promo-card {
+      min-width: calc(100% - 32px);
+      height: 148px;
+      margin-right: 10px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .promo-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .promo-label {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .promo-title {
+      margin-top: 12px;
+      font-size: 18px;
+      font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .promo-subtitle {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.88);
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .promo-icon {
+      width: 64px;
+      height: 64px;
+      flex: 0 0 64px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+    }
+
+    .promo-dots {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .promo-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #d1d5db;
+      transition: 0.22s ease;
+    }
+
+    .promo-dot.active {
+      width: 22px;
+      background: var(--blue);
+    }
+
+    .section-title-row {
+      padding: 22px 16px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .section-title {
+      font-size: 18px;
+      color: var(--text-dark);
+      font-weight: 900;
+    }
+
+    .section-subtitle {
+      margin-top: 3px;
+      font-size: 12px;
+      color: var(--text-grey);
+      font-weight: 600;
+    }
+
+    .see-all-btn {
+      padding: 8px 0 8px 10px;
+      background: transparent;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .products-grid {
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 12px;
+    }
+
+    .product-card {
+      height: 322px;
+      border-radius: 24px;
+      background: var(--white);
+      box-shadow: 0 7px 15px rgba(15, 23, 42, 0.045);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .horizontal-section {
+      margin-top: 2px;
+    }
+
+    .horizontal-title {
+      padding: 14px 16px 12px;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .horizontal-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 0 16px 22px;
+      scrollbar-width: none;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .product-card.horizontal {
+      width: 165px;
+      min-width: 165px;
+      height: 286px;
+      border-radius: 22px;
+    }
+
+    .product-image-wrap {
+      position: relative;
+      height: 104px;
+      flex: 0 0 104px;
+      overflow: hidden;
+      background: #eff6ff;
+    }
+
+    .product-card.horizontal .product-image-wrap {
+      height: 96px;
+      flex-basis: 96px;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.55), transparent 30%),
+        linear-gradient(135deg, rgba(8, 123, 216, 0.16), rgba(66, 169, 59, 0.16));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+    }
+
+    .category-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      max-width: calc(100% - 72px);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .promo-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: var(--brown);
+      font-size: 10px;
+      font-weight: 900;
+      max-width: 62px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .product-body {
+      padding: 10px 12px 12px;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card.horizontal .product-body {
+      padding: 9px 10px 10px;
+    }
+
+    .product-name {
+      height: 36px;
+      font-size: 14px;
+      line-height: 1.15;
+      color: var(--text-dark);
+      font-weight: 900;
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-card.horizontal .product-name {
+      font-size: 13px;
+    }
+
+    .product-desc {
+      height: 32px;
+      margin-top: 6px;
+      font-size: 11px;
+      line-height: 1.25;
+      color: var(--text-grey);
+      font-weight: 500;
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-card.horizontal .product-desc {
+      margin-top: 5px;
+      font-size: 10px;
+    }
+
+    .product-location {
+      height: 18px;
+      margin-top: 7px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10.5px;
+      color: var(--text-grey);
+      font-weight: 600;
+      overflow: hidden;
+    }
+
+    .product-card.horizontal .product-location {
+      margin-top: 6px;
+      font-size: 9.8px;
+    }
+
+    .product-location span:last-child {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .product-spacer {
+      flex: 1;
+    }
+
+    .price-rating-row {
+      height: 36px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .price-box {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .old-price {
+      display: block;
+      color: var(--text-grey);
+      font-size: 10px;
+      font-weight: 600;
+      text-decoration: line-through;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-card.horizontal .old-price {
+      font-size: 9px;
+    }
+
+    .price {
+      display: block;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-card.horizontal .price {
+      font-size: 12px;
+    }
+
+    .rating {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      color: var(--text-dark);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .order-btn {
+      margin-top: 9px;
+      width: 100%;
+      height: 36px;
+      border-radius: 13px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .product-card.horizontal .order-btn {
+      height: 34px;
+      margin-top: 8px;
+    }
+
+    .loading-section {
+      padding: 26px 16px 16px;
+    }
+
+    .skeleton-row {
+      height: 86px;
+      margin-bottom: 12px;
+      border-radius: 22px;
+      background: #fff;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .skeleton-img {
+      width: 86px;
+      height: 86px;
+      background: #e5e7eb;
+    }
+
+    .skeleton-body {
+      flex: 1;
+      padding: 14px;
+    }
+
+    .skeleton-line {
+      height: 12px;
+      margin-bottom: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+    }
+
+    .skeleton-line.short {
+      width: 55%;
+    }
+
+    .skeleton-line.tiny {
+      width: 34%;
+      margin-top: 20px;
+    }
+
+    .info-section {
+      margin: 22px 16px 16px;
+      padding: 18px;
+      border-radius: 24px;
+      background: #fff;
+      border: 1px solid #fecaca;
+    }
+
+    .info-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .info-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .info-text {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text-grey);
+    }
+
+    .retry-btn {
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .empty-section {
+      margin: 6px 16px 16px;
+      padding: 22px;
+      border-radius: 24px;
+      background: #fff;
+      text-align: center;
+    }
+
+    .empty-icon {
+      font-size: 42px;
+      color: var(--text-grey);
+    }
+
+    .empty-title {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .empty-text {
+      margin-top: 5px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text-grey);
+    }
+
+    .footer-card {
+      margin: 24px 16px 12px;
+      padding: 18px;
+      border-radius: 26px;
+      background: #fff;
+    }
+
+    .footer-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .footer-text {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text-grey);
+    }
+
+    .footer-actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .footer-btn {
+      flex: 1;
+      min-height: 44px;
+      padding: 11px 10px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .footer-btn.outline {
+      color: var(--blue);
+      background: #fff;
+      border: 1px solid rgba(8, 123, 216, 0.35);
+    }
+
+    .footer-btn.fill {
+      color: #fff;
+      background: var(--green);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 20;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      height: var(--bottom-height);
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-item {
+      background: transparent;
+      color: #9ca3af;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .nav-item .nav-icon {
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    .nav-item.active {
+      color: var(--blue);
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 60;
+      left: 50%;
+      bottom: calc(var(--bottom-height) + 16px);
+      transform: translateX(-50%) translateY(20px);
+      width: min(calc(100% - 32px), 398px);
+      padding: 13px 14px;
+      border-radius: 14px;
+      background: #111827;
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.4;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      z-index: 50;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 12px;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 430px;
+      max-height: calc(100vh - 24px);
+      overflow-y: auto;
+      border-radius: 28px;
+      background: #fff;
+      padding: 16px;
+      animation: slideUp 0.22s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(24px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-handle {
+      width: 48px;
+      height: 5px;
+      margin: 0 auto 16px;
+      border-radius: 999px;
+      background: #d1d5db;
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 190px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #eff6ff;
+    }
+
+    .modal-top-row {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-rating {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-dark);
+      font-weight: 700;
+    }
+
+    .modal-title {
+      margin-top: 12px;
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .modal-desc {
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-grey);
+    }
+
+    .modal-info {
+      margin-top: 14px;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      font-size: 13px;
+      line-height: 1.35;
+      color: var(--text-grey);
+      font-weight: 600;
+    }
+
+    .modal-price-row {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-price {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .modal-price .price {
+      font-size: 18px;
+    }
+
+    .modal-promo {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(245, 183, 0, 0.18);
+      color: var(--brown);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .modal-actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      min-height: 48px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .modal-btn.close {
+      background: #fff;
+      color: var(--text-dark);
+      border: 1px solid #d1d5db;
+    }
+
+    .modal-btn.order {
+      background: var(--green);
+      color: #fff;
+    }
+
+    @media (max-width: 420px) {
+      .login-text {
+        display: none;
+      }
+
+      .footer-actions,
+      .modal-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <div class="container">
+      <section class="header-card">
+        <div class="header-top">
+          <div class="logo-wrap">
+            <img
+              id="logoImage"
+              class="logo-img"
+              src="https://drive.google.com/thumbnail?id=1ykScuLGr05dAlIcBU0LJHGcRf19SiDbB&sz=w1000"
+              alt="4ja in"
+            />
+            <div id="logoFallback" class="logo-fallback">4ja in</div>
+          </div>
+
+          <button class="circle-btn" type="button" id="notificationBtn" aria-label="Notifikasi">
+            🔔
+          </button>
+
+          <button class="login-btn" type="button" id="loginBtn">
+            👤 <span class="login-text">Login</span>
+          </button>
+        </div>
+
+        <h1 class="header-title">Temukan kebutuhan lokal di sekitar Anda</h1>
+        <p class="header-subtitle">
+          Makanan, jasa, jamu, dan kerajinan dari pelaku usaha sekitar.
+        </p>
+
+        <div class="animated-info">
+          <div class="animated-icon">📣</div>
+          <div id="animatedText" class="animated-text">
+            Belanja produk lokal lebih dekat
+          </div>
+        </div>
+      </section>
+
+      <section class="search-card">
+        <div class="search-icon">🔎</div>
+        <input
+          id="searchInput"
+          class="search-input"
+          type="text"
+          placeholder="Cari makanan, jasa, jamu, kerajinan..."
+        />
+        <button id="clearSearchBtn" class="clear-btn" type="button" aria-label="Hapus pencarian">
+          ×
+        </button>
+      </section>
+
+      <section class="location-card">
+  <div id="locationIcon" class="location-icon">📍</div>
+  <p id="locationMessage" class="location-message">
+    Mengurutkan produk berdasarkan lokasi perangkat.
+  </p>
+  <button id="locationRefreshBtn" class="location-refresh" type="button" aria-label="Refresh lokasi">
+    ↻
+  </button>
+</section>
+
+      <section id="categoryList" class="category-scroll"></section>
+
+      <section class="promo-section">
+        <div class="promo-viewport">
+          <div id="promoTrack" class="promo-track"></div>
+        </div>
+        <div id="promoDots" class="promo-dots"></div>
+      </section>
+
+      <section class="section-title-row">
+        <div class="section-title-text">
+          <h2 class="section-title">Rekomendasi untuk Anda</h2>
+          <p id="sectionSubtitle" class="section-subtitle">0 layanan tersedia</p>
+        </div>
+
+        <button id="seeAllBtn" class="see-all-btn" type="button">
+          Lihat semua
+        </button>
+      </section>
+
+      <section id="productArea"></section>
+
+      <section class="footer-card">
+        <h2 class="footer-title">Terhubung dengan 4ja in</h2>
+        <p class="footer-text">
+          Ikuti sosial media atau hubungi admin untuk informasi layanan terbaru.
+        </p>
+
+        <div class="footer-actions">
+          <button id="instagramBtn" class="footer-btn outline" type="button">
+            📷 Instagram
+          </button>
+          <button id="whatsappFooterBtn" class="footer-btn fill" type="button">
+            💬 WhatsApp
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" type="button" data-nav="0">
+      <span class="nav-icon">🏠</span>
+      <span>Beranda</span>
+    </button>
+
+    <button class="nav-item" type="button" data-nav="1">
+      <span class="nav-icon">🔎</span>
+      <span>Cari</span>
+    </button>
+
+    <button class="nav-item" type="button" data-nav="2">
+      <span class="nav-icon">💬</span>
+      <span>Chat</span>
+    </button>
+
+    <button class="nav-item" type="button" data-nav="3">
+      <span class="nav-icon">👤</span>
+      <span>Profil</span>
+    </button>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+
+  <div id="detailModal" class="modal-backdrop">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const CONFIG = {
+      whatsappAdmin: "6281234567890",
+      instagramUrl: "https://instagram.com/4jain",
+      tiktokUrl: "https://tiktok.com/@4jain",
+      defaultLocation: "Surabaya, Jawa Timur",
+
+      wilayahSpreadsheetId: "1Mz10SIO8ECCuyRHyRtsCRqYdXDN3ngak6D-T24qunmY",
+      wilayahSheetGid: "0",
+
+      animatedTextSpreadsheetId: "1_oa2rmplmV1lPQU066DoGlhcrsvaWHs_k1WYWshTbjs",
+      animatedTextSheetGid: "0",
+
+      sources: {
+        Jajan: {
+          spreadsheetId: "1NdtvPXBSnK_jJUdvVSfNEcopRhrD5yoFsOWvYYkUawU",
+          gid: "396669239",
+          defaultKategori: "Jajan"
+        },
+        Jasa: {
+          spreadsheetId: "1NdtvPXBSnK_jJUdvVSfNEcopRhrD5yoFsOWvYYkUawU",
+          gid: "1948932216",
+          defaultKategori: "Jasa"
+        },
+        Jamu: {
+          spreadsheetId: "1NdtvPXBSnK_jJUdvVSfNEcopRhrD5yoFsOWvYYkUawU",
+          gid: "196150476",
+          defaultKategori: "Jamu"
+        },
+        Jarik: {
+          spreadsheetId: "1NdtvPXBSnK_jJUdvVSfNEcopRhrD5yoFsOWvYYkUawU",
+          gid: "41810502",
+          defaultKategori: "Jarik"
+        }
+      }
+    };
+
+    const COLORS = {
+      blue: "#087bd8",
+      green: "#42a93b",
+      yellow: "#f5b700",
+      brown: "#8b5e34"
+    };
+
+    const defaultAnimatedTexts = [
+      "Belanja produk lokal lebih dekat",
+      "Cari jasa dan kuliner sekitar Anda",
+      "Dukung UMKM Indonesia bersama 4ja in"
+    ];
+
+    const categories = [
+      { label: "Semua", icon: "▦", color: COLORS.blue },
+      { label: "Jajan", icon: "🍽️", color: COLORS.yellow },
+      { label: "Jasa", icon: "🎧", color: COLORS.blue },
+      { label: "Jamu", icon: "🌿", color: COLORS.green },
+      { label: "Jarik", icon: "🧵", color: COLORS.brown }
+    ];
+
+    const promos = [
+      {
+        title: "Promo lokal pilihan",
+        subtitle: "Temukan makanan, jasa, jamu, dan kerajinan dari sekitar Anda.",
+        icon: "🏷️",
+        color: COLORS.blue
+      },
+      {
+        title: "Dukung UMKM sekitar",
+        subtitle: "Belanja lebih dekat, cepat, dan mudah lewat 4ja in.",
+        icon: "🏪",
+        color: COLORS.green
+      },
+      {
+        title: "Pesan langsung via WA",
+        subtitle: "Hubungi penjual atau penyedia jasa tanpa ribet.",
+        icon: "💬",
+        color: COLORS.brown
+      }
+    ];
+
+    const state = {
+      selectedCategory: "Semua",
+      keyword: "",
+      bottomIndex: 0,
+      promoIndex: 0,
+      loading: true,
+      error: false,
+      errorMessage: "",
+      items: [],
+      filteredItems: [],
+      wilayahItems: [],
+      animatedTexts: defaultAnimatedTexts,
+      animatedIndex: 0,
+      currentAreaLocation: null
+    };
+
+    const els = {
+      logoImage: document.getElementById("logoImage"),
+      logoFallback: document.getElementById("logoFallback"),
+      notificationBtn: document.getElementById("notificationBtn"),
+      loginBtn: document.getElementById("loginBtn"),
+      animatedText: document.getElementById("animatedText"),
+      searchInput: document.getElementById("searchInput"),
+      clearSearchBtn: document.getElementById("clearSearchBtn"),
+      locationIcon: document.getElementById("locationIcon"),
+      locationMessage: document.getElementById("locationMessage"),
+      locationRefreshBtn: document.getElementById("locationRefreshBtn"),
+      categoryList: document.getElementById("categoryList"),
+      promoTrack: document.getElementById("promoTrack"),
+      promoDots: document.getElementById("promoDots"),
+      sectionSubtitle: document.getElementById("sectionSubtitle"),
+      seeAllBtn: document.getElementById("seeAllBtn"),
+      productArea: document.getElementById("productArea"),
+      instagramBtn: document.getElementById("instagramBtn"),
+      whatsappFooterBtn: document.getElementById("whatsappFooterBtn"),
+      toast: document.getElementById("toast"),
+      detailModal: document.getElementById("detailModal"),
+      modalContent: document.getElementById("modalContent")
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function cleanHeader(value) {
+      return String(value ?? "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "")
+        .trim();
+    }
+
+    function readCell(row, headers, aliases, fallbackIndex) {
+      let index = -1;
+
+      for (const alias of aliases) {
+        const target = cleanHeader(alias);
+        index = headers.findIndex((header) => header === target);
+
+        if (index !== -1) {
+          break;
+        }
+      }
+
+      if (index === -1) {
+        index = fallbackIndex;
+      }
+
+      if (index < 0 || index >= row.length) {
+        return "";
+      }
+
+      return String(row[index] ?? "").trim();
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let current = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"') {
+          if (inQuotes && next === '"') {
+            current += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === "," && !inQuotes) {
+          row.push(current);
+          current = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && next === "\n") {
+            i++;
+          }
+
+          row.push(current);
+          rows.push(row);
+          row = [];
+          current = "";
+        } else {
+          current += char;
+        }
+      }
+
+      row.push(current);
+      rows.push(row);
+
+      return rows.filter((item) => {
+        return item.some((cell) => String(cell).trim() !== "");
+      });
+    }
+
+    function shuffle(source) {
+      const result = [...source];
+
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+
+      return result;
+    }
+
+    function buildCsvUrl(spreadsheetId, gid) {
+      return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv&gid=${gid}`;
+    }
+
+    async function fetchWilayahData() {
+      const url = buildCsvUrl(
+        CONFIG.wilayahSpreadsheetId,
+        CONFIG.wilayahSheetGid
+      );
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Gagal memuat data wilayah.");
+      }
+
+      const text = await response.text();
+      const rows = parseCsv(text);
+
+      if (rows.length <= 1) {
+        return [];
+      }
+
+      return rows
+        .slice(1)
+        .map((row) => {
+          return {
+            provinsi: String(row[0] ?? "").trim(),
+            kabupatenKota: String(row[1] ?? "").trim(),
+            kecamatan: String(row[2] ?? "").trim(),
+            kelurahanDesa: String(row[3] ?? "").trim()
+          };
+        })
+        .filter((item) => {
+          return (
+            item.provinsi &&
+            item.kabupatenKota &&
+            item.kecamatan &&
+            item.kelurahanDesa
+          );
+        });
+    }
+
+    async function loadWilayahData() {
+      try {
+        state.wilayahItems = await fetchWilayahData();
+      } catch (error) {
+        state.wilayahItems = [];
+        console.warn("Data wilayah gagal dimuat:", error);
+      }
+    }
+
+    function parseRating(value) {
+      const cleanValue = String(value ?? "").replace(",", ".").trim();
+      const number = Number.parseFloat(cleanValue);
+
+      return Number.isFinite(number) ? number : 4.8;
+    }
+
+    function formatRupiah(value) {
+      const cleanValue = String(value ?? "").trim();
+
+      if (!cleanValue) {
+        return "";
+      }
+
+      if (cleanValue.toLowerCase().includes("rp")) {
+        return cleanValue;
+      }
+
+      const onlyNumber = cleanValue.replace(/[^0-9]/g, "");
+
+      if (!onlyNumber) {
+        return cleanValue;
+      }
+
+      const number = Number.parseInt(onlyNumber, 10);
+
+      if (!Number.isFinite(number)) {
+        return cleanValue;
+      }
+
+      return "Rp" + number.toLocaleString("id-ID");
+    }
+
+    function formatPromo(value) {
+      const cleanValue = String(value ?? "").trim();
+
+      if (!cleanValue || cleanValue === "0") {
+        return "";
+      }
+
+      if (cleanValue.includes("%")) {
+        return cleanValue;
+      }
+
+      const normalized = cleanValue.replace(",", ".");
+      const number = Number.parseFloat(normalized);
+
+      if (Number.isFinite(number)) {
+        if (number > 0 && number < 1) {
+          return `${Math.round(number * 100)}%`;
+        }
+
+        return `${Math.round(number)}%`;
+      }
+
+      const onlyNumber = cleanValue.replace(/[^0-9]/g, "");
+
+      if (onlyNumber) {
+        return `${onlyNumber}%`;
+      }
+
+      return cleanValue;
+    }
+
+    function titleCase(value) {
+      const cleanValue = String(value ?? "").trim();
+
+      if (!cleanValue) {
+        return "";
+      }
+
+      return cleanValue
+        .toLowerCase()
+        .split(/\s+/)
+        .map((word) => {
+          if (!word) return word;
+          return word[0].toUpperCase() + word.slice(1);
+        })
+        .join(" ");
+    }
+
+    function cleanKabupatenKota(value) {
+      let result = String(value ?? "").trim();
+
+      if (!result) {
+        return "";
+      }
+
+      result = result.replace(/KABUPATEN/gi, "");
+      result = result.replace(/KAB\./gi, "");
+      result = result.replace(/KOTA/gi, "");
+
+      return titleCase(result.trim());
+    }
+
+    function buildLokasi({ provinsi, kabupatenKota, kecamatan, kelurahanDesa }) {
+      const parts = [];
+
+      const cleanKelurahan = titleCase(kelurahanDesa);
+      const cleanKecamatan = titleCase(kecamatan);
+      const cleanKabupaten = cleanKabupatenKota(kabupatenKota);
+      const cleanProvinsi = titleCase(provinsi);
+
+      if (cleanKelurahan) parts.push(cleanKelurahan);
+      if (cleanKecamatan) parts.push(cleanKecamatan);
+      if (cleanKabupaten) parts.push(cleanKabupaten);
+      if (cleanProvinsi) parts.push(cleanProvinsi);
+
+      return parts.join(", ");
+    }
+
+    function buildAreaLabel(area) {
+      if (!area) {
+        return "";
+      }
+
+      return buildLokasi({
+        provinsi: area.provinsi,
+        kabupatenKota: area.kabupatenKota,
+        kecamatan: area.kecamatan,
+        kelurahanDesa: area.kelurahanDesa
+      });
+    }
+
+    function buildAutoDescription({ stockLabel, stok, total }) {
+      const parts = [];
+
+      if (stockLabel) {
+        parts.push(stockLabel);
+      }
+
+      if (total && stok) {
+        parts.push(`Sisa stok ${total} dari ${stok}`);
+      } else if (total) {
+        parts.push(`Sisa stok ${total}`);
+      } else if (stok) {
+        parts.push(`Stok ${stok}`);
+      }
+
+      return parts.join(" • ");
+    }
+
+    function normalizeImageUrl(url) {
+      const value = String(url ?? "").trim();
+
+      if (!value) {
+        return "";
+      }
+
+      const driveFileMatch = value.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      const driveIdMatch = value.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+
+      if (driveFileMatch) {
+        return `https://drive.google.com/thumbnail?id=${driveFileMatch[1]}&sz=w1000`;
+      }
+
+      if (driveIdMatch && value.includes("drive.google.com")) {
+        return `https://drive.google.com/thumbnail?id=${driveIdMatch[1]}&sz=w1000`;
+      }
+
+      return value;
+    }
+
+    function getCategoryColor(kategori) {
+      const value = String(kategori ?? "").toLowerCase();
+
+      if (
+        value.includes("jajan") ||
+        value.includes("makanan") ||
+        value.includes("minuman")
+      ) {
+        return COLORS.yellow;
+      }
+
+      if (value.includes("jasa")) {
+        return COLORS.blue;
+      }
+
+      if (value.includes("jamu") || value.includes("herbal")) {
+        return COLORS.green;
+      }
+
+      if (value.includes("kerajinan") || value.includes("jarik")) {
+        return COLORS.brown;
+      }
+
+      return COLORS.blue;
+    }
+
+    function getCategoryIcon(kategori) {
+      const value = String(kategori ?? "").toLowerCase();
+
+      if (
+        value.includes("jajan") ||
+        value.includes("makanan") ||
+        value.includes("minuman")
+      ) {
+        return "🍽️";
+      }
+
+      if (value.includes("jasa")) {
+        return "🎧";
+      }
+
+      if (value.includes("jamu") || value.includes("herbal")) {
+        return "🌿";
+      }
+
+      if (value.includes("kerajinan") || value.includes("jarik")) {
+        return "🧵";
+      }
+
+      return "🛍️";
+    }
+
+    function getGroupTitle(kategori) {
+      const value = String(kategori ?? "").toLowerCase();
+
+      if (
+        value.includes("jajan") ||
+        value.includes("makanan") ||
+        value.includes("minuman")
+      ) {
+        return "Jajan";
+      }
+
+      if (value.includes("jasa")) {
+        return "Jasa";
+      }
+
+      if (value.includes("jamu") || value.includes("herbal")) {
+        return "Jamu";
+      }
+
+      if (value.includes("jarik") || value.includes("kerajinan")) {
+        return "Jarik";
+      }
+
+      return kategori || "Lainnya";
+    }
+
+    function buildStockInfo(item) {
+      const values = [];
+
+      if (item.stockLabel) {
+        values.push(item.stockLabel);
+      }
+
+      if (item.total && item.stok) {
+        values.push(`Sisa ${item.total} dari ${item.stok}`);
+      } else if (item.total) {
+        values.push(`Sisa stok ${item.total}`);
+      } else if (item.stok) {
+        values.push(`Stok ${item.stok}`);
+      }
+
+      return values.join(" • ");
+    }
+
+    function openUrl(url) {
+      const cleanUrl = String(url ?? "").trim();
+
+      if (!cleanUrl) {
+        showToast("Link tidak valid.");
+        return;
+      }
+
+      window.open(cleanUrl, "_blank", "noopener,noreferrer");
+    }
+
+    function openWhatsApp(phone, message) {
+      const cleanPhone = String(phone || CONFIG.whatsappAdmin).replace(/[^0-9]/g, "");
+      const text = encodeURIComponent(
+        message || "Halo admin 4ja in, saya ingin bertanya tentang layanan."
+      );
+
+      openUrl(`https://wa.me/${cleanPhone}?text=${text}`);
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add("show");
+
+      window.clearTimeout(showToast.timer);
+
+      showToast.timer = window.setTimeout(() => {
+        els.toast.classList.remove("show");
+      }, 2600);
+    }
+
+    async function fetchAnimatedTexts() {
+      const url = buildCsvUrl(
+        CONFIG.animatedTextSpreadsheetId,
+        CONFIG.animatedTextSheetGid
+      );
+
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          return shuffle(defaultAnimatedTexts);
+        }
+
+        const text = await response.text();
+        const rows = parseCsv(text);
+
+        const data = rows
+          .map((row) => String(row[0] ?? "").trim())
+          .filter(Boolean);
+
+        return data.length ? shuffle(data) : shuffle(defaultAnimatedTexts);
+      } catch (error) {
+        return shuffle(defaultAnimatedTexts);
+      }
+    }
+
+    async function fetchFromGoogleSheet(source) {
+      const url = buildCsvUrl(source.spreadsheetId, source.gid);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Gagal memuat data.");
+      }
+
+      const text = await response.text();
+      const rows = parseCsv(text);
+
+      if (rows.length <= 1) {
+        return [];
+      }
+
+      const headers = rows[0].map((cell) => cleanHeader(cell));
+      const items = [];
+
+      rows.slice(1).forEach((row, index) => {
+        const emptyRow = row.every((cell) => String(cell ?? "").trim() === "");
+
+        if (emptyRow) {
+          return;
+        }
+
+        const kategori = readCell(
+          row,
+          headers,
+          ["status", "kategori", "category", "jenis"],
+          14
+        );
+
+        const nama = readCell(
+          row,
+          headers,
+          ["name", "nama", "nama_produk", "produk", "layanan"],
+          1
+        );
+
+        const oldPriceRaw = readCell(
+          row,
+          headers,
+          ["oldprice", "old_price", "harga_lama", "hargaawal"],
+          2
+        );
+
+        const priceRaw = readCell(
+          row,
+          headers,
+          ["price_klien", "priceklien", "harga", "price", "harga_klien"],
+          3
+        );
+
+        const discountRaw = readCell(
+          row,
+          headers,
+          [
+            "discount_kawan",
+            "discountkawan",
+            "discount_klien",
+            "diskon",
+            "discount",
+            "promo"
+          ],
+          4
+        );
+
+        const stockLabel = readCell(
+          row,
+          headers,
+          ["stocklabel", "stock_label", "labelstok", "statusstok"],
+          5
+        );
+
+        const image = readCell(
+          row,
+          headers,
+          ["image", "gambar", "foto", "thumbnail"],
+          6
+        );
+
+        const stok = readCell(
+          row,
+          headers,
+          ["stok", "stock"],
+          7
+        );
+
+        const kurang = readCell(
+          row,
+          headers,
+          ["kurang", "terjual", "sold"],
+          8
+        );
+
+        const total = readCell(
+          row,
+          headers,
+          ["total", "sisa", "sisastok"],
+          9
+        );
+
+        const provinsi = readCell(
+          row,
+          headers,
+          ["provinsi", "province"],
+          10
+        );
+
+        const kabupatenKota = readCell(
+          row,
+          headers,
+          ["kabupatenkota", "kabupaten", "kota", "city", "regency"],
+          11
+        );
+
+        const kecamatan = readCell(
+          row,
+          headers,
+          ["kecamatan", "district"],
+          12
+        );
+
+        const kelurahanDesa = readCell(
+          row,
+          headers,
+          ["kelurahandesa", "kelurahan", "desa", "village"],
+          13
+        );
+
+        const whatsapp = readCell(
+          row,
+          headers,
+          ["nohp", "no_hp", "nomorhp", "nomor_hp", "whatsapp", "wa", "phone"],
+          0
+        );
+
+        const deskripsi = readCell(
+          row,
+          headers,
+          ["deskripsi", "description", "keterangan"],
+          -1
+        );
+
+        const ratingRaw = readCell(
+          row,
+          headers,
+          ["rating", "nilai"],
+          -1
+        );
+
+        const lokasi = buildLokasi({
+          provinsi,
+          kabupatenKota,
+          kecamatan,
+          kelurahanDesa
+        });
+
+        const finalDeskripsi = deskripsi || buildAutoDescription({
+          stockLabel,
+          stok,
+          total
+        });
+
+        const item = {
+          id: `${source.defaultKategori}-${index}-${nama}`,
+          kategori: kategori || source.defaultKategori,
+          nama,
+          deskripsi: finalDeskripsi,
+          harga: formatRupiah(priceRaw),
+          oldHarga: formatRupiah(oldPriceRaw),
+          promo: formatPromo(discountRaw),
+          rating: parseRating(ratingRaw),
+          lokasi,
+          imageUrl: normalizeImageUrl(image),
+          whatsapp,
+          stockLabel,
+          stok,
+          kurang,
+          total,
+          provinsi,
+          kabupatenKota,
+          kecamatan,
+          kelurahanDesa
+        };
+
+        if (item.nama) {
+          items.push(item);
+        }
+      });
+
+      return items;
+    }
+
+    async function fetchLayananByCategory(category) {
+      const selected = String(category ?? "").toLowerCase().trim();
+
+      if (selected === "semua") {
+        const results = await Promise.all([
+          fetchFromGoogleSheet(CONFIG.sources.Jajan),
+          fetchFromGoogleSheet(CONFIG.sources.Jasa),
+          fetchFromGoogleSheet(CONFIG.sources.Jamu),
+          fetchFromGoogleSheet(CONFIG.sources.Jarik)
+        ]);
+
+        return results.flat();
+      }
+
+      if (selected === "jajan") {
+        return fetchFromGoogleSheet(CONFIG.sources.Jajan);
+      }
+
+      if (selected === "jasa") {
+        return fetchFromGoogleSheet(CONFIG.sources.Jasa);
+      }
+
+      if (selected === "jamu") {
+        return fetchFromGoogleSheet(CONFIG.sources.Jamu);
+      }
+
+      if (selected === "jarik") {
+        return fetchFromGoogleSheet(CONFIG.sources.Jarik);
+      }
+
+      return fetchLayananByCategory("Semua");
+    }
+
+    function normalizeArea(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replaceAll("provinsi", "")
+        .replaceAll("kabupaten", "")
+        .replaceAll("kab.", "")
+        .replaceAll("kab ", "")
+        .replaceAll("kota", "")
+        .replaceAll("kecamatan", "")
+        .replaceAll("kec.", "")
+        .replaceAll("kec ", "")
+        .replaceAll("kelurahan", "")
+        .replaceAll("kel.", "")
+        .replaceAll("kel ", "")
+        .replaceAll("desa", "")
+        .replaceAll("regency", "")
+        .replaceAll("city", "")
+        .replaceAll("district", "")
+        .replaceAll("subdistrict", "")
+        .replaceAll("village", "")
+        .replaceAll("eastjava", "jawatimur")
+        .replaceAll("east java", "jawatimur")
+        .replace(/[^a-z0-9]+/g, "")
+        .trim();
+    }
+
+    function areaMatch(sheetValue, deviceValue) {
+      const a = normalizeArea(sheetValue);
+      const b = normalizeArea(deviceValue);
+
+      if (!a || !b) {
+        return false;
+      }
+
+      return a === b || a.includes(b) || b.includes(a);
+    }
+
+    function findBestWilayahMatch(area) {
+      const targetKelurahan = normalizeArea(area.kelurahanDesa);
+      const targetKecamatan = normalizeArea(area.kecamatan);
+      const targetKabupaten = normalizeArea(area.kabupatenKota);
+      const targetProvinsi = normalizeArea(area.provinsi);
+
+      if (!state.wilayahItems.length) {
+        return null;
+      }
+
+      let bestMatch = null;
+      let bestScore = 0;
+
+      state.wilayahItems.forEach((wilayah) => {
+        let score = 0;
+
+        const matchKelurahan =
+          targetKelurahan &&
+          areaMatch(wilayah.kelurahanDesa, area.kelurahanDesa);
+
+        const matchKecamatan =
+          targetKecamatan &&
+          areaMatch(wilayah.kecamatan, area.kecamatan);
+
+        const matchKabupaten =
+          targetKabupaten &&
+          areaMatch(wilayah.kabupatenKota, area.kabupatenKota);
+
+        const matchProvinsi =
+          targetProvinsi &&
+          areaMatch(wilayah.provinsi, area.provinsi);
+
+        if (matchKelurahan) score += 1000;
+        if (matchKecamatan) score += 600;
+        if (matchKabupaten) score += 300;
+        if (matchProvinsi) score += 100;
+
+        const hasSpecificMatch = matchKelurahan || matchKecamatan;
+        const hasValidKabupaten = !targetKabupaten || matchKabupaten;
+
+        if (hasSpecificMatch && hasValidKabupaten && score > bestScore) {
+          bestScore = score;
+          bestMatch = wilayah;
+        }
+      });
+
+      return bestMatch;
+    }
+
+    function fixAreaIndonesia(area) {
+      const wilayah = findBestWilayahMatch(area);
+
+      if (!wilayah) {
+        return area;
+      }
+
+      return {
+        provinsi: wilayah.provinsi,
+        kabupatenKota: wilayah.kabupatenKota,
+        kecamatan: wilayah.kecamatan,
+        kelurahanDesa: wilayah.kelurahanDesa
+      };
+    }
+
+    function locationScore(item, area) {
+      let score = 0;
+
+      if (areaMatch(item.provinsi, area.provinsi)) {
+        score += 100;
+      }
+
+      if (areaMatch(item.kabupatenKota, area.kabupatenKota)) {
+        score += 300;
+      }
+
+      if (areaMatch(item.kecamatan, area.kecamatan)) {
+        score += 600;
+      }
+
+      if (areaMatch(item.kelurahanDesa, area.kelurahanDesa)) {
+        score += 1000;
+      }
+
+      return score;
+    }
+
+    function sortLayananByCurrentLocation(items) {
+      const area = state.currentAreaLocation;
+
+      if (!area) {
+        return items;
+      }
+
+      return [...items]
+        .map((item, index) => ({
+          item,
+          index,
+          score: locationScore(item, area)
+        }))
+        .sort((a, b) => {
+          if (a.score !== b.score) {
+            return b.score - a.score;
+          }
+
+          return a.index - b.index;
+        })
+        .map((entry) => entry.item);
+    }
+
+    function filterLayanan(items) {
+      const keyword = state.keyword.trim().toLowerCase();
+
+      return items.filter((item) => {
+        const matchKeyword =
+          !keyword ||
+          item.nama.toLowerCase().includes(keyword) ||
+          item.deskripsi.toLowerCase().includes(keyword) ||
+          item.kategori.toLowerCase().includes(keyword) ||
+          item.lokasi.toLowerCase().includes(keyword);
+
+        return matchKeyword;
+      });
+    }
+
+    async function loadData(category = state.selectedCategory) {
+      state.loading = true;
+      state.error = false;
+      state.errorMessage = "";
+
+      renderProducts();
+
+      try {
+        state.items = await fetchLayananByCategory(category);
+
+        const sortedItems = sortLayananByCurrentLocation(state.items);
+        state.filteredItems = filterLayanan(sortedItems);
+      } catch (error) {
+        state.error = true;
+        state.errorMessage = error.message || "Data gagal dimuat";
+        state.items = [];
+        state.filteredItems = [];
+      } finally {
+        state.loading = false;
+        renderProducts();
+      }
+    }
+
+    async function loadCurrentLocation() {
+      els.locationIcon.textContent = "📡";
+      els.locationMessage.textContent = "Membaca lokasi perangkat...";
+
+      if (!navigator.geolocation) {
+        els.locationIcon.textContent = "📍";
+        els.locationMessage.textContent =
+          "Browser belum mendukung GPS. Produk tampil sesuai urutan data.";
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+
+          try {
+            const reverseUrl =
+              `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&accept-language=id`;
+
+            const response = await fetch(reverseUrl);
+            const data = await response.json();
+            const address = data.address || {};
+
+            let area = {
+              provinsi:
+                address.state ||
+                address.region ||
+                "",
+
+              kabupatenKota:
+                address.city ||
+                address.town ||
+                address.county ||
+                address.municipality ||
+                "",
+
+              kecamatan:
+                address.city_district ||
+                address.district ||
+                "",
+
+              kelurahanDesa:
+                address.village ||
+                address.hamlet ||
+                address.neighbourhood ||
+                address.quarter ||
+                address.suburb ||
+                ""
+            };
+
+            area = fixAreaIndonesia(area);
+
+            state.currentAreaLocation = area;
+
+            const label = buildAreaLabel(area);
+
+            els.locationIcon.textContent = "📍";
+            els.locationMessage.textContent = label
+              ? `Produk diurutkan dari lokasi: ${label}`
+              : "Lokasi terbaca, tetapi detail wilayah tidak ditemukan.";
+
+            renderProducts();
+          } catch (error) {
+            state.currentAreaLocation = null;
+
+            els.locationIcon.textContent = "📍";
+            els.locationMessage.textContent =
+              "Lokasi terbaca, tetapi gagal membaca detail alamat. Produk tampil sesuai urutan data.";
+          }
+        },
+        () => {
+          state.currentAreaLocation = null;
+
+          els.locationIcon.textContent = "📍";
+          els.locationMessage.textContent =
+            "Lokasi belum bisa dibaca. Produk tampil sesuai urutan data.";
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 12000,
+          maximumAge: 60000
+        }
+      );
+    }
+
+    function renderCategories() {
+      els.categoryList.innerHTML = categories
+        .map((category) => {
+          const active = category.label === state.selectedCategory;
+
+          return `
+            <button
+              class="category-card ${active ? "active" : ""}"
+              type="button"
+              data-category="${escapeHtml(category.label)}"
+              style="${active ? `background:${category.color};` : `color:${category.color};`}"
+            >
+              <div class="category-icon">${category.icon}</div>
+              <div class="category-name">${escapeHtml(category.label)}</div>
+            </button>
+          `;
+        })
+        .join("");
+    }
+
+    function renderPromo() {
+      els.promoTrack.innerHTML = promos
+        .map((promo) => {
+          return `
+            <article
+              class="promo-card"
+              style="background: linear-gradient(135deg, ${promo.color}, ${promo.color}cc);"
+            >
+              <div class="promo-content">
+                <span class="promo-label">4ja in</span>
+                <h2 class="promo-title">${escapeHtml(promo.title)}</h2>
+                <p class="promo-subtitle">${escapeHtml(promo.subtitle)}</p>
+              </div>
+              <div class="promo-icon">${promo.icon}</div>
+            </article>
+          `;
+        })
+        .join("");
+
+      els.promoDots.innerHTML = promos
+        .map((_, index) => {
+          return `
+            <button
+              class="promo-dot ${index === state.promoIndex ? "active" : ""}"
+              type="button"
+              data-promo="${index}"
+              aria-label="Promo ${index + 1}"
+            ></button>
+          `;
+        })
+        .join("");
+
+      updatePromoPosition();
+    }
+
+    function updatePromoPosition() {
+      const firstCard = els.promoTrack.querySelector(".promo-card");
+
+      if (!firstCard) {
+        return;
+      }
+
+      const cardWidth = firstCard.getBoundingClientRect().width + 10;
+      els.promoTrack.style.transform = `translateX(-${state.promoIndex * cardWidth}px)`;
+
+      els.promoDots.querySelectorAll(".promo-dot").forEach((dot, index) => {
+        dot.classList.toggle("active", index === state.promoIndex);
+      });
+    }
+
+    function productImageHtml(item) {
+      const icon = getCategoryIcon(item.kategori);
+
+      if (!item.imageUrl) {
+        return `<div class="image-placeholder">${icon}</div>`;
+      }
+
+      return `
+        <img
+          class="product-image"
+          src="${escapeHtml(item.imageUrl)}"
+          alt="${escapeHtml(item.nama)}"
+          loading="lazy"
+          onerror="this.outerHTML='<div class=&quot;image-placeholder&quot;>${icon}</div>'"
+        />
+      `;
+    }
+
+    function renderProductCard(item, options = {}) {
+      const horizontal = options.horizontal === true;
+      const color = getCategoryColor(item.kategori);
+      const price = item.harga || "Harga menyesuaikan";
+      const desc = item.deskripsi || "Layanan lokal pilihan dari 4ja in.";
+      const lokasi = item.lokasi || CONFIG.defaultLocation;
+
+      return `
+        <article class="product-card ${horizontal ? "horizontal" : ""}" data-detail-id="${escapeHtml(item.id)}">
+          <div class="product-image-wrap">
+            ${productImageHtml(item)}
+
+            <span class="category-badge" style="background:${color};">
+              ${escapeHtml(item.kategori)}
+            </span>
+
+            ${
+              item.promo
+                ? `<span class="promo-badge">${escapeHtml(item.promo)}</span>`
+                : ""
+            }
+          </div>
+
+          <div class="product-body">
+            <h3 class="product-name">${escapeHtml(item.nama)}</h3>
+
+            <p class="product-desc">${escapeHtml(desc)}</p>
+
+            <div class="product-location">
+              <span>📍</span>
+              <span>${escapeHtml(lokasi)}</span>
+            </div>
+
+            <div class="product-spacer"></div>
+
+            <div class="price-rating-row">
+              <div class="price-box">
+                ${
+                  item.oldHarga && item.oldHarga !== item.harga
+                    ? `<span class="old-price">${escapeHtml(item.oldHarga)}</span>`
+                    : ""
+                }
+
+                <span class="price">${escapeHtml(price)}</span>
+              </div>
+
+              <div class="rating">
+                <span>⭐</span>
+                <span>${Number(item.rating || 4.8).toFixed(1)}</span>
+              </div>
+            </div>
+
+            <button
+              class="order-btn"
+              type="button"
+              data-order-id="${escapeHtml(item.id)}"
+              style="background:${color};"
+            >
+              Pesan
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderGroupedSections(items) {
+      const grouped = {};
+
+      items.forEach((item) => {
+        const groupTitle = getGroupTitle(item.kategori);
+
+        if (!grouped[groupTitle]) {
+          grouped[groupTitle] = [];
+        }
+
+        grouped[groupTitle].push(item);
+      });
+
+      return Object.entries(grouped)
+        .map(([title, groupItems]) => {
+          if (!groupItems.length) {
+            return "";
+          }
+
+          return `
+            <section class="horizontal-section">
+              <h2 class="horizontal-title">${escapeHtml(title)}</h2>
+
+              <div class="horizontal-scroll">
+                ${groupItems
+                  .map((item) => renderProductCard(item, { horizontal: true }))
+                  .join("")}
+              </div>
+            </section>
+          `;
+        })
+        .join("");
+    }
+
+    function renderProducts() {
+      renderCategories();
+
+      if (state.loading) {
+        els.sectionSubtitle.textContent = "Memuat data layanan...";
+
+        els.productArea.innerHTML = `
+          <div class="loading-section">
+            ${Array.from({ length: 4 })
+              .map(() => `
+                <div class="skeleton-row">
+                  <div class="skeleton-img"></div>
+                  <div class="skeleton-body">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
+                    <div class="skeleton-line tiny"></div>
+                  </div>
+                </div>
+              `)
+              .join("")}
+          </div>
+        `;
+
+        return;
+      }
+
+      if (state.error) {
+        els.sectionSubtitle.textContent = "Data belum bisa dimuat";
+
+        els.productArea.innerHTML = `
+          <div class="info-section">
+            <div class="info-icon">⚠️</div>
+            <h3 class="info-title">Data belum bisa dimuat</h3>
+            <p class="info-text">
+              Terjadi gangguan saat memuat data. Silakan coba lagi beberapa saat lagi.
+            </p>
+            <button id="retryBtn" class="retry-btn" type="button">↻ Coba lagi</button>
+          </div>
+        `;
+
+        return;
+      }
+
+      const sortedItems = sortLayananByCurrentLocation(state.items);
+      state.filteredItems = filterLayanan(sortedItems);
+
+      els.sectionSubtitle.textContent = `${state.filteredItems.length} layanan tersedia`;
+
+      if (!state.filteredItems.length) {
+        els.productArea.innerHTML = `
+          <div class="empty-section">
+            <div class="empty-icon">🔎</div>
+            <h3 class="empty-title">Layanan tidak ditemukan</h3>
+            <p class="empty-text">
+              Coba gunakan kata kunci lain atau pilih kategori berbeda.
+            </p>
+          </div>
+        `;
+
+        return;
+      }
+
+      if (state.selectedCategory === "Semua") {
+        els.productArea.innerHTML = renderGroupedSections(state.filteredItems);
+      } else {
+        els.productArea.innerHTML = `
+          <div class="products-grid">
+            ${state.filteredItems
+              .map((item) => renderProductCard(item))
+              .join("")}
+          </div>
+        `;
+      }
+    }
+
+    function showDetailProduk(item) {
+      const color = getCategoryColor(item.kategori);
+      const desc = item.deskripsi || "Belum ada deskripsi produk atau layanan.";
+      const lokasi = item.lokasi || CONFIG.defaultLocation;
+      const stockInfo = buildStockInfo(item);
+
+      els.modalContent.innerHTML = `
+        <div class="modal-image">
+          ${productImageHtml(item)}
+        </div>
+
+        <div class="modal-top-row">
+          <span class="category-badge" style="position:static; background:${color}; max-width:none;">
+            ${escapeHtml(item.kategori)}
+          </span>
+
+          <div class="modal-rating">
+            <span>⭐</span>
+            <span>${Number(item.rating || 4.8).toFixed(1)}</span>
+          </div>
+        </div>
+
+        <h2 class="modal-title">${escapeHtml(item.nama)}</h2>
+
+        <p class="modal-desc">${escapeHtml(desc)}</p>
+
+        <div class="modal-info">
+          <span>📍</span>
+          <span>${escapeHtml(lokasi)}</span>
+        </div>
+
+        ${
+          stockInfo
+            ? `
+              <div class="modal-info">
+                <span>📦</span>
+                <span>${escapeHtml(stockInfo)}</span>
+              </div>
+            `
+            : ""
+        }
+
+        <div class="modal-price-row">
+          <div class="modal-price">
+            ${
+              item.oldHarga && item.oldHarga !== item.harga
+                ? `<span class="old-price">${escapeHtml(item.oldHarga)}</span>`
+                : ""
+            }
+
+            <span class="price">${escapeHtml(item.harga || "Harga menyesuaikan")}</span>
+          </div>
+
+          ${
+            item.promo
+              ? `<div class="modal-promo">${escapeHtml(item.promo)}</div>`
+              : ""
+          }
+        </div>
+
+        <div class="modal-actions">
+          <button class="modal-btn close" type="button" id="closeModalBtn">
+            Tutup
+          </button>
+
+          <button class="modal-btn order" type="button" id="modalOrderBtn">
+            💬 Pesan
+          </button>
+        </div>
+      `;
+
+      els.detailModal.classList.add("show");
+
+      document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+
+      document.getElementById("modalOrderBtn").addEventListener("click", () => {
+        closeModal();
+
+        openWhatsApp(
+          item.whatsapp,
+          `Halo, saya tertarik dengan ${item.nama} di aplikasi 4ja in.`
+        );
+      });
+    }
+
+    function closeModal() {
+      els.detailModal.classList.remove("show");
+    }
+
+    function startAnimatedText() {
+      if (!state.animatedTexts.length) {
+        return;
+      }
+
+      els.animatedText.textContent = state.animatedTexts[0];
+
+      window.setInterval(() => {
+        els.animatedText.classList.add("hide");
+
+        window.setTimeout(() => {
+          state.animatedIndex = (state.animatedIndex + 1) % state.animatedTexts.length;
+          els.animatedText.textContent = state.animatedTexts[state.animatedIndex];
+          els.animatedText.classList.remove("hide");
+        }, 280);
+      }, 5000);
+    }
+
+    function setBottomIndex(index) {
+      state.bottomIndex = index;
+
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.classList.toggle("active", Number(item.dataset.nav) === index);
+      });
+
+      if (index === 0) {
+        return;
+      }
+
+      if (index === 1) {
+        els.searchInput.focus();
+        showToast("Silakan cari layanan yang dibutuhkan.");
+      }
+
+      if (index === 2) {
+        openWhatsApp();
+      }
+
+      if (index === 3) {
+        window.location.href = "login.html";
+      }
+    }
+
+    function setupEvents() {
+      els.logoImage.addEventListener("error", () => {
+        els.logoImage.style.display = "none";
+        els.logoFallback.style.display = "block";
+      });
+
+      els.notificationBtn.addEventListener("click", () => {
+        showToast("Belum ada notifikasi baru.");
+      });
+
+      els.loginBtn.addEventListener("click", () => {
+        window.location.href = "login.html";
+      });
+
+      els.searchInput.addEventListener("input", (event) => {
+        state.keyword = event.target.value;
+
+        els.clearSearchBtn.classList.toggle(
+          "show",
+          state.keyword.trim() !== ""
+        );
+
+        renderProducts();
+      });
+
+      els.clearSearchBtn.addEventListener("click", () => {
+        state.keyword = "";
+        els.searchInput.value = "";
+        els.clearSearchBtn.classList.remove("show");
+
+        renderProducts();
+      });
+
+      els.locationRefreshBtn.addEventListener("click", loadCurrentLocation);
+
+      els.categoryList.addEventListener("click", async (event) => {
+        const button = event.target.closest("[data-category]");
+
+        if (!button) {
+          return;
+        }
+
+        const category = button.dataset.category;
+
+        if (!category || category === state.selectedCategory) {
+          return;
+        }
+
+        state.selectedCategory = category;
+
+        await loadData(category);
+      });
+
+      els.promoDots.addEventListener("click", (event) => {
+        const dot = event.target.closest("[data-promo]");
+
+        if (!dot) {
+          return;
+        }
+
+        state.promoIndex = Number(dot.dataset.promo);
+        updatePromoPosition();
+      });
+
+      els.seeAllBtn.addEventListener("click", async () => {
+        state.selectedCategory = "Semua";
+        state.keyword = "";
+        els.searchInput.value = "";
+        els.clearSearchBtn.classList.remove("show");
+
+        await loadData("Semua");
+      });
+
+      els.productArea.addEventListener("click", (event) => {
+        const retryBtn = event.target.closest("#retryBtn");
+
+        if (retryBtn) {
+          loadData(state.selectedCategory);
+          return;
+        }
+
+        const orderBtn = event.target.closest("[data-order-id]");
+
+        if (orderBtn) {
+          event.stopPropagation();
+
+          const item = state.filteredItems.find((data) => {
+            return data.id === orderBtn.dataset.orderId;
+          });
+
+          if (!item) {
+            return;
+          }
+
+          openWhatsApp(
+            item.whatsapp,
+            `Halo, saya tertarik dengan ${item.nama} di aplikasi 4ja in.`
+          );
+
+          return;
+        }
+
+        const card = event.target.closest("[data-detail-id]");
+
+        if (!card) {
+          return;
+        }
+
+        const item = state.filteredItems.find((data) => {
+          return data.id === card.dataset.detailId;
+        });
+
+        if (item) {
+          showDetailProduk(item);
+        }
+      });
+
+      els.instagramBtn.addEventListener("click", () => {
+        openUrl(CONFIG.instagramUrl);
+      });
+
+      els.whatsappFooterBtn.addEventListener("click", () => {
+        openWhatsApp();
+      });
+
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          setBottomIndex(Number(item.dataset.nav));
+        });
+      });
+
+      els.detailModal.addEventListener("click", (event) => {
+        if (event.target === els.detailModal) {
+          closeModal();
+        }
+      });
+
+      window.addEventListener("resize", updatePromoPosition);
+    }
+
+    async function init() {
+      setupEvents();
+      renderCategories();
+      renderPromo();
+      renderProducts();
+
+      await loadWilayahData();
+
+      loadCurrentLocation();
+
+      fetchAnimatedTexts().then((texts) => {
+        state.animatedTexts = texts;
+        startAnimatedText();
+      });
+
+      await loadData("Semua");
+
+      window.setInterval(() => {
+        state.promoIndex = (state.promoIndex + 1) % promos.length;
+        updatePromoPosition();
+      }, 4200);
+    }
+
+    init();
+  </script>
+</body>
+</html>

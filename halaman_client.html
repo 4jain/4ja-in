@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Client</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 430px; /* Lebar maksimum seperti perangkat HP */
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-bar {
+            background-color: #6200EE; /* inversePrimary color */
+            color: white;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .app-bar-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .app-bar-actions button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .app-bar-actions button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .client-body {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 16px;
+        }
+
+        .welcome-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- AppBar -->
+        <header class="app-bar">
+            <div class="app-bar-title">Halaman Client</div>
+            <div class="app-bar-actions">
+                <button id="logoutButton">Logout</button>
+            </div>
+        </header>
+
+        <!-- Client Body -->
+        <main class="client-body">
+            <p class="welcome-text" id="welcomeText">Selamat datang di Halaman Client</p>
+        </main>
+    </div>
+    <script src="auth.js"></script>
+    <script>
+        const session = AuthService.getSession();
+
+        if (session.is_logged_in === 'true' && session.nama) {
+            document.getElementById('welcomeText').textContent = `Selamat datang di Halaman Client, ${session.nama}`;
+        }
+
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            AuthService.logout();
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

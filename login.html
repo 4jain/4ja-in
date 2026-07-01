@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Login - 4ja in</title>
+
+  <style>
+    :root {
+      --blue: #087bd8;
+      --green: #42a93b;
+      --yellow: #f5b700;
+      --brown: #8b5e34;
+      --purple: #673ab7;
+      --soft-bg: #f7fafc;
+      --white: #ffffff;
+      --text-dark: #1e293b;
+      --text-grey: #64748b;
+      --border: #e5e7eb;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+      --bottom-height: 72px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #e5e7eb;
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: var(--soft-bg);
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .appbar {
+      width: 100%;
+      height: 58px;
+      padding: 0 16px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(8, 123, 216, 0.95),
+          rgba(66, 169, 59, 0.9)
+        );
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 6px 18px rgba(8, 123, 216, 0.18);
+    }
+
+    .back-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .appbar-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+    }
+
+    .content {
+      flex: 1;
+      width: 100%;
+      padding: 22px 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-card {
+      width: 100%;
+      padding: 24px 18px 20px;
+      background: #ffffff;
+      border-radius: 28px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      box-shadow: var(--shadow);
+    }
+
+    .brand-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .avatar-icon {
+      width: 104px;
+      height: 104px;
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.65), transparent 30%),
+        linear-gradient(135deg, rgba(103, 58, 183, 0.18), rgba(8, 123, 216, 0.13));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--purple);
+      font-size: 58px;
+      box-shadow: 0 10px 22px rgba(103, 58, 183, 0.12);
+    }
+
+    .title {
+      text-align: center;
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 600;
+      color: var(--text-grey);
+    }
+
+    .form {
+      margin-top: 28px;
+    }
+
+    .field-group {
+      margin-bottom: 18px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .input-wrap {
+      height: 54px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 13px;
+      background: #ffffff;
+      border: 1.4px solid #d1d5db;
+      border-radius: 10px;
+      transition: 0.2s ease;
+    }
+
+    .input-wrap:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(8, 123, 216, 0.1);
+    }
+
+    .input-icon {
+      width: 24px;
+      flex: 0 0 24px;
+      color: var(--text-grey);
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .input {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 15px;
+      color: var(--text-dark);
+    }
+
+    .input::placeholder {
+      color: #9ca3af;
+    }
+
+    .toggle-password {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: var(--text-grey);
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hint {
+      margin-top: 7px;
+      font-size: 11.5px;
+      line-height: 1.35;
+      color: var(--text-grey);
+      font-weight: 600;
+    }
+
+    .login-submit {
+      width: 100%;
+      height: 52px;
+      margin-top: 10px;
+      border-radius: 10px;
+      background: var(--blue);
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: 0.2s ease;
+      box-shadow: 0 8px 18px rgba(8, 123, 216, 0.22);
+    }
+
+    .login-submit:hover {
+      background: #066fc3;
+    }
+
+    .login-submit:disabled {
+      cursor: not-allowed;
+      opacity: 0.75;
+      box-shadow: none;
+    }
+
+    .spinner {
+      width: 23px;
+      height: 23px;
+      border-radius: 999px;
+      border: 3px solid rgba(255, 255, 255, 0.45);
+      border-top-color: #ffffff;
+      animation: spin 0.75s linear infinite;
+      display: none;
+    }
+
+    .login-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    .login-submit.loading .button-text {
+      font-size: 15px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .helper-card {
+      margin-top: 18px;
+      padding: 13px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+    }
+
+    .helper-title {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .helper-text {
+      margin-top: 4px;
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: var(--text-grey);
+      font-weight: 600;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 50;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%) translateY(18px);
+      width: min(calc(100% - 32px), 398px);
+      padding: 13px 14px;
+      border-radius: 14px;
+      background: #111827;
+      color: #ffffff;
+      font-size: 13px;
+      line-height: 1.4;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.success {
+      background: #166534;
+    }
+
+    .toast.error {
+      background: #991b1b;
+    }
+
+    @media (max-width: 360px) {
+      .content {
+        padding: 18px 12px 24px;
+      }
+
+      .login-card {
+        padding: 22px 15px 18px;
+        border-radius: 24px;
+      }
+
+      .title {
+        font-size: 22px;
+      }
+
+      .avatar-icon {
+        width: 94px;
+        height: 94px;
+        font-size: 52px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="appbar">
+      <button class="back-btn" type="button" id="backBtn" aria-label="Kembali">
+        ‹
+      </button>
+      <h1 class="appbar-title">Login</h1>
+    </header>
+
+    <section class="content">
+      <div class="login-card">
+        <div class="brand-wrap">
+          <div class="avatar-icon">
+            📍
+          </div>
+        </div>
+
+        <h2 class="title">Masuk Akun</h2>
+        <p class="subtitle">
+          Gunakan nomor HP dan password yang sudah terdaftar di 4ja in.
+        </p>
+
+        <form class="form" id="loginForm">
+          <div class="field-group">
+            <label class="field-label" for="nomorHpInput">Nomor HP</label>
+
+            <div class="input-wrap">
+              <span class="input-icon">📞</span>
+
+              <input
+                id="nomorHpInput"
+                class="input"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                placeholder="Contoh: 6281298542192"
+              />
+            </div>
+
+            <p class="hint">
+              Nomor dengan awalan 08 otomatis diubah menjadi 62.
+            </p>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="passwordInput">Password</label>
+
+            <div class="input-wrap">
+              <span class="input-icon">🔒</span>
+
+              <input
+                id="passwordInput"
+                class="input"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Masukkan Password Anda"
+              />
+
+              <button
+                id="togglePasswordBtn"
+                class="toggle-password"
+                type="button"
+                aria-label="Tampilkan password"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <button id="loginBtn" class="login-submit" type="submit">
+            <span class="spinner"></span>
+            <span class="button-text">Login</span>
+          </button>
+        </form>
+
+        
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const CONFIG = {
+      sheetCsvUrl:
+        "https://docs.google.com/spreadsheets/d/1AN8Zea7RRqVz2m400Kmsk-RVQjn394wP8DXmQyOvxco/export?format=csv",
+
+      routes: {
+        home: "index.html",
+        umkm: "halaman_umkm.html",
+        client: "halaman_client.html"
+      },
+
+      storageKeys: {
+        isLoggedIn: "is_logged_in",
+        nomorHp: "logged_in_nomor_hp",
+        nama: "logged_in_nama",
+        status: "logged_in_status"
+      }
+    };
+
+    const state = {
+      isLoading: false,
+      isPasswordVisible: false
+    };
+
+    const els = {
+      backBtn: document.getElementById("backBtn"),
+      loginForm: document.getElementById("loginForm"),
+      nomorHpInput: document.getElementById("nomorHpInput"),
+      passwordInput: document.getElementById("passwordInput"),
+      togglePasswordBtn: document.getElementById("togglePasswordBtn"),
+      loginBtn: document.getElementById("loginBtn"),
+      toast: document.getElementById("toast")
+    };
+
+    function normalizeNomorHp(value) {
+      const digitsOnly = String(value || "").replace(/[^0-9]/g, "");
+
+      if (digitsOnly.startsWith("0")) {
+        return `62${digitsOnly.substring(1)}`;
+      }
+
+      return digitsOnly;
+    }
+
+    function updateNomorHp() {
+      const normalizedNomorHp = normalizeNomorHp(els.nomorHpInput.value);
+
+      if (els.nomorHpInput.value === normalizedNomorHp) {
+        return;
+      }
+
+      els.nomorHpInput.value = normalizedNomorHp;
+      els.nomorHpInput.setSelectionRange(
+        normalizedNomorHp.length,
+        normalizedNomorHp.length
+      );
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let current = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"') {
+          if (inQuotes && next === '"') {
+            current += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === "," && !inQuotes) {
+          row.push(current);
+          current = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && next === "\n") {
+            i++;
+          }
+
+          row.push(current);
+          rows.push(row);
+          row = [];
+          current = "";
+        } else {
+          current += char;
+        }
+      }
+
+      row.push(current);
+      rows.push(row);
+
+      return rows.filter((item) => {
+        return item.some((cell) => String(cell).trim() !== "");
+      });
+    }
+
+    function setLoading(value) {
+      state.isLoading = value;
+
+      els.loginBtn.disabled = value;
+      els.nomorHpInput.disabled = value;
+      els.passwordInput.disabled = value;
+      els.togglePasswordBtn.disabled = value;
+
+      els.loginBtn.classList.toggle("loading", value);
+
+      const buttonText = els.loginBtn.querySelector(".button-text");
+      buttonText.textContent = value ? "Memproses..." : "Login";
+    }
+
+    function showToast(message, type = "default") {
+      els.toast.textContent = message;
+      els.toast.className = "toast";
+
+      if (type === "success") {
+        els.toast.classList.add("success");
+      }
+
+      if (type === "error") {
+        els.toast.classList.add("error");
+      }
+
+      els.toast.classList.add("show");
+
+      window.clearTimeout(showToast.timer);
+
+      showToast.timer = window.setTimeout(() => {
+        els.toast.classList.remove("show");
+      }, 2800);
+    }
+
+    function saveSession(user) {
+      localStorage.setItem(CONFIG.storageKeys.isLoggedIn, "true");
+      localStorage.setItem(CONFIG.storageKeys.nomorHp, user.nomor_hp);
+      localStorage.setItem(CONFIG.storageKeys.nama, user.nama);
+      localStorage.setItem(CONFIG.storageKeys.status, user.status);
+    }
+
+    async function login({ nomorHp, password }) {
+      const response = await fetch(CONFIG.sheetCsvUrl);
+
+      if (!response.ok) {
+        throw new Error(`Gagal membaca data Google Sheet. Kode: ${response.status}`);
+      }
+
+      const text = await response.text();
+      const rows = parseCsv(text);
+
+      if (rows.length <= 1) {
+        throw new Error("Data login di Google Sheet kosong.");
+      }
+
+      for (const row of rows.slice(1)) {
+        if (row.length < 5) {
+          continue;
+        }
+
+        const sheetNomorHp = String(row[0] || "").trim();
+        const sheetNama = String(row[1] || "").trim();
+        const sheetPassword = String(row[3] || "").trim();
+        const sheetStatus = String(row[4] || "").trim().toLowerCase();
+
+        if (sheetNomorHp === nomorHp && sheetPassword === password) {
+          if (sheetStatus !== "umkm" && sheetStatus !== "client") {
+            throw new Error(`Status akun "${sheetStatus}" tidak dikenali.`);
+          }
+
+          const user = {
+            nomor_hp: sheetNomorHp,
+            nama: sheetNama,
+            status: sheetStatus
+          };
+
+          saveSession(user);
+
+          return user;
+        }
+      }
+
+      throw new Error("Nomor HP atau password tidak cocok.");
+    }
+
+    function redirectByStatus(status) {
+      if (status === "umkm") {
+        window.location.href = CONFIG.routes.umkm;
+        return;
+      }
+
+      if (status === "client") {
+        window.location.href = CONFIG.routes.client;
+        return;
+      }
+
+      throw new Error(`Status akun tidak dikenali: ${status}`);
+    }
+
+    async function handleLogin(event) {
+      event.preventDefault();
+
+      const nomorHp = normalizeNomorHp(els.nomorHpInput.value.trim());
+      const password = els.passwordInput.value.trim();
+
+      els.nomorHpInput.value = nomorHp;
+
+      if (!nomorHp || !password) {
+        showToast("Nomor HP dan password wajib diisi", "error");
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const user = await login({
+          nomorHp,
+          password
+        });
+
+        showToast(`Login berhasil. Halo ${user.nama}`, "success");
+
+        window.setTimeout(() => {
+          redirectByStatus(user.status);
+        }, 700);
+      } catch (error) {
+        showToast(error.message || "Login gagal.", "error");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    function togglePasswordVisibility() {
+      state.isPasswordVisible = !state.isPasswordVisible;
+
+      els.passwordInput.type = state.isPasswordVisible ? "text" : "password";
+      els.togglePasswordBtn.textContent = state.isPasswordVisible ? "🙈" : "👁️";
+      els.togglePasswordBtn.setAttribute(
+        "aria-label",
+        state.isPasswordVisible ? "Sembunyikan password" : "Tampilkan password"
+      );
+    }
+
+    function setupEvents() {
+      els.backBtn.addEventListener("click", () => {
+        window.location.href = CONFIG.routes.home;
+      });
+
+      els.nomorHpInput.addEventListener("input", updateNomorHp);
+
+      els.nomorHpInput.addEventListener("keydown", (event) => {
+        const allowedKeys = [
+          "Backspace",
+          "Delete",
+          "ArrowLeft",
+          "ArrowRight",
+          "Tab",
+          "Home",
+          "End"
+        ];
+
+        if (allowedKeys.includes(event.key)) {
+          return;
+        }
+
+        if (/^[0-9+\-\s]$/.test(event.key)) {
+          return;
+        }
+
+        event.preventDefault();
+      });
+
+      els.passwordInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !state.isLoading) {
+          els.loginForm.requestSubmit();
+        }
+      });
+
+      els.togglePasswordBtn.addEventListener("click", togglePasswordVisibility);
+
+      els.loginForm.addEventListener("submit", handleLogin);
+    }
+
+    function init() {
+      setupEvents();
+      els.nomorHpInput.focus();
+    }
+
+    init();
+  </script>
+</body>
+</html>

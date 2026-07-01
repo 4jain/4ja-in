@@ -1,0 +1,2756 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beranda UMKM</title>
+
+  <!-- Material Symbols untuk ikon seperti Flutter Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --green: #16a34a;
+      --green-soft: #f0fdf4;
+      --red: #e53935;
+      --orange: #e7553c;
+      --yellow: #ffe78a;
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      --radius: 18px;
+      --app-max-width: 520px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .material-symbols-rounded {
+      font-family: "Material Symbols Rounded";
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: "liga";
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: var(--app-max-width);
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--bg);
+      position: relative;
+      padding-bottom: 78px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .appbar {
+      height: 58px;
+      background: #dbeafe;
+      color: #111827;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid #bfdbfe;
+    }
+
+    .icon-button {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #1f2937;
+      transition: 0.2s ease;
+    }
+
+    .icon-button:hover {
+      background: rgba(37, 99, 235, 0.1);
+    }
+
+    .appbar-title {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .logout-btn {
+      background: var(--primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 10px;
+    }
+
+    .screen {
+      display: none;
+      padding-bottom: 20px;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .search-wrap {
+      padding: 16px;
+    }
+
+    .search-box {
+      width: 100%;
+      height: 48px;
+      background: #ffffff;
+      border: 0;
+      outline: none;
+      border-radius: 8px;
+      padding: 0 14px 0 44px;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+      color: var(--text);
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-container .material-symbols-rounded {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+      font-size: 22px;
+    }
+
+    .section {
+      margin: 0 16px;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .section.green {
+      border-color: #bbf7d0;
+    }
+
+    .section.blue {
+      border-color: #bfdbfe;
+    }
+
+    .section + .section,
+    .carousel-section + .section {
+      margin-top: 20px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .section-icon {
+      flex: 0 0 46px;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-icon.green {
+      background: var(--green-soft);
+      color: #15803d;
+    }
+
+    .section-icon.blue {
+      background: #eff6ff;
+      color: var(--primary-dark);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
+    .section-refresh {
+      margin-left: auto;
+      color: #374151;
+      background: transparent;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-refresh:hover {
+      background: #f3f4f6;
+    }
+
+    .carousel-section {
+      padding: 0 16px 6px;
+    }
+
+    .carousel-viewport {
+      width: 100%;
+      overflow: hidden;
+      padding: 0 0 10px;
+      border-radius: 16px;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 0;
+      transition: transform 0.45s ease;
+      will-change: transform;
+    }
+
+    .carousel-item {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 210px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #9ca3af;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-dots,
+    .detail-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding-top: 4px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50px;
+      background: #d1d5db;
+      transition: 0.25s ease;
+    }
+
+    .dot.active {
+      width: 22px;
+      background: var(--red);
+    }
+
+    .info-box {
+      width: 100%;
+      padding: 14px;
+      text-align: center;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: #4b5563;
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .info-box.error {
+      background: #ffebee;
+      border-color: #ffcdd2;
+      color: #c62828;
+    }
+
+    .title-row {
+      padding: 20px 16px 0;
+    }
+
+    .headline {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .hint-text {
+      padding: 6px 16px 0;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .horizontal-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+      display: flex;
+      gap: 12px;
+      padding: 12px 12px 10px;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar {
+      height: 0;
+    }
+
+    .materi-card {
+      flex: 0 0 155px;
+      width: 155px;
+      height: 230px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      scroll-snap-align: start;
+      transition: 0.18s ease;
+    }
+
+    .materi-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .materi-image {
+      height: 138px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+    }
+
+    .materi-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .materi-title {
+      height: 92px;
+      padding: 9px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.25;
+      font-weight: 800;
+      color: #111827;
+    }
+
+    .contact-list {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 0 4px;
+      min-height: 185px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .contact-list::-webkit-scrollbar {
+      height: 0;
+    }
+
+    .contact-card {
+      flex: 0 0 38%;
+      aspect-ratio: 3 / 4;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+      padding: 11px 9px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 120px;
+    }
+
+    .contact-photo {
+      width: 50%;
+      aspect-ratio: 1;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+    }
+
+    .contact-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .contact-name {
+      height: 34px;
+      margin-top: 12px;
+      font-size: clamp(11px, 3vw, 14px);
+      line-height: 1.2;
+      font-weight: 800;
+      text-align: center;
+      color: #222222;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .contact-btn {
+      margin-top: 14px;
+      width: 100%;
+      height: 29px;
+      background: #4caf50;
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 3px 8px rgba(22, 163, 74, 0.28);
+    }
+
+    .gps-action {
+      width: 100%;
+      height: 50px;
+      margin-top: 24px;
+      background: var(--primary-dark);
+      color: white;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .gps-action:disabled {
+      background: #93c5fd;
+      cursor: not-allowed;
+    }
+
+    .gps-status {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.3;
+      font-weight: 700;
+      color: #6b7280;
+    }
+
+    .gps-status.show {
+      display: flex;
+    }
+
+    .gps-status .success {
+      color: #15803d;
+    }
+
+    .gps-status .warning {
+      color: #c2410c;
+    }
+
+    .gps-result {
+      display: none;
+      margin-top: 18px;
+      height: 285px;
+      background: #f7f7f7;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .gps-result.show {
+      display: block;
+    }
+
+    .product-list {
+      height: 100%;
+      overflow-x: auto;
+      display: flex;
+      gap: 14px;
+      padding: 16px 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .product-list::-webkit-scrollbar {
+      height: 0;
+    }
+
+    .product-card {
+      flex: 0 0 160px;
+      width: 160px;
+      height: 252px;
+      background: #ffffff;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-image {
+      flex: 10;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-body {
+      flex: 12;
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .product-name {
+      height: 24px;
+      font-size: 12px;
+      line-height: 1.1;
+      font-weight: 600;
+      color: #222;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-location {
+      margin-top: 3px;
+      display: flex;
+      gap: 2px;
+      align-items: center;
+      color: #6b7280;
+      font-size: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .product-location span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .old-row {
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .old-price {
+      color: #9ca3af;
+      font-size: 9px;
+      text-decoration: line-through;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .discount {
+      flex: 0 0 auto;
+      padding: 1px 3px;
+      background: var(--yellow);
+      border-radius: 3px;
+      color: #e94324;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .current-price {
+      display: flex;
+      align-items: flex-end;
+      color: var(--orange);
+      gap: 2px;
+      margin-top: 1px;
+    }
+
+    .current-price .rp {
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .current-price .number {
+      flex: 1;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stock-bar {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #f7bda8;
+      position: relative;
+      margin-top: auto;
+    }
+
+    .stock-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff8a00, #e94324);
+      width: 0%;
+    }
+
+    .stock-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 0 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .buy-btn {
+      width: 100%;
+      height: 22px;
+      margin-top: 4px;
+      border-radius: 5px;
+      background: var(--orange);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--app-max-width);
+      height: 66px;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      z-index: 30;
+      box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-item {
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-item .material-symbols-rounded {
+      font-size: 25px;
+    }
+
+    .center-placeholder {
+      min-height: calc(100vh - 124px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      color: #111827;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s ease;
+    }
+
+    .drawer-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer-panel {
+      width: min(310px, 82vw);
+      height: 100%;
+      background: white;
+      padding: 18px;
+      transform: translateX(-100%);
+      transition: 0.25s ease;
+      box-shadow: 10px 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .drawer-overlay.show .drawer-panel {
+      transform: translateX(0);
+    }
+
+    .drawer-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .drawer-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+
+    .drawer-menu {
+      display: grid;
+      gap: 8px;
+    }
+
+    .drawer-link {
+      height: 44px;
+      border-radius: 12px;
+      color: #111827;
+      background: #f9fafb;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .drawer-link:hover {
+      background: #eff6ff;
+      color: var(--primary-dark);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: #f6f7fb;
+      z-index: 200;
+      display: none;
+      overflow: auto;
+    }
+
+    .modal.show {
+      display: block;
+    }
+
+    .detail-page {
+      width: 100%;
+      max-width: var(--app-max-width);
+      min-height: 100vh;
+      margin: 0 auto;
+      background: #f6f7fb;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-slider-wrap {
+      padding: 14px 0 10px;
+      border-bottom: 1px solid var(--border);
+      background: #f6f7fb;
+    }
+
+    .detail-slider {
+      height: 31vh;
+      min-height: 230px;
+      overflow: hidden;
+    }
+
+    .detail-track {
+      height: 100%;
+      display: flex;
+      gap: 12px;
+      padding: 0 18px;
+      transition: transform 0.35s ease;
+    }
+
+    .detail-slide {
+      flex: 0 0 92%;
+      height: 100%;
+      padding: 8px;
+      background: white;
+      border: 1.2px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .detail-slide-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+    }
+
+    .detail-slide-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .detail-content-wrap {
+      flex: 1;
+      padding: 16px 18px 24px;
+    }
+
+    .detail-content-card {
+      background: white;
+      border-radius: 22px;
+      border: 1.2px solid var(--border);
+      box-shadow: 0 7px 14px rgba(0, 0, 0, 0.08);
+      padding: 18px;
+    }
+
+    .detail-title {
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 900;
+      color: #111827;
+      margin-bottom: 14px;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 0 0 14px;
+    }
+
+    .detail-text {
+      font-size: 15px;
+      line-height: 1.6;
+      text-align: justify;
+      color: #374151;
+      white-space: pre-line;
+    }
+
+    .detail-bottom {
+      position: sticky;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 12px 18px 16px;
+      background: white;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -5px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .detail-btn {
+      height: 52px;
+      border-radius: 16px;
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+
+    .detail-btn.primary {
+      color: white;
+      background: var(--red);
+    }
+
+    .detail-btn.outline {
+      color: #111827;
+      background: white;
+      border: 1.2px solid #d1d5db;
+    }
+
+    .image-preview {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.94);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 54px 12px 70px;
+    }
+
+    .image-preview.show {
+      display: flex;
+    }
+
+    .image-preview img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      cursor: zoom-in;
+      transition: transform 0.2s ease;
+    }
+
+    .image-preview img.zoomed {
+      transform: scale(1.7);
+      cursor: zoom-out;
+    }
+
+    .preview-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      color: white;
+    }
+
+    .preview-hint {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 18px;
+      background: rgba(255, 255, 255, 0.13);
+      color: white;
+      text-align: center;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 82px;
+      transform: translateX(-50%) translateY(30px);
+      width: min(440px, calc(100% - 28px));
+      background: #111827;
+      color: white;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.4;
+      z-index: 400;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.25s ease;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+    }
+
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .loading-center {
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 3px solid #dbeafe;
+      border-top-color: var(--primary);
+      animation: spin 0.8s linear infinite;
+    }
+
+    .spinner.white {
+      width: 18px;
+      height: 18px;
+      border-width: 2px;
+      border-color: rgba(255, 255, 255, 0.35);
+      border-top-color: white;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 360px) {
+      .section {
+        padding: 16px;
+      }
+
+      .carousel-item {
+        height: 180px;
+      }
+
+      .contact-card {
+        flex-basis: 45%;
+      }
+
+      .appbar-title {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell">
+    <header class="appbar">
+      <button class="icon-button" id="openDrawerBtn" aria-label="Buka menu">
+        <span class="material-symbols-rounded">menu</span>
+      </button>
+      <div class="appbar-title" id="appbarTitle">Beranda UMKM - Beranda</div>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </header>
+
+    <main>
+      <!-- TAB BERANDA -->
+      <section class="screen active" id="screen-home">
+        <div class="search-wrap">
+          <div class="search-container">
+            <span class="material-symbols-rounded">search</span>
+            <input class="search-box" id="searchInput" type="search" placeholder="Cari produk atau UMKM..." />
+          </div>
+        </div>
+
+        <section class="carousel-section">
+          <div class="carousel-viewport">
+            <div class="carousel-track" id="carouselTrack">
+              <div class="info-box">Memuat carousel...</div>
+            </div>
+          </div>
+          <div class="carousel-dots" id="carouselDots"></div>
+        </section>
+
+        <section class="section green" id="kontakSection">
+          <div class="section-header">
+            <div class="section-icon green">
+              <span class="material-symbols-rounded">groups</span>
+            </div>
+            <div>
+              <h2 class="section-title">Kontak UMKM</h2>
+              <p class="section-subtitle">
+                Geser ke samping untuk melihat daftar kontak UMKM dan menghubungi langsung melalui WhatsApp.
+              </p>
+            </div>
+            <button class="section-refresh" id="refreshKontakBtn" aria-label="Refresh kontak">
+              <span class="material-symbols-rounded">refresh</span>
+            </button>
+          </div>
+          <div class="contact-list" id="contactList">
+            <div class="loading-center"><div class="spinner"></div></div>
+          </div>
+        </section>
+
+        <section class="section blue" id="gpsSectionHome">
+          <div class="section-header">
+            <div class="section-icon blue">
+              <span class="material-symbols-rounded">location_searching</span>
+            </div>
+            <div>
+              <h2 class="section-title">Produk Terdekat</h2>
+              <p class="section-subtitle">
+                Gunakan lokasi GPS untuk mengurutkan produk dari wilayah paling dekat: kelurahan/desa, kecamatan, lalu kabupaten/kota.
+              </p>
+            </div>
+          </div>
+
+          <button class="gps-action" id="gpsButtonHome">
+            <span class="material-symbols-rounded">gps_fixed</span>
+            <span>Gunakan Lokasi GPS</span>
+          </button>
+
+          <div class="gps-status" id="gpsStatusHome">
+            <span class="material-symbols-rounded warning">info</span>
+            <span>Belum mengambil lokasi</span>
+          </div>
+
+          <div class="gps-result" id="gpsResultHome">
+            <div class="product-list" id="productListHome"></div>
+          </div>
+        </section>
+
+        <div class="title-row">
+          <h2 class="headline">Materi Edukasi</h2>
+        </div>
+        <p class="hint-text">Klik materi untuk membaca detail dan memulai ujian.</p>
+        <div class="horizontal-scroll" id="materiList">
+          <div class="loading-center"><div class="spinner"></div></div>
+        </div>
+      </section>
+
+      <!-- TAB BELANJA -->
+      <section class="screen" id="screen-shop">
+        <div style="height: 16px"></div>
+        <section class="section blue" id="gpsSectionShop">
+          <div class="section-header">
+            <div class="section-icon blue">
+              <span class="material-symbols-rounded">location_searching</span>
+            </div>
+            <div>
+              <h2 class="section-title">Produk Terdekat</h2>
+              <p class="section-subtitle">
+                Gunakan lokasi GPS untuk mengurutkan produk dari wilayah paling dekat: kelurahan/desa, kecamatan, lalu kabupaten/kota.
+              </p>
+            </div>
+          </div>
+
+          <button class="gps-action" id="gpsButtonShop">
+            <span class="material-symbols-rounded">gps_fixed</span>
+            <span>Gunakan Lokasi GPS</span>
+          </button>
+
+          <div class="gps-status" id="gpsStatusShop">
+            <span class="material-symbols-rounded warning">info</span>
+            <span>Belum mengambil lokasi</span>
+          </div>
+
+          <div class="gps-result" id="gpsResultShop">
+            <div class="product-list" id="productListShop"></div>
+          </div>
+        </section>
+      </section>
+
+      <!-- TAB CHAT -->
+      <section class="screen" id="screen-chat">
+        <div class="center-placeholder">Halaman Chat</div>
+      </section>
+
+      <!-- TAB PROFIL -->
+      <section class="screen" id="screen-profile">
+        <div class="center-placeholder">Halaman Profil</div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-tab="home" data-title="Beranda">
+        <span class="material-symbols-rounded">home</span>
+        <span>Beranda</span>
+      </button>
+      <button class="nav-item" data-tab="shop" data-title="Belanja">
+        <span class="material-symbols-rounded">shopping_bag</span>
+        <span>Belanja</span>
+      </button>
+      <button class="nav-item" data-tab="chat" data-title="Chat">
+        <span class="material-symbols-rounded">chat</span>
+        <span>Chat</span>
+      </button>
+      <button class="nav-item" data-tab="profile" data-title="Profil">
+        <span class="material-symbols-rounded">person</span>
+        <span>Profil</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Drawer sederhana sebagai pengganti AppDrawer -->
+  <div class="drawer-overlay" id="drawerOverlay">
+    <aside class="drawer-panel">
+      <h2 class="drawer-title">Menu UMKM</h2>
+      <p class="drawer-subtitle">
+        Drawer ini adalah versi HTML dari AppDrawer Flutter. Silakan ganti isi menu sesuai kebutuhan.
+      </p>
+      <div class="drawer-menu">
+        <button class="drawer-link" data-drawer-tab="home">
+          <span class="material-symbols-rounded">home</span>
+          Beranda
+        </button>
+        <button class="drawer-link" data-drawer-tab="shop">
+          <span class="material-symbols-rounded">shopping_bag</span>
+          Belanja
+        </button>
+        <button class="drawer-link" data-drawer-tab="chat">
+          <span class="material-symbols-rounded">chat</span>
+          Chat
+        </button>
+        <button class="drawer-link" data-drawer-tab="profile">
+          <span class="material-symbols-rounded">person</span>
+          Profil
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modal Detail Materi -->
+  <section class="modal" id="materiModal">
+    <div class="detail-page">
+      <div class="detail-slider-wrap">
+        <div class="detail-slider">
+          <div class="detail-track" id="detailTrack"></div>
+        </div>
+        <div class="detail-dots" id="detailDots"></div>
+      </div>
+
+      <div class="detail-content-wrap">
+        <div class="detail-content-card">
+          <h1 class="detail-title" id="detailTitle">Memuat...</h1>
+          <div class="divider"></div>
+          <p class="detail-text" id="detailContent">Memuat isi materi...</p>
+        </div>
+      </div>
+
+      <div class="detail-bottom">
+        <button class="detail-btn primary" id="startExamBtn">
+          <span class="material-symbols-rounded">assignment</span>
+          Mulai Ujian
+        </button>
+        <button class="detail-btn outline" id="closeMateriBtn">
+          <span class="material-symbols-rounded">arrow_back</span>
+          Kembali
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Preview Gambar -->
+  <div class="image-preview" id="imagePreview">
+    <button class="preview-close" id="closePreviewBtn">
+      <span class="material-symbols-rounded">close</span>
+    </button>
+    <img id="previewImage" alt="Preview gambar materi" />
+    <div class="preview-hint">Klik gambar untuk zoom</div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ===========================================================
+       KONFIGURASI GOOGLE SHEET
+    =========================================================== */
+
+    const spreadsheetId = "1aQ_2e8x7_Fw4wKxDJQctC_aKyPNPfZigH6D649GiVKM";
+    const sheetName = "Sheet1";
+
+    const carouselSpreadsheetId = "1w7o01gAVzsPlO94lmrFUBEoTuPoI71WI50Z4MKg0W0c";
+    const carouselSheetName = "Sheet1";
+
+    const productSpreadsheetId = "1FFO1Lq3e1lxdfR1-es_vM9RfWYbPDm09aMTRs0coApE";
+    const productSheetGid = "0";
+    const productCsvUrl =
+      `https://docs.google.com/spreadsheets/d/${productSpreadsheetId}/export?format=csv&gid=${productSheetGid}`;
+
+    const kontakSpreadsheetId = "1k7xT7gVRfhFtJUD_qYRKkG7Yegt0ZXPAiWLw9rWhfAw";
+    const kontakCsvUrl =
+      `https://docs.google.com/spreadsheets/d/${kontakSpreadsheetId}/export?format=csv&gid=0`;
+
+    /* ===========================================================
+       STATE APLIKASI
+    =========================================================== */
+
+    const appState = {
+      carouselImages: [],
+      carouselIndex: 0,
+      carouselTimer: null,
+
+      materiItems: [],
+      detailImages: [],
+      detailIndex: 0,
+      currentExamUrl: "",
+
+      semuaProduk: [],
+      produkTerdekat: [],
+      lokasiSaatIni: null,
+      sedangMengambilLokasi: false,
+      sedangMemuatProduk: false,
+      sudahTekanGps: false,
+      statusGps: "Belum mengambil lokasi",
+      productError: null
+    };
+
+    /* ===========================================================
+       ELEMEN DOM
+    =========================================================== */
+
+    const appbarTitle = document.getElementById("appbarTitle");
+    const navItems = document.querySelectorAll(".nav-item");
+    const screens = {
+      home: document.getElementById("screen-home"),
+      shop: document.getElementById("screen-shop"),
+      chat: document.getElementById("screen-chat"),
+      profile: document.getElementById("screen-profile")
+    };
+
+    const drawerOverlay = document.getElementById("drawerOverlay");
+    const openDrawerBtn = document.getElementById("openDrawerBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    const carouselTrack = document.getElementById("carouselTrack");
+    const carouselDots = document.getElementById("carouselDots");
+
+    const contactList = document.getElementById("contactList");
+    const refreshKontakBtn = document.getElementById("refreshKontakBtn");
+
+    const materiList = document.getElementById("materiList");
+
+    const gpsButtonHome = document.getElementById("gpsButtonHome");
+    const gpsStatusHome = document.getElementById("gpsStatusHome");
+    const gpsResultHome = document.getElementById("gpsResultHome");
+    const productListHome = document.getElementById("productListHome");
+
+    const gpsButtonShop = document.getElementById("gpsButtonShop");
+    const gpsStatusShop = document.getElementById("gpsStatusShop");
+    const gpsResultShop = document.getElementById("gpsResultShop");
+    const productListShop = document.getElementById("productListShop");
+
+    const materiModal = document.getElementById("materiModal");
+    const detailTrack = document.getElementById("detailTrack");
+    const detailDots = document.getElementById("detailDots");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailContent = document.getElementById("detailContent");
+    const startExamBtn = document.getElementById("startExamBtn");
+    const closeMateriBtn = document.getElementById("closeMateriBtn");
+
+    const imagePreview = document.getElementById("imagePreview");
+    const previewImage = document.getElementById("previewImage");
+    const closePreviewBtn = document.getElementById("closePreviewBtn");
+
+    const searchInput = document.getElementById("searchInput");
+
+    /* ===========================================================
+       INIT
+    =========================================================== */
+
+    document.addEventListener("DOMContentLoaded", () => {
+      bindEvents();
+      initData();
+    });
+
+    function bindEvents() {
+      navItems.forEach((item) => {
+        item.addEventListener("click", () => {
+          setActiveTab(item.dataset.tab);
+        });
+      });
+
+      document.querySelectorAll("[data-drawer-tab]").forEach((item) => {
+        item.addEventListener("click", () => {
+          closeDrawer();
+          setActiveTab(item.dataset.drawerTab);
+        });
+      });
+
+      openDrawerBtn.addEventListener("click", openDrawer);
+
+      drawerOverlay.addEventListener("click", (event) => {
+        if (event.target === drawerOverlay) closeDrawer();
+      });
+
+      logoutBtn.addEventListener("click", () => {
+        showToast("Logout ditekan. Pada HTML statis ini, arahkan sendiri ke halaman login/beranda.");
+      });
+
+      refreshKontakBtn.addEventListener("click", loadKontak);
+
+      gpsButtonHome.addEventListener("click", ambilLokasiSaatIni);
+      gpsButtonShop.addEventListener("click", ambilLokasiSaatIni);
+
+      closeMateriBtn.addEventListener("click", closeMateriDetail);
+
+      startExamBtn.addEventListener("click", () => {
+        openUrl(appState.currentExamUrl, "Link ujian belum tersedia");
+      });
+
+      closePreviewBtn.addEventListener("click", closeImagePreview);
+
+      imagePreview.addEventListener("click", (event) => {
+        if (event.target === imagePreview) closeImagePreview();
+      });
+
+      previewImage.addEventListener("click", () => {
+        previewImage.classList.toggle("zoomed");
+      });
+
+      searchInput.addEventListener("input", () => {
+        renderProducts();
+      });
+
+      window.addEventListener("resize", () => {
+        updateCarouselPosition();
+        updateDetailPosition();
+      });
+    }
+
+    async function initData() {
+      await Promise.allSettled([
+        loadCarousel(),
+        loadMateri(),
+        loadKontak(),
+        fetchProductData()
+      ]);
+    }
+
+    /* ===========================================================
+       NAVIGATION
+    =========================================================== */
+
+    function setActiveTab(tab) {
+      Object.entries(screens).forEach(([key, screen]) => {
+        screen.classList.toggle("active", key === tab);
+      });
+
+      navItems.forEach((item) => {
+        item.classList.toggle("active", item.dataset.tab === tab);
+      });
+
+      const titleMap = {
+        home: "Beranda",
+        shop: "Belanja",
+        chat: "Chat",
+        profile: "Profil"
+      };
+
+      appbarTitle.textContent = `Beranda UMKM - ${titleMap[tab] || ""}`;
+    }
+
+    function openDrawer() {
+      drawerOverlay.classList.add("show");
+    }
+
+    function closeDrawer() {
+      drawerOverlay.classList.remove("show");
+    }
+
+    /* ===========================================================
+       CAROUSEL
+    =========================================================== */
+
+    async function loadCarousel() {
+      try {
+        carouselTrack.innerHTML = `<div class="info-box">Memuat carousel...</div>`;
+
+        const url = new URL(`https://docs.google.com/spreadsheets/d/${carouselSpreadsheetId}/gviz/tq`);
+        url.searchParams.set("tqx", "out:json");
+        url.searchParams.set("sheet", carouselSheetName);
+        url.searchParams.set("range", "A2:A");
+
+        const text = await fetchText(url.toString());
+        const jsonData = parseGoogleSheetResponse(text);
+        const rows = jsonData?.table?.rows || [];
+
+        const imageUrls = [];
+
+        rows.forEach((row) => {
+          const cells = row.c || [];
+          const gambar = getCellValue(cells, 0);
+          if (gambar) imageUrls.push(convertToDriveThumbnail(gambar));
+        });
+
+        appState.carouselImages = imageUrls;
+        appState.carouselIndex = 0;
+        renderCarousel();
+        startCarouselTimer();
+      } catch (error) {
+        carouselTrack.innerHTML = `<div class="info-box error">Gagal memuat carousel.<br>${escapeHtml(error.message)}</div>`;
+      }
+    }
+
+    function renderCarousel() {
+      const images = appState.carouselImages;
+
+      if (!images.length) {
+        carouselTrack.innerHTML = `<div class="info-box">Gambar carousel masih kosong</div>`;
+        carouselDots.innerHTML = "";
+        return;
+      }
+
+      carouselTrack.innerHTML = images.map((url) => `
+        <div class="carousel-item">
+          <img src="${escapeAttr(url)}" alt="Banner UMKM" onerror="this.outerHTML='<div class=&quot;loading-center&quot;><span class=&quot;material-symbols-rounded&quot; style=&quot;color:white;font-size:42px&quot;>broken_image</span></div>'">
+        </div>
+      `).join("");
+
+      carouselDots.innerHTML = images.map((_, index) => `
+        <button class="dot ${index === appState.carouselIndex ? "active" : ""}" aria-label="Slide ${index + 1}" onclick="setCarouselIndex(${index})"></button>
+      `).join("");
+
+      updateCarouselPosition();
+    }
+
+    function updateCarouselPosition() {
+      const items = carouselTrack.querySelectorAll(".carousel-item");
+      if (!items.length) return;
+
+      const itemWidth = items[0].getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(carouselTrack).gap || 0);
+      const offset = appState.carouselIndex * (itemWidth + gap);
+      carouselTrack.style.transform = `translateX(-${offset}px)`;
+
+      carouselDots.querySelectorAll(".dot").forEach((dot, index) => {
+        dot.classList.toggle("active", index === appState.carouselIndex);
+      });
+    }
+
+    function setCarouselIndex(index) {
+      appState.carouselIndex = index;
+      updateCarouselPosition();
+      startCarouselTimer();
+    }
+
+    function startCarouselTimer() {
+      if (appState.carouselTimer) clearInterval(appState.carouselTimer);
+      if (appState.carouselImages.length <= 1) return;
+
+      appState.carouselTimer = setInterval(() => {
+        appState.carouselIndex = (appState.carouselIndex + 1) % appState.carouselImages.length;
+        updateCarouselPosition();
+      }, 3000);
+    }
+
+    /* ===========================================================
+       KONTAK UMKM
+    =========================================================== */
+
+    async function loadKontak() {
+      contactList.innerHTML = `<div class="loading-center"><div class="spinner"></div></div>`;
+
+      try {
+        const csvText = await fetchText(kontakCsvUrl);
+        const rows = parseCSV(csvText);
+
+        if (rows.length <= 1) {
+          contactList.innerHTML = `<div class="info-box">Data kontak masih kosong</div>`;
+          return;
+        }
+
+        const kontak = [];
+
+        for (let i = 1; i < rows.length; i++) {
+          const row = rows[i];
+          const nama = cell(row, 0);
+          const noHp = normalizeWhatsappNumber(cell(row, 1));
+          const fotoProfil = cell(row, 2);
+
+          if (nama && noHp && fotoProfil) {
+            kontak.push({
+              nama,
+              noHp,
+              fotoProfil: convertToDriveThumbnail(fotoProfil)
+            });
+          }
+        }
+
+        renderKontak(kontak);
+      } catch (error) {
+        contactList.innerHTML = `<div class="info-box error">Gagal memuat kontak.<br>${escapeHtml(error.message)}</div>`;
+      }
+    }
+
+    function renderKontak(kontak) {
+      if (!kontak.length) {
+        contactList.innerHTML = `<div class="info-box">Data kontak masih kosong</div>`;
+        return;
+      }
+
+      contactList.innerHTML = kontak.map((item) => `
+        <article class="contact-card">
+          <div class="contact-photo">
+            <img src="${escapeAttr(item.fotoProfil)}" alt="${escapeAttr(item.nama)}" onerror="this.outerHTML='<span class=&quot;material-symbols-rounded&quot;>person</span>'">
+          </div>
+          <div class="contact-name">${escapeHtml(item.nama)}</div>
+          <button class="contact-btn" onclick="openWhatsappContact('${escapeAttr(item.noHp)}')">
+            <span class="material-symbols-rounded" style="font-size:15px">chat_bubble</span>
+            Pesan
+          </button>
+        </article>
+      `).join("");
+    }
+
+    function openWhatsappContact(noHp) {
+      if (!noHp) {
+        showToast("Nomor WhatsApp belum tersedia.");
+        return;
+      }
+
+      window.open(`https://wa.me/${noHp}`, "_blank", "noopener,noreferrer");
+    }
+
+    /* ===========================================================
+       MATERI EDUKASI
+    =========================================================== */
+
+    async function loadMateri() {
+      materiList.innerHTML = `<div class="loading-center"><div class="spinner"></div></div>`;
+
+      try {
+        const url = new URL(`https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq`);
+        url.searchParams.set("tqx", "out:json");
+        url.searchParams.set("sheet", sheetName);
+        url.searchParams.set("range", "A2:Z");
+
+        const text = await fetchText(url.toString());
+        const jsonData = parseGoogleSheetResponse(text);
+        const rows = jsonData?.table?.rows || [];
+        const items = [];
+
+        rows.forEach((row, index) => {
+          const cells = row.c || [];
+          const sheetRowNumber = index + 2;
+          const judul = getCellValue(cells, 0);
+          const gambar = getCellValue(cells, 3);
+
+          if (!judul && !gambar) return;
+
+          items.push({
+            rowNumber: sheetRowNumber,
+            title: judul,
+            imageUrl: convertToDriveThumbnail(gambar)
+          });
+        });
+
+        appState.materiItems = items;
+        renderMateriList();
+      } catch (error) {
+        materiList.innerHTML = `<div class="info-box error">Gagal memuat materi.<br>${escapeHtml(error.message)}</div>`;
+      }
+    }
+
+    function renderMateriList() {
+      const data = appState.materiItems;
+
+      if (!data.length) {
+        materiList.innerHTML = `<div class="info-box">Materi edukasi masih kosong</div>`;
+        return;
+      }
+
+      materiList.innerHTML = data.map((item) => `
+        <article class="materi-card" onclick="openMateriDetail(${item.rowNumber})">
+          <div class="materi-image">
+            ${
+              item.imageUrl
+                ? `<img src="${escapeAttr(item.imageUrl)}" alt="${escapeAttr(item.title || "Materi")}" onerror="this.outerHTML='<span class=&quot;material-symbols-rounded&quot; style=&quot;font-size:38px&quot;>broken_image</span>'">`
+                : `<span class="material-symbols-rounded" style="font-size:38px">image_not_supported</span>`
+            }
+          </div>
+          <div class="materi-title">${escapeHtml(item.title || "Tanpa Judul")}</div>
+        </article>
+      `).join("");
+    }
+
+    async function openMateriDetail(rowNumber) {
+      materiModal.classList.add("show");
+      document.body.style.overflow = "hidden";
+
+      detailTrack.innerHTML = `<div class="detail-slide"><div class="detail-slide-inner"><div class="spinner"></div></div></div>`;
+      detailDots.innerHTML = "";
+      detailTitle.textContent = "Memuat...";
+      detailContent.textContent = "Memuat isi materi...";
+      appState.currentExamUrl = "";
+
+      try {
+        const materi = await getMateriDetailFromSheet(rowNumber);
+        appState.detailImages = materi.imageUrls;
+        appState.detailIndex = 0;
+        appState.currentExamUrl = materi.examUrl;
+
+        detailTitle.textContent = materi.title || "Tanpa Judul";
+        detailContent.textContent = materi.content || "Isi materi belum tersedia.";
+        renderDetailImages();
+      } catch (error) {
+        detailTrack.innerHTML = "";
+        detailTitle.textContent = "Gagal memuat data";
+        detailContent.textContent = error.message;
+      }
+    }
+
+    async function getMateriDetailFromSheet(rowNumber) {
+      const url = new URL(`https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq`);
+      url.searchParams.set("tqx", "out:json");
+      url.searchParams.set("sheet", sheetName);
+      url.searchParams.set("range", `A${rowNumber}:Z${rowNumber}`);
+
+      const text = await fetchText(url.toString());
+      const jsonData = parseGoogleSheetResponse(text);
+      const rows = jsonData?.table?.rows || [];
+
+      if (!rows.length) {
+        throw new Error(`Data baris ${rowNumber} masih kosong`);
+      }
+
+      const cells = rows[0].c || [];
+      const title = getCellValue(cells, 0);
+      const content = getCellValue(cells, 1);
+      const examUrl = getCellValue(cells, 2);
+      const imageUrls = [];
+
+      for (let i = 3; i <= 25; i++) {
+        const imageUrl = getCellValue(cells, i);
+        if (imageUrl) imageUrls.push(convertToDriveThumbnail(imageUrl));
+      }
+
+      return { title, content, examUrl, imageUrls };
+    }
+
+    function renderDetailImages() {
+      const images = appState.detailImages;
+
+      if (!images.length) {
+        detailTrack.innerHTML = `
+          <div class="detail-slide">
+            <div class="detail-slide-inner">
+              <span class="material-symbols-rounded" style="font-size:52px">image_not_supported</span>
+            </div>
+          </div>
+        `;
+        detailDots.innerHTML = "";
+        return;
+      }
+
+      detailTrack.innerHTML = images.map((url, index) => `
+        <div class="detail-slide" onclick="showImagePreview('${escapeAttr(url)}')">
+          <div class="detail-slide-inner">
+            <img src="${escapeAttr(url)}" alt="Gambar materi ${index + 1}" onerror="this.outerHTML='<span class=&quot;material-symbols-rounded&quot; style=&quot;font-size:48px&quot;>broken_image</span>'">
+          </div>
+        </div>
+      `).join("");
+
+      detailDots.innerHTML = images.map((_, index) => `
+        <button class="dot ${index === appState.detailIndex ? "active" : ""}" onclick="setDetailIndex(${index})" aria-label="Gambar ${index + 1}"></button>
+      `).join("");
+
+      updateDetailPosition();
+    }
+
+    function setDetailIndex(index) {
+      appState.detailIndex = index;
+      updateDetailPosition();
+    }
+
+    function updateDetailPosition() {
+      const gap = 12;
+      detailTrack.style.transform =
+        `translateX(calc(-${appState.detailIndex * 92}% - ${appState.detailIndex * gap}px))`;
+
+      detailDots.querySelectorAll(".dot").forEach((dot, index) => {
+        dot.classList.toggle("active", index === appState.detailIndex);
+      });
+    }
+
+    function closeMateriDetail() {
+      materiModal.classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    function showImagePreview(imageUrl) {
+      previewImage.src = imageUrl;
+      previewImage.classList.remove("zoomed");
+      imagePreview.classList.add("show");
+    }
+
+    function closeImagePreview() {
+      imagePreview.classList.remove("show");
+      previewImage.src = "";
+      previewImage.classList.remove("zoomed");
+    }
+
+    /* ===========================================================
+       PRODUK GPS
+    =========================================================== */
+
+    async function fetchProductData() {
+      appState.sedangMemuatProduk = true;
+      appState.productError = null;
+      renderProducts();
+
+      try {
+        const csvText = await fetchText(productCsvUrl);
+        const rows = parseCSV(csvText);
+
+        if (rows.length <= 1) {
+          appState.semuaProduk = [];
+          appState.produkTerdekat = [];
+          appState.sedangMemuatProduk = false;
+          renderProducts();
+          return;
+        }
+
+        if (rows[0].length < 14) {
+          throw new Error("Format Google Sheet tidak sesuai. Minimal harus ada kolom A sampai N.");
+        }
+
+        const headerName = cell(rows[0], 1).toLowerCase();
+
+        if (headerName !== "name") {
+          throw new Error("Format Google Sheet tidak sesuai atau Sheet belum dibagikan sebagai Viewer.");
+        }
+
+        const products = [];
+
+        for (let i = 1; i < rows.length; i++) {
+          const row = rows[i];
+
+          if (!cell(row, 1)) continue;
+
+          products.push(productFromSheetRow(row));
+        }
+
+        appState.semuaProduk = products;
+        appState.produkTerdekat = appState.lokasiSaatIni
+          ? sortProdukTerdekatBerdasarkanLokasi(products, appState.lokasiSaatIni)
+          : [];
+        appState.sedangMemuatProduk = false;
+        renderProducts();
+      } catch (error) {
+        appState.sedangMemuatProduk = false;
+        appState.productError = error.message;
+        renderProducts();
+        showToast("Gagal memuat data produk dari Google Sheet.");
+      }
+    }
+
+    async function ambilLokasiSaatIni() {
+      if (appState.sedangMengambilLokasi) return;
+
+      appState.sudahTekanGps = true;
+      appState.sedangMengambilLokasi = true;
+      appState.statusGps = "Mengambil lokasi...";
+      renderGpsStatus();
+
+      if (!navigator.geolocation) {
+        appState.sedangMengambilLokasi = false;
+        appState.statusGps = "Browser tidak mendukung GPS.";
+        renderGpsStatus();
+        showToast("Browser tidak mendukung geolocation.");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            const lokasiParts = await reverseGeocode(latitude, longitude);
+
+            appState.lokasiSaatIni = lokasiParts;
+            appState.produkTerdekat = sortProdukTerdekatBerdasarkanLokasi(
+              appState.semuaProduk,
+              lokasiParts
+            );
+
+            const lokasiTerdeteksi = formatDetectedLocation(lokasiParts);
+
+            appState.statusGps = appState.produkTerdekat.length
+              ? `Lokasi berhasil: ${lokasiTerdeteksi}. Produk diurutkan dari terdekat.`
+              : `Lokasi terbaca: ${lokasiTerdeteksi}, tetapi belum ada produk satu kabupaten/kota.`;
+
+            appState.sedangMengambilLokasi = false;
+            renderGpsStatus();
+            renderProducts();
+            showToast("Lokasi berhasil terbaca.");
+          } catch (error) {
+            appState.sedangMengambilLokasi = false;
+            appState.statusGps = "Gagal membaca detail alamat dari GPS.";
+            renderGpsStatus();
+            showToast("GPS terbaca, tetapi alamat gagal diproses.");
+          }
+        },
+        (error) => {
+          appState.sedangMengambilLokasi = false;
+
+          if (error.code === error.PERMISSION_DENIED) {
+            appState.statusGps = "Izin lokasi ditolak";
+            showToast("Izin lokasi ditolak. Lokasi tidak bisa dibaca.");
+          } else if (error.code === error.TIMEOUT) {
+            appState.statusGps = "Gagal membaca lokasi";
+            showToast("Gagal membaca GPS karena waktu habis.");
+          } else {
+            appState.statusGps = "Gagal membaca lokasi";
+            showToast("Gagal membaca GPS. Coba ulangi beberapa saat lagi.");
+          }
+
+          renderGpsStatus();
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 0
+        }
+      );
+    }
+
+    async function reverseGeocode(latitude, longitude) {
+      /*
+        Browser hanya memberi latitude dan longitude.
+        Penyebab produk tidak muncul biasanya karena reverse geocoding web
+        mengisi kabupatenKota dengan kecamatan/kelurahan, bukan "KABUPATEN SIDOARJO".
+        Karena itu bagian ini dibuat lebih longgar: membaca semua kandidat alamat
+        dari BigDataCloud lalu mencocokkannya dengan kolom K:N Google Sheet.
+      */
+      const url = new URL("https://api.bigdatacloud.net/data/reverse-geocode-client");
+      url.searchParams.set("latitude", latitude);
+      url.searchParams.set("longitude", longitude);
+      url.searchParams.set("localityLanguage", "id");
+
+      const data = await fetchJson(url.toString());
+
+      const administrative = Array.isArray(data.localityInfo?.administrative)
+        ? data.localityInfo.administrative
+        : [];
+
+      const informative = Array.isArray(data.localityInfo?.informative)
+        ? data.localityInfo.informative
+        : [];
+
+      const adminNames = administrative
+        .map((item) => item?.name)
+        .filter(Boolean);
+
+      const informativeNames = informative
+        .map((item) => item?.name)
+        .filter(Boolean);
+
+      const allCandidatesRaw = [
+        data.principalSubdivision,
+        data.principalSubdivisionCode,
+        data.city,
+        data.locality,
+        data.localityInfo?.localityName,
+        ...adminNames,
+        ...informativeNames
+      ].filter(Boolean);
+
+      const provinsi = ambilYangAdaIsinya([
+        findAdministrativeByKeyword(adminNames, ["PROVINSI", "PROPINSI", "PROVINCE", "JAWA", "JAVA"]),
+        data.principalSubdivision
+      ]);
+
+      const kabupatenKota = ambilYangAdaIsinya([
+        findAdministrativeByKeyword(adminNames, ["KABUPATEN", "KAB ", "REGENCY", "KOTA", "CITY"]),
+        findAdministrativeByAdminLevel(administrative, [5, 6]),
+        data.city,
+        data.locality
+      ]);
+
+      const kecamatan = ambilYangAdaIsinya([
+        findAdministrativeByKeyword(allCandidatesRaw, ["KECAMATAN", "KEC ", "DISTRICT"]),
+        findAdministrativeByAdminLevel(administrative, [6, 7]),
+        data.locality,
+        data.city
+      ]);
+
+      const kelurahanDesa = ambilYangAdaIsinya([
+        findAdministrativeByKeyword(allCandidatesRaw, ["KELURAHAN", "KEL ", "DESA", "DS ", "VILLAGE"]),
+        findAdministrativeByAdminLevel(administrative, [8, 9, 10]),
+        data.localityInfo?.administrative?.[4]?.name,
+        data.localityInfo?.administrative?.[5]?.name,
+        data.locality,
+        data.city
+      ]);
+
+      const candidates = buildLocationCandidates([
+        provinsi,
+        kabupatenKota,
+        kecamatan,
+        kelurahanDesa,
+        ...allCandidatesRaw
+      ]);
+
+      return {
+        provinsi,
+        kabupatenKota,
+        kecamatan,
+        kelurahanDesa,
+        candidates
+      };
+    }
+
+    function findAdministrativeByKeyword(names, keywords) {
+      const list = Array.isArray(names) ? names : [];
+
+      return list.find((name) => {
+        const raw = String(name || "").toUpperCase();
+        const clean = normalizeLocationKey(raw);
+
+        return keywords.some((keyword) => {
+          const key = String(keyword || "").trim().toUpperCase();
+          if (!key) return false;
+
+          return raw.includes(key) || clean.includes(normalizeLocationKey(key));
+        });
+      }) || "";
+    }
+
+    function findAdministrativeByAdminLevel(administrative, levels) {
+      const list = Array.isArray(administrative) ? administrative : [];
+
+      const found = list.find((item) => {
+        const level = Number(item?.adminLevel);
+        return levels.includes(level) && item?.name;
+      });
+
+      return found?.name || "";
+    }
+
+    function buildLocationCandidates(values) {
+      const result = new Set();
+
+      values.forEach((value) => {
+        const key = normalizeLocationKey(value);
+        if (key) result.add(key);
+      });
+
+      return Array.from(result);
+    }
+
+    function hasLocationCandidate(lokasi, value) {
+      const key = normalizeLocationKey(value);
+
+      if (!key) return false;
+
+      const candidates = Array.isArray(lokasi?.candidates)
+        ? lokasi.candidates
+        : buildLocationCandidates([
+            lokasi?.provinsi,
+            lokasi?.kabupatenKota,
+            lokasi?.kecamatan,
+            lokasi?.kelurahanDesa
+          ]);
+
+      return candidates.some((candidate) => {
+        if (!candidate) return false;
+        return candidate === key || candidate.includes(key) || key.includes(candidate);
+      });
+    }
+
+    function formatDetectedLocation(lokasi) {
+      return [
+        lokasi?.kelurahanDesa,
+        lokasi?.kecamatan,
+        lokasi?.kabupatenKota,
+        lokasi?.provinsi
+      ]
+        .filter((item) => item && item !== "-")
+        .join(", ") || "lokasi tidak dikenal";
+    }
+
+    function renderGpsStatus() {
+      [gpsButtonHome, gpsButtonShop].forEach((button) => {
+        button.disabled = appState.sedangMengambilLokasi;
+
+        if (appState.sedangMengambilLokasi) {
+          button.innerHTML = `<span class="spinner white"></span><span>Membaca GPS...</span>`;
+        } else {
+          button.innerHTML = `<span class="material-symbols-rounded">gps_fixed</span><span>Gunakan Lokasi GPS</span>`;
+        }
+      });
+
+      [gpsStatusHome, gpsStatusShop].forEach((statusEl) => {
+        const icon = statusEl.querySelector(".material-symbols-rounded");
+        const text = statusEl.querySelector("span:last-child");
+
+        statusEl.classList.toggle("show", appState.sudahTekanGps);
+        text.textContent = appState.statusGps;
+
+        const success = Boolean(appState.lokasiSaatIni);
+        icon.textContent = success ? "check_circle" : "info";
+        icon.className = `material-symbols-rounded ${success ? "success" : "warning"}`;
+      });
+    }
+
+    function renderProducts() {
+      renderGpsStatus();
+
+      const showResult = Boolean(appState.lokasiSaatIni);
+      [gpsResultHome, gpsResultShop].forEach((el) => {
+        el.classList.toggle("show", showResult);
+      });
+
+      const html = getProductsHtml();
+      productListHome.innerHTML = html;
+      productListShop.innerHTML = html;
+    }
+
+    function getProductsHtml() {
+      if (appState.sedangMemuatProduk) {
+        return `<div class="loading-center" style="width:100%"><div class="spinner"></div></div>`;
+      }
+
+      if (appState.productError) {
+        return `
+          <div class="info-box error" style="margin:auto">
+            Data produk gagal dimuat.<br>
+            ${escapeHtml(appState.productError)}<br><br>
+            <button class="logout-btn" onclick="fetchProductData()">Muat Ulang</button>
+          </div>
+        `;
+      }
+
+      let products = appState.produkTerdekat;
+
+      const keyword = searchInput.value.trim().toLowerCase();
+
+      if (keyword) {
+        products = products.filter((product) => {
+          const text = [
+            product.name,
+            product.provinsi,
+            product.kabupatenKota,
+            product.kecamatan,
+            product.kelurahanDesa
+          ].join(" ").toLowerCase();
+
+          return text.includes(keyword);
+        });
+      }
+
+      if (!products.length) {
+        return `
+          <div class="info-box" style="margin:auto">
+            Belum ada produk yang cocok dengan lokasi GPS Anda. Pastikan lokasi browser berada di wilayah yang sama dengan kolom Kabupaten/Kota atau Kecamatan pada Google Sheet.
+          </div>
+        `;
+      }
+
+      return products.map(buildProductCard).join("");
+    }
+
+    function buildProductCard(product) {
+      const locationParts = [
+        product.kelurahanDesa,
+        product.kecamatan,
+        product.kabupatenKota,
+        product.provinsi
+      ].filter((item) => item && item.trim());
+
+      const lokasiText = locationParts.join(", ");
+      const priceNumber = product.price.replace(/^Rp\s*/, "");
+      const progress = Math.max(0, Math.min(1, product.stockProgress)) * 100;
+
+      return `
+        <article class="product-card">
+          <div class="product-image">
+            ${
+              product.image
+                ? `<img src="${escapeAttr(product.image)}" alt="${escapeAttr(product.name)}" onerror="this.outerHTML='<span class=&quot;material-symbols-rounded&quot; style=&quot;font-size:28px&quot;>image_not_supported</span>'">`
+                : `<span class="material-symbols-rounded" style="font-size:28px">image_not_supported</span>`
+            }
+          </div>
+
+          <div class="product-body">
+            <div class="product-name">${escapeHtml(product.name)}</div>
+
+            ${
+              lokasiText
+                ? `<div class="product-location">
+                    <span class="material-symbols-rounded" style="font-size:12px">location_on</span>
+                    <span>${escapeHtml(lokasiText)}</span>
+                  </div>`
+                : ""
+            }
+
+            <div class="old-row">
+              <span class="old-price">${escapeHtml(product.oldPrice)}</span>
+              ${product.discount ? `<span class="discount">${escapeHtml(product.discount)}</span>` : ""}
+            </div>
+
+            <div class="current-price">
+              <span class="rp">Rp</span>
+              <span class="number">${escapeHtml(priceNumber)}</span>
+              <span class="material-symbols-rounded" style="font-size:11px">verified</span>
+            </div>
+
+            <div class="stock-bar">
+              <div class="stock-fill" style="width:${progress}%"></div>
+              <div class="stock-label">${escapeHtml(product.stockLabel)}</div>
+            </div>
+
+            <button class="buy-btn" onclick='openWhatsappOrder(${JSON.stringify(product).replace(/'/g, "&apos;")})'>
+              Beli
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function productFromSheetRow(row) {
+      const whatsappNumber = cell(row, 0);
+      const name = cell(row, 1);
+      const oldPrice = formatRupiahFromSheet(cell(row, 2));
+      const price = formatRupiahFromSheet(cell(row, 3));
+      const discount = formatDiscount(cell(row, 4));
+      const stockLabel = cell(row, 5);
+      const image = normalizeImageUrl(cell(row, 6));
+
+      const stokAwal = tryParseNumber(cell(row, 7)) || 0;
+      const totalSisa = tryParseNumber(cell(row, 9)) || 0;
+
+      const stockProgress = stokAwal > 0
+        ? clamp(totalSisa / stokAwal, 0, 1)
+        : clamp(totalSisa / 100, 0, 1);
+
+      return {
+        whatsappNumber,
+        name,
+        oldPrice,
+        price,
+        discount,
+        stockLabel,
+        image,
+        provinsi: cell(row, 10),
+        kabupatenKota: cell(row, 11),
+        kecamatan: cell(row, 12),
+        kelurahanDesa: cell(row, 13),
+        stockProgress
+      };
+    }
+
+    function sortProdukTerdekatBerdasarkanLokasi(products, lokasi) {
+      const rankedProducts = [];
+
+      products.forEach((product, index) => {
+        const rank = getLocationRank(product, lokasi);
+
+        if (rank === null) return;
+
+        rankedProducts.push({
+          product,
+          rank,
+          originalIndex: index
+        });
+      });
+
+      rankedProducts.sort((a, b) => {
+        const rankCompare = a.rank - b.rank;
+        if (rankCompare !== 0) return rankCompare;
+        return a.originalIndex - b.originalIndex;
+      });
+
+      return rankedProducts.map((item) => item.product);
+    }
+
+    function getLocationRank(product, lokasi) {
+      const sameProvinsi =
+        isSameLocationOptional(product.provinsi, lokasi.provinsi) ||
+        hasLocationCandidate(lokasi, product.provinsi);
+
+      const sameKabupatenKota =
+        isSameLocation(product.kabupatenKota, lokasi.kabupatenKota) ||
+        hasLocationCandidate(lokasi, product.kabupatenKota);
+
+      const sameKecamatan =
+        isSameLocation(product.kecamatan, lokasi.kecamatan) ||
+        hasLocationCandidate(lokasi, product.kecamatan);
+
+      const sameKelurahanDesa =
+        isSameLocation(product.kelurahanDesa, lokasi.kelurahanDesa) ||
+        hasLocationCandidate(lokasi, product.kelurahanDesa);
+
+      if (!sameProvinsi) return null;
+
+      /*
+        Jangan terlalu ketat hanya pada kabupaten/kota.
+        Di browser, hasil GPS kadang hanya mengembalikan kecamatan atau kelurahan.
+        Kalau kecamatan/kelurahan sudah cocok dengan kolom Sheet, produk tetap ditampilkan.
+      */
+      if (!sameKabupatenKota && !sameKecamatan && !sameKelurahanDesa) {
+        return null;
+      }
+
+      if (sameKelurahanDesa) return 0;
+      if (sameKecamatan) return 1;
+      if (sameKabupatenKota) return 2;
+
+      return null;
+    }
+
+    function openWhatsappOrder(product) {
+      const waNumber = normalizeWhatsappNumber(product.whatsappNumber);
+
+      if (!waNumber) {
+        showToast("Nomor WhatsApp penjual belum tersedia.");
+        return;
+      }
+
+      const message = `Saya mau membeli ${product.name} dengan harga retail ${product.price}`;
+      const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    /* ===========================================================
+       HELPER GOOGLE SHEET, CSV, FORMAT, LOKASI
+    =========================================================== */
+
+    async function fetchText(url) {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      return await response.text();
+    }
+
+    async function fetchJson(url) {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      return await response.json();
+    }
+
+    function parseGoogleSheetResponse(body) {
+      const startIndex = body.indexOf("{");
+      const endIndex = body.lastIndexOf("}");
+
+      if (startIndex === -1 || endIndex === -1) {
+        throw new Error("Format data Google Sheet tidak valid");
+      }
+
+      const jsonString = body.substring(startIndex, endIndex + 1);
+      return JSON.parse(jsonString);
+    }
+
+    function getCellValue(cells, index) {
+      if (index >= cells.length || !cells[index]) return "";
+      const value = cells[index].v ?? cells[index].f ?? "";
+      return String(value).trim();
+    }
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let current = "";
+      let insideQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"' && insideQuotes && next === '"') {
+          current += '"';
+          i++;
+          continue;
+        }
+
+        if (char === '"') {
+          insideQuotes = !insideQuotes;
+          continue;
+        }
+
+        if (char === "," && !insideQuotes) {
+          row.push(current);
+          current = "";
+          continue;
+        }
+
+        if ((char === "\n" || char === "\r") && !insideQuotes) {
+          if (char === "\r" && next === "\n") i++;
+          row.push(current);
+          rows.push(row);
+          row = [];
+          current = "";
+          continue;
+        }
+
+        current += char;
+      }
+
+      if (current.length > 0 || row.length > 0) {
+        row.push(current);
+        rows.push(row);
+      }
+
+      return rows;
+    }
+
+    function cell(row, index) {
+      if (!row || index >= row.length) return "";
+      return String(row[index] ?? "").trim();
+    }
+
+    function convertToDriveThumbnail(url) {
+      if (!url) return "";
+
+      let parsedUrl = null;
+      try {
+        parsedUrl = new URL(url);
+      } catch (_) {
+        parsedUrl = null;
+      }
+
+      if (url.includes("drive.google.com/thumbnail")) {
+        const id = parsedUrl?.searchParams?.get("id");
+        if (id) return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
+        return url;
+      }
+
+      const fileRegex = /\/d\/([a-zA-Z0-9_-]+)/;
+      const fileMatch = url.match(fileRegex);
+      const idFromFileUrl = fileMatch ? fileMatch[1] : null;
+      const idFromQuery = parsedUrl?.searchParams?.get("id") || null;
+      const isPlainFileId = /^[a-zA-Z0-9_-]{20,}$/.test(url);
+
+      const fileId = idFromFileUrl || idFromQuery || (isPlainFileId ? url : null);
+
+      if (!fileId) return url;
+
+      return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+    }
+
+    function normalizeImageUrl(imageUrl) {
+      const url = String(imageUrl || "").trim();
+
+      if (!url) return "";
+
+      if (url.includes("drive.google.com")) {
+        const filePattern = /\/d\/([^/]+)/;
+        const idPattern = /[?&]id=([^&]+)/;
+
+        const fileId =
+          (url.match(filePattern) || [])[1] ||
+          (url.match(idPattern) || [])[1];
+
+        if (fileId) {
+          return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+        }
+      }
+
+      return url;
+    }
+
+    function normalizeWhatsappNumber(value) {
+      let number = String(value || "").trim();
+
+      if (!number) return "";
+
+      number = number.replace(/[^0-9+]/g, "");
+
+      if (number.startsWith("+")) {
+        number = number.substring(1);
+      }
+
+      if (number.startsWith("0")) {
+        number = `62${number.substring(1)}`;
+      } else if (number.startsWith("8")) {
+        number = `62${number}`;
+      }
+
+      return number;
+    }
+
+    function formatRupiahFromSheet(value) {
+      const raw = String(value || "").trim();
+
+      if (!raw) return "";
+
+      if (raw.toLowerCase().startsWith("rp")) {
+        const number = tryParseNumber(raw);
+        if (number === null) return raw;
+        return `Rp${formatThousands(Math.round(number))}`;
+      }
+
+      const number = tryParseNumber(raw);
+      if (number === null) return raw;
+
+      return `Rp${formatThousands(Math.round(number))}`;
+    }
+
+    function formatDiscount(value) {
+      let raw = String(value || "").trim();
+
+      if (!raw) return "";
+
+      raw = raw.replace("-", "").trim();
+
+      if (raw.includes("%")) {
+        return `-${raw}`;
+      }
+
+      let number = tryParseNumber(raw);
+
+      if (number === null) {
+        return `-${raw}`;
+      }
+
+      if (number > 0 && number <= 1) {
+        number = number * 100;
+      }
+
+      return `-${formatNumberWithoutTrailingZero(number)}%`;
+    }
+
+    function tryParseNumber(value) {
+      let text = String(value || "").trim();
+
+      if (!text) return null;
+
+      text = text.replace("%", "");
+      text = text.replace(/[^0-9,.\-]/g, "");
+
+      if (!text || text === "-") return null;
+
+      const isIndonesianThousands = /^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(text);
+
+      if (isIndonesianThousands) {
+        text = text.replace(/\./g, "");
+        text = text.replace(",", ".");
+      } else if (text.includes(".") && text.includes(",")) {
+        text = text.replace(/\./g, "");
+        text = text.replace(",", ".");
+      } else if (text.includes(",")) {
+        text = text.replace(",", ".");
+      }
+
+      const number = Number.parseFloat(text);
+      return Number.isNaN(number) ? null : number;
+    }
+
+    function formatThousands(value) {
+      const sign = value < 0 ? "-" : "";
+      const digits = String(Math.abs(value));
+      return sign + digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function formatNumberWithoutTrailingZero(value) {
+      return value % 1 === 0 ? value.toFixed(0) : value.toFixed(1);
+    }
+
+    function ambilYangAdaIsinya(daftarTeks) {
+      for (const teks of daftarTeks) {
+        const bersih = String(teks || "").trim();
+
+        if (bersih) {
+          return cleanDisplayLocation(bersih);
+        }
+      }
+
+      return "-";
+    }
+
+    function isSameLocation(sheetValue, gpsValue) {
+      const a = normalizeLocationKey(sheetValue);
+      const b = normalizeLocationKey(gpsValue);
+
+      if (!a || !b) return false;
+
+      return a === b;
+    }
+
+    function isSameLocationOptional(sheetValue, gpsValue) {
+      const a = normalizeLocationKey(sheetValue);
+      const b = normalizeLocationKey(gpsValue);
+
+      if (!a || !b) return true;
+
+      return a === b;
+    }
+
+    function cleanDisplayLocation(value) {
+      let text = String(value || "").trim();
+
+      if (!text) return "-";
+
+      text = text.replace(/\s+/g, " ").trim().toUpperCase();
+
+      const englishToIndonesian = {
+        "EAST JAVA": "JAWA TIMUR",
+        "CENTRAL JAVA": "JAWA TENGAH",
+        "WEST JAVA": "JAWA BARAT",
+        "NORTH JAKARTA": "JAKARTA UTARA",
+        "SOUTH JAKARTA": "JAKARTA SELATAN",
+        "WEST JAKARTA": "JAKARTA BARAT",
+        "EAST JAKARTA": "JAKARTA TIMUR",
+        "CENTRAL JAKARTA": "JAKARTA PUSAT"
+      };
+
+      return englishToIndonesian[text] || text;
+    }
+
+    function normalizeLocationKey(value) {
+      let text = String(value || "").trim().toUpperCase();
+
+      if (!text || text === "-") return "";
+
+      const englishToIndonesian = {
+        "EAST JAVA": "JAWA TIMUR",
+        "CENTRAL JAVA": "JAWA TENGAH",
+        "WEST JAVA": "JAWA BARAT",
+        "NORTH JAKARTA": "JAKARTA UTARA",
+        "SOUTH JAKARTA": "JAKARTA SELATAN",
+        "WEST JAKARTA": "JAKARTA BARAT",
+        "EAST JAKARTA": "JAKARTA TIMUR",
+        "CENTRAL JAKARTA": "JAKARTA PUSAT"
+      };
+
+      if (englishToIndonesian[text]) {
+        text = englishToIndonesian[text];
+      }
+
+      text = text.replace(/[^A-Z0-9\s]/g, " ");
+      text = text.replace(/\s+/g, " ").trim();
+
+      text = text
+        .replace(/\bREGENCY\b/g, "")
+        .replace(/\bCITY\b/g, "")
+        .replace(/\bDISTRICT\b/g, "")
+        .replace(/\bVILLAGE\b/g, "");
+
+      text = text.replace(/\s+/g, " ").trim();
+
+      const prefixes = [
+        "PROVINSI ",
+        "PROPINSI ",
+        "KABUPATEN ",
+        "KAB ",
+        "KOTA ",
+        "KECAMATAN ",
+        "KEC ",
+        "KELURAHAN ",
+        "KEL ",
+        "DESA ",
+        "DS "
+      ];
+
+      let changed = true;
+
+      while (changed) {
+        changed = false;
+
+        for (const prefix of prefixes) {
+          if (text.startsWith(prefix)) {
+            text = text.substring(prefix.length).trim();
+            changed = true;
+          }
+        }
+      }
+
+      return text;
+    }
+
+    function openUrl(url, emptyMessage) {
+      if (!url) {
+        showToast(emptyMessage || "Link belum tersedia.");
+        return;
+      }
+
+      try {
+        const parsed = new URL(url);
+
+        if (!parsed.protocol.startsWith("http")) {
+          showToast("Format link tidak valid.");
+          return;
+        }
+
+        window.open(parsed.toString(), "_blank", "noopener,noreferrer");
+      } catch (_) {
+        showToast("Format link tidak valid.");
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3200);
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value).replace(/`/g, "&#096;");
+    }
+  </script>
+</body>
+</html>
