@@ -1,0 +1,4447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#2e7d32">
+
+  <title>Dashboard ASPETRI</title>
+
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --primary-dark: #1b5e20;
+      --primary-light: #e8f5e9;
+
+      --blue: #087bd8;
+      --green: #42a93b;
+      --yellow: #f5b700;
+      --brown: #8b5e34;
+      --orange: #e7553c;
+
+      --background: #f7fafc;
+      --surface: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e5e7eb;
+
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    html {
+      background: #e5e7eb;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: #e5e7eb;
+      color: var(--text);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      overscroll-behavior: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    svg {
+      pointer-events: none;
+    }
+
+    /* Batas tampilan seperti layar HP */
+    .app-shell {
+      position: relative;
+      width: min(100%, 430px);
+      height: 100vh;
+      height: 100dvh;
+      margin: 0 auto;
+      overflow: hidden;
+      background: var(--background);
+      box-shadow: 0 0 32px rgba(15, 23, 42, 0.2);
+      isolation: isolate;
+    }
+
+    .icon {
+      width: 22px;
+      height: 22px;
+      display: block;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Header */
+    .topbar {
+      position: absolute;
+      z-index: 20;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: calc(64px + var(--safe-top));
+      padding: var(--safe-top) 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+
+    .icon-button {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--text);
+      background: transparent;
+      transition:
+        transform 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .icon-button:active {
+      transform: scale(0.94);
+    }
+
+    .logout-top {
+      color: var(--orange);
+      background: rgba(231, 85, 60, 0.1);
+    }
+
+    .title-wrapper {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .app-title {
+      margin: 0;
+      overflow: hidden;
+      color: var(--text);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 16px;
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .tab-caption {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    /* Konten utama */
+    .app-main {
+      position: absolute;
+      inset:
+        calc(64px + var(--safe-top))
+        0
+        calc(72px + var(--safe-bottom));
+      overflow: hidden;
+    }
+
+    .tab-panel {
+      display: none;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      scrollbar-width: none;
+    }
+
+    .tab-panel::-webkit-scrollbar,
+    .horizontal-scroll::-webkit-scrollbar,
+    .mini-products::-webkit-scrollbar,
+    .contact-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+      animation: panel-in 0.2s ease-out;
+    }
+
+    @keyframes panel-in {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content {
+      padding: 10px 0 28px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.055);
+    }
+
+    /* Header organisasi */
+    .organization-card {
+      position: relative;
+      overflow: hidden;
+      margin: 0 16px 14px;
+      padding: 18px 16px 17px;
+      text-align: center;
+    }
+
+    .organization-card::before,
+    .organization-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .organization-card::before {
+      width: 130px;
+      height: 130px;
+      top: -65px;
+      right: -44px;
+      background: rgba(46, 125, 50, 0.11);
+    }
+
+    .organization-card::after {
+      width: 96px;
+      height: 96px;
+      left: -43px;
+      bottom: -56px;
+      background: rgba(66, 169, 59, 0.1);
+    }
+
+    .organization-logo {
+      position: relative;
+      z-index: 1;
+      width: 102px;
+      height: 102px;
+      margin: 0 auto 12px;
+      overflow: hidden;
+      border: 5px solid #ffffff;
+      outline: 2px solid rgba(46, 125, 50, 0.25);
+      border-radius: 50%;
+      background: linear-gradient(145deg, #e8f5e9, #f1f8e9);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+    }
+
+    .organization-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .organization-title {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.3;
+      font-weight: 900;
+    }
+
+    .welcome-text {
+      position: relative;
+      z-index: 1;
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    /* Banner */
+    .banner-window {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .banner-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .banner-slide {
+      min-width: 100%;
+      padding: 0 16px;
+    }
+
+    .banner-media {
+      position: relative;
+      height: 168px;
+      overflow: hidden;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--primary), #66bb6a);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+    }
+
+    .banner-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .banner-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          180deg,
+          transparent 40%,
+          rgba(15, 23, 42, 0.52)
+        );
+      pointer-events: none;
+    }
+
+    .banner-fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px;
+      color: #ffffff;
+      text-align: left;
+    }
+
+    .banner-fallback strong {
+      max-width: 250px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .banner-fallback span {
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 650;
+      opacity: 0.9;
+    }
+
+    .banner-label {
+      position: absolute;
+      z-index: 2;
+      left: 13px;
+      bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: #ffffff;
+      background: rgba(15, 23, 42, 0.5);
+      font-size: 11px;
+      font-weight: 800;
+      backdrop-filter: blur(8px);
+    }
+
+    .banner-dots {
+      min-height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .banner-dot {
+      width: 6px;
+      height: 6px;
+      padding: 0;
+      border-radius: 999px;
+      background: #cbd5e1;
+      transition:
+        width 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .banner-dot.active {
+      width: 18px;
+      background: var(--primary);
+    }
+
+    /* Judul bagian */
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin: 4px 16px 12px;
+    }
+
+    .heading-icon {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      color: var(--primary);
+      background: rgba(46, 125, 50, 0.12);
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .section-heading p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .horizontal-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 2px 16px 14px;
+      scrollbar-width: none;
+      scroll-snap-type: x proximity;
+    }
+
+    /* Kategori */
+    .category-button {
+      width: 86px;
+      min-width: 86px;
+      height: 92px;
+      padding: 10px 7px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      color: var(--text);
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 21px;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+      scroll-snap-align: start;
+      transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .category-button:active {
+      transform: scale(0.96);
+    }
+
+    .category-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      font-size: 21px;
+    }
+
+    .category-button span:last-child {
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .category-button[data-category="Jajan"] .category-icon {
+      background: rgba(231, 85, 60, 0.13);
+    }
+
+    .category-button[data-category="Jasa"] .category-icon {
+      background: rgba(8, 123, 216, 0.13);
+    }
+
+    .category-button[data-category="Jarik"] .category-icon {
+      background: rgba(139, 94, 52, 0.13);
+    }
+
+    .category-button[data-category="Jamu"] .category-icon {
+      background: rgba(66, 169, 59, 0.13);
+    }
+
+    .category-button.active {
+      border-color: currentColor;
+      background: #fafffa;
+    }
+
+    .category-button.active[data-category="Jajan"] {
+      color: var(--orange);
+    }
+
+    .category-button.active[data-category="Jasa"] {
+      color: var(--blue);
+    }
+
+    .category-button.active[data-category="Jarik"] {
+      color: var(--brown);
+    }
+
+    .category-button.active[data-category="Jamu"] {
+      color: var(--green);
+    }
+
+    .category-result {
+      display: none;
+      margin: 0 16px 20px;
+      padding: 16px;
+    }
+
+    .category-result.show {
+      display: block;
+    }
+
+    .result-heading {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 12px;
+    }
+
+    .result-icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      color: var(--primary);
+      background: rgba(46, 125, 50, 0.11);
+      font-size: 21px;
+    }
+
+    .result-heading h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .result-heading p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .mini-products {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    /* Kontak */
+    .contact-box {
+      margin: 0 16px 20px;
+      padding: 17px;
+    }
+
+    .contact-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .contact-heading-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .contact-heading h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .contact-heading p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .refresh-button {
+      width: 40px;
+      height: 40px;
+      flex: 0 0 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      color: var(--primary);
+      background: rgba(46, 125, 50, 0.11);
+    }
+
+    .contact-list {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .contact-card {
+      width: 142px;
+      min-width: 142px;
+      min-height: 190px;
+      padding: 15px 11px 12px;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background:
+        linear-gradient(
+          180deg,
+          #ffffff,
+          rgba(232, 245, 233, 0.65)
+        );
+    }
+
+    .avatar {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 10px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: #ffffff;
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--primary), #66bb6a);
+      box-shadow: 0 6px 14px rgba(46, 125, 50, 0.2);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .contact-name {
+      min-height: 36px;
+      margin: 0;
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 850;
+      line-clamp: 2;
+
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .whatsapp-button {
+      width: 100%;
+      min-height: 34px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-radius: 11px;
+      color: #ffffff;
+      background: #22a447;
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    /* Materi */
+    .material-card {
+      width: 166px;
+      min-width: 166px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+      text-align: left;
+      scroll-snap-align: start;
+    }
+
+    .material-image {
+      height: 100px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: var(--primary);
+      background: linear-gradient(145deg, #e8f5e9, #f1f8e9);
+      font-size: 32px;
+    }
+
+    .material-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .material-body {
+      padding: 11px;
+    }
+
+    .material-title {
+      min-height: 38px;
+      margin: 0;
+      display: -webkit-box;
+      overflow: hidden;
+      color: var(--text);
+      font-size: 12.5px;
+      line-height: 1.4;
+      font-weight: 850;
+      line-clamp: 2;
+
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .detail-label {
+      margin-top: 9px;
+      padding: 7px;
+      border-radius: 10px;
+      color: var(--primary);
+      background: rgba(46, 125, 50, 0.1);
+      text-align: center;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    /* Belanja */
+    .shopping-header {
+      position: sticky;
+      z-index: 5;
+      top: 0;
+      padding: 14px 0 4px;
+      background: rgba(247, 250, 252, 0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .search-wrapper {
+      position: relative;
+      margin: 0 16px 12px;
+    }
+
+    .search-wrapper > .icon {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      width: 20px;
+      height: 20px;
+      color: var(--primary);
+      transform: translateY(-50%);
+    }
+
+    .search-input {
+      width: 100%;
+      height: 49px;
+      padding: 0 42px 0 43px;
+      color: var(--text);
+      outline: none;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: #ffffff;
+      font-size: 13px;
+      font-weight: 650;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+    }
+
+    .clear-search {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      width: 34px;
+      height: 34px;
+      display: none;
+      place-items: center;
+      color: var(--muted);
+      border-radius: 11px;
+      background: transparent;
+      transform: translateY(-50%);
+    }
+
+    .clear-search.show {
+      display: grid;
+    }
+
+    .location-card {
+      margin: 10px 16px 14px;
+      padding: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      border-radius: 19px;
+      color: var(--primary-dark);
+      background: var(--primary-light);
+      border: 1px solid #c8e6c9;
+    }
+
+    .location-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .location-copy strong {
+      display: block;
+      font-size: 12.5px;
+    }
+
+    .location-copy span {
+      display: block;
+      margin-top: 3px;
+      color: #4f6f52;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .location-button {
+      flex: 0 0 auto;
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: #ffffff;
+      background: var(--primary);
+      font-size: 10.5px;
+      font-weight: 850;
+    }
+
+    .location-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    .products-area {
+      padding: 0 16px 26px;
+    }
+
+    .products-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 2px 0 12px;
+    }
+
+    .products-heading h2 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .products-count {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+    }
+
+    .product-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.055);
+    }
+
+    .product-card.mini {
+      width: 140px;
+      min-width: 140px;
+    }
+
+    .product-image {
+      position: relative;
+      height: 118px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: linear-gradient(145deg, #eef7ff, #f0f8ed);
+      font-size: 34px;
+    }
+
+    .product-card.mini .product-image {
+      height: 95px;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .category-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      padding: 4px 7px;
+      border-radius: 8px;
+      color: #ffffff;
+      background: rgba(15, 23, 42, 0.7);
+      font-size: 9px;
+      font-weight: 900;
+      backdrop-filter: blur(5px);
+    }
+
+    .product-body {
+      padding: 10px;
+    }
+
+    .product-name {
+      min-height: 37px;
+      margin: 0;
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: 12.5px;
+      line-height: 1.4;
+      font-weight: 850;
+      line-clamp: 2;
+
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .product-location {
+      min-height: 28px;
+      margin: 5px 0 0;
+      display: -webkit-box;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 9.5px;
+      line-height: 1.35;
+      font-weight: 650;
+      line-clamp: 2;
+
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .old-price-row {
+      height: 18px;
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .old-price {
+      color: var(--muted);
+      text-decoration: line-through;
+      font-size: 9.5px;
+      font-weight: 650;
+    }
+
+    .discount {
+      padding: 2px 5px;
+      border-radius: 6px;
+      color: var(--orange);
+      background: rgba(245, 183, 0, 0.2);
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+    .product-price {
+      margin-top: 1px;
+      color: var(--orange);
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .stock-bar {
+      position: relative;
+      height: 15px;
+      margin-top: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(231, 85, 60, 0.18);
+    }
+
+    .stock-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      min-width: 8%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--yellow), var(--orange));
+    }
+
+    .stock-text {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+      font-size: 8px;
+      font-weight: 900;
+    }
+
+    .order-button {
+      width: 100%;
+      height: 32px;
+      margin-top: 8px;
+      border-radius: 10px;
+      color: #ffffff;
+      background: var(--primary);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    /* Empty state */
+    .empty-state,
+    .simple-state {
+      padding: 38px 22px;
+      text-align: center;
+    }
+
+    .empty-icon,
+    .simple-icon {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 16px;
+      display: grid;
+      place-items: center;
+      border-radius: 26px;
+      color: var(--primary);
+      background: rgba(46, 125, 50, 0.1);
+    }
+
+    .empty-icon .icon,
+    .simple-icon .icon {
+      width: 38px;
+      height: 38px;
+    }
+
+    .simple-state h2,
+    .empty-state h3 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .simple-state p,
+    .empty-state p {
+      max-width: 300px;
+      margin: 8px auto 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    /* Chat */
+    .chat-list {
+      display: grid;
+      gap: 10px;
+      padding: 0 16px 26px;
+    }
+
+    .chat-row {
+      min-height: 76px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .chat-row .avatar {
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .chat-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .chat-copy strong {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13.5px;
+    }
+
+    .chat-copy span {
+      display: block;
+      margin-top: 4px;
+      overflow: hidden;
+      color: var(--muted);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 11px;
+    }
+
+    /* Profil */
+    .profile-wrapper {
+      padding: 16px 16px 30px;
+    }
+
+    .profile-hero {
+      padding: 22px 18px;
+      color: #ffffff;
+      text-align: center;
+      background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+      border: 0;
+    }
+
+    .profile-hero .avatar {
+      width: 78px;
+      height: 78px;
+      font-size: 25px;
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.75);
+      box-shadow: none;
+    }
+
+    .profile-hero h2 {
+      margin: 12px 0 0;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .profile-hero p {
+      margin: 5px 0 0;
+      font-size: 12px;
+      opacity: 0.86;
+    }
+
+    .status-pill {
+      width: max-content;
+      margin: 12px auto 0;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: #eaffea;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .profile-section {
+      margin-top: 14px;
+      padding: 16px;
+    }
+
+    .profile-section h3 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .profile-row {
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid #eef2f7;
+    }
+
+    .profile-row:last-child {
+      border-bottom: 0;
+    }
+
+    .profile-row span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .profile-row strong {
+      max-width: 220px;
+      overflow-wrap: anywhere;
+      text-align: right;
+      font-size: 12px;
+    }
+
+    .access-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .access-chip {
+      padding: 7px 10px;
+      border-radius: 10px;
+      color: var(--primary);
+      background: rgba(46, 125, 50, 0.09);
+      font-size: 10.5px;
+      font-weight: 850;
+    }
+
+    .logout-wide {
+      width: 100%;
+      height: 46px;
+      margin-top: 14px;
+      border-radius: 14px;
+      color: #c62828;
+      background: #ffebee;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    /* Bottom navigation */
+    .bottom-navigation {
+      position: absolute;
+      z-index: 20;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: calc(72px + var(--safe-bottom));
+      padding: 7px 7px var(--safe-bottom);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: rgba(255, 255, 255, 0.97);
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -8px 22px rgba(15, 23, 42, 0.07);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-button {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      color: #94a3b8;
+      background: transparent;
+      border-radius: 14px;
+      font-size: 10px;
+      font-weight: 750;
+    }
+
+    .nav-button::before {
+      content: "";
+      position: absolute;
+      top: -7px;
+      width: 28px;
+      height: 3px;
+      border-radius: 0 0 6px 6px;
+      background: transparent;
+    }
+
+    .nav-button.active {
+      color: var(--primary);
+    }
+
+    .nav-button.active::before {
+      background: var(--primary);
+    }
+
+    /* Drawer */
+    .drawer-backdrop {
+      position: absolute;
+      z-index: 80;
+      inset: 0;
+      visibility: hidden;
+      opacity: 0;
+      background: rgba(15, 23, 42, 0.46);
+      backdrop-filter: blur(2px);
+      transition:
+        opacity 0.24s ease,
+        visibility 0.24s ease;
+    }
+
+    .drawer {
+      position: absolute;
+      z-index: 90;
+      inset: 0 auto 0 0;
+      width: min(82%, 330px);
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      transform: translateX(-102%);
+      box-shadow: 18px 0 40px rgba(15, 23, 42, 0.2);
+      transition: transform 0.27s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .drawer-backdrop.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      min-height: 154px;
+      padding: calc(20px + var(--safe-top)) 20px 18px;
+      color: #ffffff;
+      background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+    }
+
+    .drawer-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drawer-user .avatar {
+      width: 54px;
+      height: 54px;
+      flex: 0 0 54px;
+      margin: 0;
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.7);
+      box-shadow: none;
+      font-size: 18px;
+    }
+
+    .drawer-user strong {
+      display: block;
+      max-width: 190px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 15px;
+    }
+
+    .drawer-user span {
+      display: block;
+      margin-top: 4px;
+      font-size: 11px;
+      opacity: 0.82;
+    }
+
+    .drawer-title {
+      margin: 17px 0 0;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .drawer-navigation {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 10px;
+    }
+
+    .drawer-label {
+      margin: 5px 10px 8px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .drawer-link {
+      width: 100%;
+      min-height: 50px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      border-radius: 14px;
+      background: transparent;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .drawer-link.current {
+      color: var(--primary);
+      background: rgba(46, 125, 50, 0.09);
+    }
+
+    .drawer-link .arrow {
+      width: 16px;
+      height: 16px;
+      margin-left: auto;
+    }
+
+    .drawer-bottom {
+      padding: 10px 12px calc(12px + var(--safe-bottom));
+      border-top: 1px solid var(--border);
+    }
+
+    .drawer-logout {
+      width: 100%;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 0 14px;
+      border-radius: 14px;
+      color: #c62828;
+      background: #ffebee;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: absolute;
+      z-index: 100;
+      inset: 0;
+      visibility: hidden;
+      opacity: 0;
+      display: flex;
+      align-items: flex-end;
+      background: rgba(15, 23, 42, 0.52);
+      backdrop-filter: blur(3px);
+      transition:
+        opacity 0.22s ease,
+        visibility 0.22s ease;
+    }
+
+    .modal-backdrop.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-height: 88%;
+      overflow-y: auto;
+      padding: 10px 18px calc(20px + var(--safe-bottom));
+      border-radius: 28px 28px 0 0;
+      background: #ffffff;
+      transform: translateY(100%);
+      transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .modal-backdrop.open .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .modal-handle {
+      width: 42px;
+      height: 5px;
+      margin: 0 auto 16px;
+      border-radius: 999px;
+      background: #cbd5e1;
+    }
+
+    .modal-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .modal-heading h2 {
+      min-width: 0;
+      flex: 1;
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.3;
+      font-weight: 900;
+    }
+
+    .modal-close {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: var(--muted);
+      background: #f1f5f9;
+    }
+
+    .modal-image {
+      width: 100%;
+      max-height: 230px;
+      margin-top: 14px;
+      object-fit: cover;
+      border-radius: 18px;
+      background: var(--background);
+    }
+
+    .modal-content {
+      margin: 14px 0 0;
+      color: #475569;
+      font-size: 13px;
+      line-height: 1.65;
+      white-space: pre-line;
+    }
+
+    .modal-action {
+      width: 100%;
+      height: 47px;
+      margin-top: 18px;
+      border-radius: 14px;
+      color: #ffffff;
+      background: var(--primary);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .confirm-sheet {
+      text-align: center;
+    }
+
+    .confirm-sheet .simple-icon {
+      width: 68px;
+      height: 68px;
+      color: var(--orange);
+      background: rgba(231, 85, 60, 0.1);
+    }
+
+    .confirm-sheet h2 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .confirm-sheet p {
+      margin: 8px auto 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .confirm-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .confirm-actions button {
+      height: 45px;
+      border-radius: 13px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .cancel-button {
+      color: var(--text);
+      background: #f1f5f9;
+    }
+
+    .danger-button {
+      color: #ffffff;
+      background: var(--orange);
+    }
+
+    /* Toast dan loading */
+    .toast {
+      position: absolute;
+      z-index: 120;
+      left: 16px;
+      right: 16px;
+      bottom: calc(84px + var(--safe-bottom));
+      visibility: hidden;
+      opacity: 0;
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: #ffffff;
+      background: rgba(15, 23, 42, 0.94);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.18);
+      transform: translateY(10px);
+      transition: 0.22s ease;
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .loading-card {
+      min-width: 142px;
+      height: 190px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #e9eef4;
+    }
+
+    .loading-card::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.7),
+          transparent
+        );
+      transform: translateX(-100%);
+      animation: shimmer 1.2s infinite;
+    }
+
+    @keyframes shimmer {
+      to {
+        transform: translateX(100%);
+      }
+    }
+
+    @media (max-width: 430px) {
+      html,
+      body {
+        background: var(--background);
+      }
+
+      .app-shell {
+        width: 100%;
+        box-shadow: none;
+      }
+    }
+
+    @media (max-width: 350px) {
+      .product-grid {
+        gap: 8px;
+      }
+
+      .products-area {
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+
+      .category-button {
+        width: 80px;
+        min-width: 80px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Ikon SVG -->
+  <svg
+    width="0"
+    height="0"
+    style="position:absolute;overflow:hidden"
+    aria-hidden="true"
+  >
+    <symbol id="icon-menu" viewBox="0 0 24 24">
+      <path d="M4 6h16M4 12h16M4 18h16"></path>
+    </symbol>
+
+    <symbol id="icon-logout" viewBox="0 0 24 24">
+      <path d="M10 17l5-5-5-5M15 12H3"></path>
+      <path d="M15 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"></path>
+    </symbol>
+
+    <symbol id="icon-home" viewBox="0 0 24 24">
+      <path d="M3 11.5 12 4l9 7.5"></path>
+      <path d="M5 10v10h14V10M9 20v-6h6v6"></path>
+    </symbol>
+
+    <symbol id="icon-bag" viewBox="0 0 24 24">
+      <path d="M6 8h12l1 12H5L6 8Z"></path>
+      <path d="M9 9V6a3 3 0 0 1 6 0v3"></path>
+    </symbol>
+
+    <symbol id="icon-chat" viewBox="0 0 24 24">
+      <path d="M21 15a4 4 0 0 1-4 4H8l-5 3 1.7-5A7 7 0 0 1 3 12V8a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"></path>
+    </symbol>
+
+    <symbol id="icon-user" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4"></circle>
+      <path d="M4 21a8 8 0 0 1 16 0"></path>
+    </symbol>
+
+    <symbol id="icon-book" viewBox="0 0 24 24">
+      <path d="M4 5a3 3 0 0 1 3-3h5v18H7a3 3 0 0 0-3 3V5Z"></path>
+      <path d="M20 5a3 3 0 0 0-3-3h-5v18h5a3 3 0 0 1 3 3V5Z"></path>
+    </symbol>
+
+    <symbol id="icon-users" viewBox="0 0 24 24">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+    </symbol>
+
+    <symbol id="icon-refresh" viewBox="0 0 24 24">
+      <path d="M20 6v5h-5M4 18v-5h5"></path>
+      <path d="M18.5 9A7 7 0 0 0 6.7 6.7L4 11"></path>
+      <path d="M20 13l-2.7 4.3A7 7 0 0 1 5.5 15"></path>
+    </symbol>
+
+    <symbol id="icon-search" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="7"></circle>
+      <path d="m20 20-4-4"></path>
+    </symbol>
+
+    <symbol id="icon-close" viewBox="0 0 24 24">
+      <path d="m6 6 12 12M18 6 6 18"></path>
+    </symbol>
+
+    <symbol id="icon-location" viewBox="0 0 24 24">
+      <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"></path>
+      <circle cx="12" cy="10" r="2.5"></circle>
+    </symbol>
+
+    <symbol id="icon-store" viewBox="0 0 24 24">
+      <path d="M3 10h18M5 10v10h14V10"></path>
+      <path d="M4 4h16l1 6H3l1-6ZM9 20v-6h6v6"></path>
+    </symbol>
+
+    <symbol id="icon-chevron" viewBox="0 0 24 24">
+      <path d="m9 18 6-6-6-6"></path>
+    </symbol>
+  </svg>
+
+  <div class="app-shell" id="appShell">
+    <!-- Header -->
+    <header class="topbar">
+      <button
+        class="icon-button"
+        id="openDrawerButton"
+        type="button"
+        aria-label="Buka menu"
+      >
+        <svg class="icon">
+          <use href="#icon-menu"></use>
+        </svg>
+      </button>
+
+      <div class="title-wrapper">
+        <h1 class="app-title">ASPETRI Jawa Timur</h1>
+        <p class="tab-caption" id="tabCaption">Beranda</p>
+      </div>
+
+      <button
+        class="icon-button logout-top"
+        id="topLogoutButton"
+        type="button"
+        aria-label="Keluar dari akun"
+      >
+        <svg class="icon">
+          <use href="#icon-logout"></use>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Konten -->
+    <main class="app-main">
+      <!-- TAB BERANDA -->
+      <section
+        class="tab-panel active"
+        id="tab-home"
+        data-title="Beranda"
+      >
+        <div class="content">
+          <article class="organization-card card">
+            <div class="organization-logo">
+              <img
+                src="https://drive.google.com/thumbnail?id=132CmuiUAvSUbkwRdXBid11-Oh-vBhksT&sz=w400"
+                alt="Logo ASPETRI DPD Jawa Timur"
+                onerror="this.style.display='none'"
+              >
+            </div>
+
+            <h2 class="organization-title">
+              ASPETRI DPD Jawa Timur
+            </h2>
+
+            <p class="welcome-text">
+              Selamat datang,
+              <span class="js-user-firstname">Anggota ASPETRI</span>
+            </p>
+          </article>
+
+          <div class="banner-window">
+            <div class="banner-track" id="bannerTrack"></div>
+          </div>
+
+          <div class="banner-dots" id="bannerDots"></div>
+
+          <div class="section-heading">
+            <div class="heading-icon">
+              <svg class="icon">
+                <use href="#icon-store"></use>
+              </svg>
+            </div>
+
+            <div>
+              <h2>Pilih Kategori</h2>
+              <p>
+                Temukan produk anggota berdasarkan kategori dan lokasi.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="horizontal-scroll js-category-list"
+            aria-label="Kategori produk"
+          ></div>
+
+          <article
+            class="category-result card"
+            id="homeCategoryResult"
+          >
+            <div class="result-heading">
+              <div class="result-icon" id="homeCategoryIcon">
+                🛍️
+              </div>
+
+              <div>
+                <h3 id="homeCategoryTitle">
+                  Produk kategori
+                </h3>
+
+                <p id="homeCategoryStatus">
+                  Produk lokal yang tersedia.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="mini-products"
+              id="homeMiniProducts"
+            ></div>
+          </article>
+
+          <article class="contact-box card">
+            <div class="contact-heading">
+              <div class="heading-icon">
+                <svg class="icon">
+                  <use href="#icon-users"></use>
+                </svg>
+              </div>
+
+              <div class="contact-heading-text">
+                <h2>Kontak ASPETRI</h2>
+
+                <p>
+                  Geser ke samping dan hubungi langsung melalui WhatsApp.
+                </p>
+              </div>
+
+              <button
+                class="refresh-button"
+                id="refreshContactsButton"
+                type="button"
+                aria-label="Muat ulang kontak"
+              >
+                <svg class="icon">
+                  <use href="#icon-refresh"></use>
+                </svg>
+              </button>
+            </div>
+
+            <div
+              class="contact-list"
+              id="homeContacts"
+              aria-live="polite"
+            ></div>
+          </article>
+
+          <div class="section-heading">
+            <div class="heading-icon">
+              <svg class="icon">
+                <use href="#icon-book"></use>
+              </svg>
+            </div>
+
+            <div>
+              <h2>Materi Edukasi</h2>
+
+              <p>
+                Klik materi untuk membaca detail dan memulai ujian.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="horizontal-scroll"
+            id="materialList"
+            aria-live="polite"
+          ></div>
+        </div>
+      </section>
+
+      <!-- TAB BELANJA -->
+      <section
+        class="tab-panel"
+        id="tab-shop"
+        data-title="Belanja"
+      >
+        <div class="shopping-header">
+          <div class="search-wrapper">
+            <svg class="icon">
+              <use href="#icon-search"></use>
+            </svg>
+
+            <input
+              class="search-input"
+              id="productSearch"
+              type="search"
+              placeholder="Cari nama produk atau wilayah..."
+              autocomplete="off"
+              aria-label="Cari produk"
+            >
+
+            <button
+              class="clear-search"
+              id="clearSearchButton"
+              type="button"
+              aria-label="Hapus pencarian"
+            >
+              <svg class="icon">
+                <use href="#icon-close"></use>
+              </svg>
+            </button>
+          </div>
+
+          <div
+            class="horizontal-scroll js-category-list"
+            aria-label="Filter kategori"
+          ></div>
+        </div>
+
+        <div class="location-card">
+          <svg class="icon">
+            <use href="#icon-location"></use>
+          </svg>
+
+          <div class="location-copy">
+            <strong>Lokasi produk</strong>
+
+            <span id="locationStatus">
+              Aktifkan GPS agar produk dari wilayah terdekat tampil
+              lebih dahulu.
+            </span>
+          </div>
+
+          <button
+            class="location-button"
+            id="locationButton"
+            type="button"
+          >
+            Aktifkan
+          </button>
+        </div>
+
+        <div class="products-area">
+          <div class="products-heading">
+            <h2 id="productSectionTitle">
+              Pilih kategori
+            </h2>
+
+            <span
+              class="products-count"
+              id="productsCount"
+            >
+              0 produk
+            </span>
+          </div>
+
+          <div
+            class="product-grid"
+            id="productGrid"
+            aria-live="polite"
+          ></div>
+        </div>
+      </section>
+
+      <!-- TAB CHAT -->
+      <section
+        class="tab-panel"
+        id="tab-chat"
+        data-title="Chat"
+      >
+        <div class="simple-state">
+          <div class="simple-icon">
+            <svg class="icon">
+              <use href="#icon-chat"></use>
+            </svg>
+          </div>
+
+          <h2>Kontak dan Pesan</h2>
+
+          <p>
+            Pilih kontak di bawah untuk memulai percakapan
+            melalui WhatsApp.
+          </p>
+        </div>
+
+        <div
+          class="chat-list"
+          id="chatContacts"
+        ></div>
+      </section>
+
+      <!-- TAB PROFIL -->
+      <section
+        class="tab-panel"
+        id="tab-profile"
+        data-title="Profil"
+      >
+        <div class="profile-wrapper">
+          <article class="profile-hero card">
+            <div class="avatar js-user-initials">
+              AS
+            </div>
+
+            <h2 class="js-user-name">
+              Anggota ASPETRI
+            </h2>
+
+            <p class="js-user-phone">
+              Nomor HP tidak tersedia
+            </p>
+
+            <div
+              class="status-pill"
+              id="profileStatus"
+            >
+              ● Akun aktif
+            </div>
+          </article>
+
+          <article class="profile-section card">
+            <h3>Informasi Akun</h3>
+
+            <div class="profile-row">
+              <span>Nama</span>
+
+              <strong class="js-user-name">
+                Anggota ASPETRI
+              </strong>
+            </div>
+
+            <div class="profile-row">
+              <span>Nomor HP</span>
+              <strong class="js-user-phone">-</strong>
+            </div>
+
+            <div class="profile-row">
+              <span>Status</span>
+              <strong id="profileStatusText">Aktif</strong>
+            </div>
+          </article>
+
+          <article class="profile-section card">
+            <h3>Akses Halaman</h3>
+
+            <div
+              class="access-list"
+              id="profileAccessList"
+            ></div>
+          </article>
+
+          <button
+            class="logout-wide"
+            id="profileLogoutButton"
+            type="button"
+          >
+            Keluar dari akun
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom navigation -->
+    <nav
+      class="bottom-navigation"
+      aria-label="Navigasi utama"
+    >
+      <button
+        class="nav-button active"
+        type="button"
+        data-tab="home"
+      >
+        <svg class="icon">
+          <use href="#icon-home"></use>
+        </svg>
+
+        <span>Beranda</span>
+      </button>
+
+      <button
+        class="nav-button"
+        type="button"
+        data-tab="shop"
+      >
+        <svg class="icon">
+          <use href="#icon-bag"></use>
+        </svg>
+
+        <span>Belanja</span>
+      </button>
+
+      <button
+        class="nav-button"
+        type="button"
+        data-tab="chat"
+      >
+        <svg class="icon">
+          <use href="#icon-chat"></use>
+        </svg>
+
+        <span>Chat</span>
+      </button>
+
+      <button
+        class="nav-button"
+        type="button"
+        data-tab="profile"
+      >
+        <svg class="icon">
+          <use href="#icon-user"></use>
+        </svg>
+
+        <span>Profil</span>
+      </button>
+    </nav>
+
+    <!-- Drawer -->
+    <div
+      class="drawer-backdrop"
+      id="drawerBackdrop"
+    ></div>
+
+    <aside
+      class="drawer"
+      id="drawer"
+      aria-label="Menu akses"
+    >
+      <div class="drawer-header">
+        <div class="drawer-user">
+          <div class="avatar js-user-initials">
+            AS
+          </div>
+
+          <div>
+            <strong class="js-user-name">
+              Anggota ASPETRI
+            </strong>
+
+            <span class="js-user-phone">-</span>
+          </div>
+        </div>
+
+        <div class="drawer-title">
+          Menu ASPETRI
+        </div>
+      </div>
+
+      <div class="drawer-navigation">
+        <p class="drawer-label">
+          Akses halaman
+        </p>
+
+        <div id="drawerAccessList"></div>
+      </div>
+
+      <div class="drawer-bottom">
+        <button
+          class="drawer-logout"
+          id="drawerLogoutButton"
+          type="button"
+        >
+          <svg class="icon">
+            <use href="#icon-logout"></use>
+          </svg>
+
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Modal materi -->
+    <div
+      class="modal-backdrop"
+      id="materialModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="materialModalTitle"
+    >
+      <article class="modal-sheet">
+        <div class="modal-handle"></div>
+
+        <div class="modal-heading">
+          <h2 id="materialModalTitle">
+            Detail Materi
+          </h2>
+
+          <button
+            class="modal-close"
+            type="button"
+            data-close-modal="materialModal"
+            aria-label="Tutup"
+          >
+            <svg class="icon">
+              <use href="#icon-close"></use>
+            </svg>
+          </button>
+        </div>
+
+        <img
+          class="modal-image"
+          id="materialModalImage"
+          alt="Gambar materi"
+          hidden
+        >
+
+        <p
+          class="modal-content"
+          id="materialModalContent"
+        ></p>
+
+        <button
+          class="modal-action"
+          id="examButton"
+          type="button"
+          hidden
+        >
+          Mulai Ujian
+        </button>
+      </article>
+    </div>
+
+    <!-- Modal logout -->
+    <div
+      class="modal-backdrop"
+      id="logoutModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="logoutModalTitle"
+    >
+      <article class="modal-sheet confirm-sheet">
+        <div class="modal-handle"></div>
+
+        <div class="simple-icon">
+          <svg class="icon">
+            <use href="#icon-logout"></use>
+          </svg>
+        </div>
+
+        <h2 id="logoutModalTitle">
+          Keluar dari akun?
+        </h2>
+
+        <p>
+          Sesi login pada perangkat ini akan dihapus.
+        </p>
+
+        <div class="confirm-actions">
+          <button
+            class="cancel-button"
+            type="button"
+            data-close-modal="logoutModal"
+          >
+            Batal
+          </button>
+
+          <button
+            class="danger-button"
+            id="confirmLogoutButton"
+            type="button"
+          >
+            Ya, keluar
+          </button>
+        </div>
+      </article>
+    </div>
+
+    <div
+      class="toast"
+      id="toast"
+      role="status"
+      aria-live="polite"
+    ></div>
+  </div>
+
+  <script>
+    "use strict";
+
+    /* ======================================================
+       KONFIGURASI
+    ====================================================== */
+    const STORAGE = {
+      session: "auth_session_payload_v2",
+      logoutNotice: "auth_logout_notice_v1"
+    };
+
+    const SHEETS = {
+      materi: "1aQ_2e8x7_Fw4wKxDJQctC_aKyPNPfZigH6D649GiVKM",
+      carousel: "1w7o01gAVzsPlO94lmrFUBEoTuPoI71WI50Z4MKg0W0c",
+      produk: "1FFO1Lq3e1lxdfR1-es_vM9RfWYbPDm09aMTRs0coApE",
+      kontak: "1k7xT7gVRfhFtJUD_qYRKkG7Yegt0ZXPAiWLw9rWhfAw"
+    };
+
+    const CURRENT_ACCESS = "aspetri dpd jatim";
+
+    const ACCESS = {
+      "umkm": {
+        title: "UMKM",
+        route: "dashboard-umkm.html"
+      },
+
+      "aspetri dpd jatim": {
+        title: "ASPETRI DPD Jawa Timur",
+        route: "dashboard-aspetri.html"
+      },
+
+      "gp jamu jatim": {
+        title: "GP Jamu Jawa Timur",
+        route: "dashboard-gp-jamu.html"
+      },
+
+      "pak teguh": {
+        title: "Pembelajaran Pak Teguh",
+        route: "pembelajaran.html"
+      },
+
+      "mitra 4ja-in": {
+        title: "Mitra 4JA-IN",
+        route: "mitra-4jain.html"
+      }
+    };
+
+    const CATEGORIES = [
+      {
+        name: "Jajan",
+        emoji: "🍜"
+      },
+      {
+        name: "Jasa",
+        emoji: "🧑‍💼"
+      },
+      {
+        name: "Jarik",
+        emoji: "🧵"
+      },
+      {
+        name: "Jamu",
+        emoji: "🌿"
+      }
+    ];
+
+    const FALLBACK_PRODUCTS = [
+      {
+        phone: "",
+        name: "Camilan Anggota ASPETRI",
+        oldPrice: "Rp25.000",
+        price: "Rp20.000",
+        discount: "-20%",
+        stock: "Stok tersedia",
+        image: "",
+        province: "Jawa Timur",
+        city: "Surabaya",
+        district: "",
+        village: "",
+        category: "Jajan",
+        progress: 0.72
+      },
+      {
+        phone: "",
+        name: "Kue Kering Produk Lokal",
+        oldPrice: "",
+        price: "Rp35.000",
+        discount: "",
+        stock: "Stok tersedia",
+        image: "",
+        province: "Jawa Timur",
+        city: "Sidoarjo",
+        district: "",
+        village: "",
+        category: "Jajan",
+        progress: 0.55
+      },
+      {
+        phone: "",
+        name: "Jasa Foto Produk UMKM",
+        oldPrice: "Rp175.000",
+        price: "Rp150.000",
+        discount: "-14%",
+        stock: "Jadwal tersedia",
+        image: "",
+        province: "Jawa Timur",
+        city: "Surabaya",
+        district: "",
+        village: "",
+        category: "Jasa",
+        progress: 0.64
+      },
+      {
+        phone: "",
+        name: "Jasa Desain Kemasan",
+        oldPrice: "",
+        price: "Rp100.000",
+        discount: "",
+        stock: "Siap dipesan",
+        image: "",
+        province: "Jawa Timur",
+        city: "Malang",
+        district: "",
+        village: "",
+        category: "Jasa",
+        progress: 0.82
+      },
+      {
+        phone: "",
+        name: "Jarik Batik Motif Klasik",
+        oldPrice: "Rp250.000",
+        price: "Rp225.000",
+        discount: "-10%",
+        stock: "Stok terbatas",
+        image: "",
+        province: "Jawa Timur",
+        city: "Madura",
+        district: "",
+        village: "",
+        category: "Jarik",
+        progress: 0.35
+      },
+      {
+        phone: "",
+        name: "Jarik Batik Tulis Lokal",
+        oldPrice: "",
+        price: "Rp375.000",
+        discount: "",
+        stock: "Stok tersedia",
+        image: "",
+        province: "Jawa Timur",
+        city: "Tuban",
+        district: "",
+        village: "",
+        category: "Jarik",
+        progress: 0.68
+      },
+      {
+        phone: "",
+        name: "Jamu Kunyit Asam",
+        oldPrice: "Rp15.000",
+        price: "Rp12.000",
+        discount: "-20%",
+        stock: "Segar hari ini",
+        image: "",
+        province: "Jawa Timur",
+        city: "Surabaya",
+        district: "",
+        village: "",
+        category: "Jamu",
+        progress: 0.76
+      },
+      {
+        phone: "",
+        name: "Beras Kencur Tradisional",
+        oldPrice: "",
+        price: "Rp12.000",
+        discount: "",
+        stock: "Segar hari ini",
+        image: "",
+        province: "Jawa Timur",
+        city: "Gresik",
+        district: "",
+        village: "",
+        category: "Jamu",
+        progress: 0.6
+      }
+    ];
+
+    const FALLBACK_MATERIALS = [
+      {
+        row: 2,
+        title: "Pengembangan Usaha Anggota ASPETRI",
+        content:
+          "Materi pengembangan usaha untuk membantu anggota mengenali pasar, memperkuat produk, dan meningkatkan kualitas pelayanan.",
+        examUrl: "",
+        images: []
+      },
+      {
+        row: 3,
+        title: "Dasar Pemasaran Digital",
+        content:
+          "Materi pengantar untuk membuat konten, memilih kanal promosi, dan mengukur hasil pemasaran digital.",
+        examUrl: "",
+        images: []
+      },
+      {
+        row: 4,
+        title: "Standar Pelayanan yang Profesional",
+        content:
+          "Pelajari pentingnya komunikasi, pencatatan, pelayanan pelanggan, dan konsistensi mutu dalam menjalankan usaha.",
+        examUrl: "",
+        images: []
+      }
+    ];
+
+    const FALLBACK_CONTACTS = [
+      {
+        name: "Admin ASPETRI",
+        phone: "",
+        photo: ""
+      },
+      {
+        name: "Pengurus DPD Jawa Timur",
+        phone: "",
+        photo: ""
+      },
+      {
+        name: "Layanan Anggota",
+        phone: "",
+        photo: ""
+      }
+    ];
+
+    const state = {
+      session: null,
+      activeTab: "home",
+      selectedCategory: "",
+      search: "",
+      products: [],
+      contacts: [],
+      materials: [],
+      banners: [],
+      bannerIndex: 0,
+      bannerTimer: null,
+      location: null,
+      toastTimer: null
+    };
+
+    /* ======================================================
+       SESSION
+    ====================================================== */
+    function readSession() {
+      try {
+        const raw = localStorage.getItem(STORAGE.session);
+
+        if (!raw) {
+          return null;
+        }
+
+        const session = JSON.parse(raw);
+
+        if (!session || typeof session !== "object") {
+          return null;
+        }
+
+        return session;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function isValidLocalSession(session) {
+      return Boolean(
+        session &&
+        String(session.nomor_hp || "").trim() &&
+        String(session.nama || "").trim() &&
+        String(session.status || "").trim() &&
+        String(session.session_id || "").trim() &&
+        String(session.device_id || "").trim() &&
+        Array.isArray(session.akses) &&
+        session.akses.length
+      );
+    }
+
+    function requireSession() {
+      state.session = readSession();
+
+      if (!isValidLocalSession(state.session)) {
+        localStorage.removeItem(STORAGE.session);
+        window.location.replace("login.html");
+        return false;
+      }
+
+      const accessList = state.session.akses.map((item) => {
+        return String(item).trim().toLowerCase();
+      });
+
+      if (!accessList.includes(CURRENT_ACCESS)) {
+        const destination =
+          ACCESS[accessList[0]]?.route || "login.html";
+
+        window.location.replace(destination);
+        return false;
+      }
+
+      return true;
+    }
+
+    function getUserName() {
+      return String(
+        state.session?.nama ||
+        state.session?.name ||
+        "Anggota ASPETRI"
+      ).trim();
+    }
+
+    function getUserPhone() {
+      return String(
+        state.session?.nomor_hp ||
+        state.session?.no_hp ||
+        state.session?.phone ||
+        "-"
+      ).trim();
+    }
+
+    function getInitials(name) {
+      const words = String(name)
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2);
+
+      return (
+        words
+          .map((word) => word.charAt(0).toUpperCase())
+          .join("") || "AS"
+      );
+    }
+
+    function getAccessList() {
+      const raw = state.session?.akses;
+
+      let items = Array.isArray(raw)
+        ? raw
+        : typeof raw === "string"
+          ? raw.split(",")
+          : [];
+
+      items = items
+        .map((item) => String(item).trim().toLowerCase())
+        .filter(Boolean);
+
+      if (!items.includes(CURRENT_ACCESS)) {
+        items.unshift(CURRENT_ACCESS);
+      }
+
+      return [...new Set(items)];
+    }
+
+    function fillSessionUI() {
+      const name = getUserName();
+      const phone = getUserPhone();
+      const initials = getInitials(name);
+      const firstName = name.split(/\s+/)[0] || "Anggota ASPETRI";
+      const status = String(state.session?.status || "Aktif");
+
+      document
+        .querySelectorAll(".js-user-name")
+        .forEach((element) => {
+          element.textContent = name;
+        });
+
+      document
+        .querySelectorAll(".js-user-phone")
+        .forEach((element) => {
+          element.textContent = phone;
+        });
+
+      document
+        .querySelectorAll(".js-user-initials")
+        .forEach((element) => {
+          element.textContent = initials;
+        });
+
+      document
+        .querySelectorAll(".js-user-firstname")
+        .forEach((element) => {
+          element.textContent = firstName;
+        });
+
+      document.getElementById("profileStatus").textContent =
+        `● Akun ${status.toLowerCase()}`;
+
+      document.getElementById("profileStatusText").textContent =
+        status;
+
+      renderAccessMenus();
+    }
+
+    function renderAccessMenus() {
+      const accesses = getAccessList();
+      const drawerList =
+        document.getElementById("drawerAccessList");
+      const profileList =
+        document.getElementById("profileAccessList");
+
+      drawerList.innerHTML = accesses
+        .map((key) => {
+          const item = ACCESS[key] || {
+            title: titleCase(key),
+            route: "#"
+          };
+
+          const current =
+            key === CURRENT_ACCESS ? " current" : "";
+
+          return `
+            <button
+              class="drawer-link${current}"
+              type="button"
+              data-access="${escapeAttribute(key)}"
+            >
+              <svg class="icon">
+                <use href="#icon-store"></use>
+              </svg>
+
+              <span>${escapeHTML(item.title)}</span>
+
+              <svg class="icon arrow">
+                <use href="#icon-chevron"></use>
+              </svg>
+            </button>
+          `;
+        })
+        .join("");
+
+      profileList.innerHTML = accesses
+        .map((key) => {
+          const title =
+            ACCESS[key]?.title || titleCase(key);
+
+          return `
+            <span class="access-chip">
+              ${escapeHTML(title)}
+            </span>
+          `;
+        })
+        .join("");
+    }
+
+    function performLogout() {
+      localStorage.removeItem(STORAGE.session);
+
+      localStorage.setItem(
+        STORAGE.logoutNotice,
+        "Anda berhasil keluar dari akun."
+      );
+
+      window.location.replace("index.html");
+    }
+
+    /* ======================================================
+       NAVIGASI
+    ====================================================== */
+    function switchTab(tabName) {
+      const panel =
+        document.getElementById(`tab-${tabName}`);
+
+      if (!panel) {
+        return;
+      }
+
+      state.activeTab = tabName;
+
+      document
+        .querySelectorAll(".tab-panel")
+        .forEach((item) => {
+          item.classList.toggle("active", item === panel);
+        });
+
+      document
+        .querySelectorAll(".nav-button")
+        .forEach((button) => {
+          button.classList.toggle(
+            "active",
+            button.dataset.tab === tabName
+          );
+        });
+
+      document.getElementById("tabCaption").textContent =
+        panel.dataset.title || "";
+
+      panel.scrollTop = 0;
+    }
+
+    function openDrawer() {
+      document.getElementById("drawer").classList.add("open");
+
+      document
+        .getElementById("drawerBackdrop")
+        .classList.add("open");
+    }
+
+    function closeDrawer() {
+      document.getElementById("drawer").classList.remove("open");
+
+      document
+        .getElementById("drawerBackdrop")
+        .classList.remove("open");
+    }
+
+    function openModal(id) {
+      closeDrawer();
+      document.getElementById(id)?.classList.add("open");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id)?.classList.remove("open");
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      const safeMessage =
+        /(drive|docs)\.google\.com|https?:\/\//i.test(String(message || ""))
+          ? "data tidak terbaca silakan refresh kembali"
+          : message;
+
+      toast.textContent = safeMessage;
+      toast.classList.add("show");
+
+      clearTimeout(state.toastTimer);
+
+      state.toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2800);
+    }
+
+    /* ======================================================
+       GOOGLE SHEET
+    ====================================================== */
+    async function fetchText(url, timeout = 15000) {
+      const controller = new AbortController();
+
+      const timer = setTimeout(() => {
+        controller.abort();
+      }, timeout);
+
+      try {
+        const response = await fetch(url, {
+          signal: controller.signal
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        return await response.text();
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    function parseGviz(body) {
+      const start = body.indexOf("{");
+      const end = body.lastIndexOf("}");
+
+      if (start < 0 || end < start) {
+        throw new Error("Format Google Sheet tidak valid");
+      }
+
+      return JSON.parse(body.slice(start, end + 1));
+    }
+
+    function cellValue(cells, index) {
+      const cell = cells?.[index];
+
+      if (!cell) {
+        return "";
+      }
+
+      return String(cell.v ?? cell.f ?? "").trim();
+    }
+
+    function parseCSV(text) {
+      const rows = [];
+
+      let row = [];
+      let value = "";
+      let quoted = false;
+
+      for (
+        let index = 0;
+        index < text.length;
+        index += 1
+      ) {
+        const character = text[index];
+        const nextCharacter = text[index + 1];
+
+        if (
+          character === '"' &&
+          quoted &&
+          nextCharacter === '"'
+        ) {
+          value += '"';
+          index += 1;
+        } else if (character === '"') {
+          quoted = !quoted;
+        } else if (character === "," && !quoted) {
+          row.push(value);
+          value = "";
+        } else if (
+          (character === "\n" || character === "\r") &&
+          !quoted
+        ) {
+          if (
+            character === "\r" &&
+            nextCharacter === "\n"
+          ) {
+            index += 1;
+          }
+
+          row.push(value);
+
+          if (row.some((item) => item.trim() !== "")) {
+            rows.push(row);
+          }
+
+          row = [];
+          value = "";
+        } else {
+          value += character;
+        }
+      }
+
+      row.push(value);
+
+      if (row.some((item) => item.trim() !== "")) {
+        rows.push(row);
+      }
+
+      return rows;
+    }
+
+    function driveImage(url, size = 1000) {
+      const value = String(url || "").trim();
+
+      if (!value) {
+        return "";
+      }
+
+      if (value.includes("drive.google.com/thumbnail")) {
+        try {
+          const id = new URL(value).searchParams.get("id");
+
+          return id
+            ? `https://drive.google.com/thumbnail?id=${id}&sz=w${size}`
+            : value;
+        } catch (error) {
+          return value;
+        }
+      }
+
+      const fileMatch =
+        value.match(/\/d\/([a-zA-Z0-9_-]+)/);
+
+      const queryMatch =
+        value.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+
+      const plainId =
+        /^[a-zA-Z0-9_-]{20,}$/.test(value)
+          ? value
+          : "";
+
+      const id =
+        fileMatch?.[1] ||
+        queryMatch?.[1] ||
+        plainId;
+
+      return id
+        ? `https://drive.google.com/thumbnail?id=${id}&sz=w${size}`
+        : value;
+    }
+
+    async function loadBanners() {
+      try {
+        const url =
+          `https://docs.google.com/spreadsheets/d/${SHEETS.carousel}/gviz/tq` +
+          "?tqx=out:json&sheet=Sheet1&range=A2:A";
+
+        const json = parseGviz(await fetchText(url));
+
+        state.banners = (json.table?.rows || [])
+          .map((row) => {
+            return driveImage(cellValue(row.c, 0));
+          })
+          .filter(Boolean);
+      } catch (error) {
+        state.banners = [];
+      }
+
+      renderBanners();
+    }
+
+    async function loadMaterials() {
+      renderMaterialLoading();
+
+      try {
+        const url =
+          `https://docs.google.com/spreadsheets/d/${SHEETS.materi}/gviz/tq` +
+          "?tqx=out:json&sheet=Sheet1&range=A2:Z";
+
+        const json = parseGviz(await fetchText(url));
+        const rows = json.table?.rows || [];
+
+        state.materials = rows
+          .map((row, index) => {
+            const cells = row.c || [];
+
+            return {
+              row: index + 2,
+              title: cellValue(cells, 0),
+              content: cellValue(cells, 1),
+              examUrl: cellValue(cells, 2),
+
+              images: Array.from(
+                { length: 23 },
+                (_, imageIndex) => {
+                  return driveImage(
+                    cellValue(cells, imageIndex + 3)
+                  );
+                }
+              ).filter(Boolean)
+            };
+          })
+          .filter((item) => {
+            return item.title || item.images.length;
+          });
+      } catch (error) {
+        state.materials = FALLBACK_MATERIALS;
+      }
+
+      if (!state.materials.length) {
+        state.materials = FALLBACK_MATERIALS;
+      }
+
+      renderMaterials();
+    }
+
+    async function loadProducts() {
+      try {
+        const url =
+          `https://docs.google.com/spreadsheets/d/${SHEETS.produk}/export` +
+          "?format=csv&gid=0";
+
+        const text = await fetchText(url, 20000);
+        const rows = parseCSV(text);
+
+        state.products = rows
+          .slice(1)
+          .map((row) => {
+            const initialStock = parseNumber(row[9]);
+            const remainingStock = parseNumber(row[11]);
+
+            const progress =
+              initialStock > 0
+                ? remainingStock / initialStock
+                : remainingStock / 100;
+
+            return {
+              phone: row[0] || "",
+              name: row[1] || "",
+              oldPrice: formatRupiah(row[3]),
+              price: formatRupiah(row[4]),
+              discount: formatDiscount(row[5]),
+              stock: row[6] || "Stok tersedia",
+              image: driveImage(row[7]),
+              province: row[12] || "",
+              city: row[13] || "",
+              district: row[14] || "",
+              village: row[15] || "",
+              category: row[16] || "",
+
+              progress: Math.max(
+                0,
+                Math.min(
+                  1,
+                  Number.isFinite(progress)
+                    ? progress
+                    : 0.6
+                )
+              )
+            };
+          })
+          .filter((product) => product.name);
+      } catch (error) {
+        state.products = FALLBACK_PRODUCTS;
+      }
+
+      if (!state.products.length) {
+        state.products = FALLBACK_PRODUCTS;
+      }
+
+      renderSelectedCategory();
+    }
+
+    async function loadContacts(displayMessage = false) {
+      renderContactLoading();
+
+      try {
+        const url =
+          `https://docs.google.com/spreadsheets/d/${SHEETS.kontak}/export` +
+          "?format=csv&gid=0";
+
+        const rows = parseCSV(await fetchText(url));
+
+        state.contacts = rows
+          .slice(1)
+          .map((row) => {
+            return {
+              name: String(row[0] || "").trim(),
+              phone: normalizePhone(row[1]),
+              photo: driveImage(row[2], 500)
+            };
+          })
+          .filter((contact) => contact.name);
+      } catch (error) {
+        state.contacts = FALLBACK_CONTACTS;
+      }
+
+      if (!state.contacts.length) {
+        state.contacts = FALLBACK_CONTACTS;
+      }
+
+      renderContacts();
+
+      if (displayMessage) {
+        showToast("Data kontak telah diperbarui.");
+      }
+    }
+
+    /* ======================================================
+       BANNER
+    ====================================================== */
+    function renderBanners() {
+      const track = document.getElementById("bannerTrack");
+      const dots = document.getElementById("bannerDots");
+
+      const fallbackSlides = [
+        {
+          title: "ASPETRI Jawa Timur, Bersama Naik Kelas",
+          subtitle:
+            "Belajar, terhubung, dan berkembang bersama organisasi.",
+          colors: "#2e7d32,#66bb6a"
+        },
+        {
+          title: "Produk Anggota Lebih Dekat",
+          subtitle:
+            "Pilih kategori dan aktifkan lokasi perangkat Anda.",
+          colors: "#1b5e20,#42a93b"
+        }
+      ];
+
+      const slides = state.banners.length
+        ? state.banners.map((image) => ({ image }))
+        : fallbackSlides;
+
+      state.bannerIndex = 0;
+
+      track.innerHTML = slides
+        .map((slide) => {
+          const background = slide.colors
+            ? `style="background:linear-gradient(135deg,${slide.colors})"`
+            : "";
+
+          const content = slide.image
+            ? `
+              <img
+                src="${escapeAttribute(slide.image)}"
+                alt="Informasi ASPETRI"
+                loading="lazy"
+              >
+            `
+            : `
+              <div class="banner-fallback">
+                <strong>${escapeHTML(slide.title)}</strong>
+                <span>${escapeHTML(slide.subtitle)}</span>
+              </div>
+            `;
+
+          return `
+            <div class="banner-slide">
+              <div class="banner-media" ${background}>
+                ${content}
+
+                <div class="banner-label">
+                  📢 Info ASPETRI
+                </div>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+
+      dots.innerHTML = slides
+        .map((_, index) => {
+          return `
+            <button
+              class="banner-dot${index === 0 ? " active" : ""}"
+              type="button"
+              data-banner-index="${index}"
+              aria-label="Banner ${index + 1}"
+            ></button>
+          `;
+        })
+        .join("");
+
+      updateBanner(0);
+
+      clearInterval(state.bannerTimer);
+
+      if (slides.length > 1) {
+        state.bannerTimer = setInterval(() => {
+          updateBanner(
+            (state.bannerIndex + 1) % slides.length
+          );
+        }, 3500);
+      }
+    }
+
+    function updateBanner(index) {
+      const slides =
+        document.querySelectorAll(".banner-slide");
+
+      if (!slides.length) {
+        return;
+      }
+
+      state.bannerIndex = Math.max(
+        0,
+        Math.min(index, slides.length - 1)
+      );
+
+      document.getElementById("bannerTrack").style.transform =
+        `translateX(-${state.bannerIndex * 100}%)`;
+
+      document
+        .querySelectorAll(".banner-dot")
+        .forEach((dot, dotIndex) => {
+          dot.classList.toggle(
+            "active",
+            dotIndex === state.bannerIndex
+          );
+        });
+    }
+
+    /* ======================================================
+       KATEGORI DAN PRODUK
+    ====================================================== */
+    function renderCategories() {
+      const html = CATEGORIES
+        .map((item) => {
+          const active =
+            state.selectedCategory === item.name
+              ? " active"
+              : "";
+
+          return `
+            <button
+              class="category-button${active}"
+              type="button"
+              data-category="${item.name}"
+            >
+              <span class="category-icon">
+                ${item.emoji}
+              </span>
+
+              <span>${item.name}</span>
+            </button>
+          `;
+        })
+        .join("");
+
+      document
+        .querySelectorAll(".js-category-list")
+        .forEach((list) => {
+          list.innerHTML = html;
+        });
+    }
+
+    function selectCategory(category) {
+      state.selectedCategory = category;
+
+      renderCategories();
+      renderSelectedCategory();
+    }
+
+    function renderSelectedCategory() {
+      const homeResult =
+        document.getElementById("homeCategoryResult");
+
+      const grid =
+        document.getElementById("productGrid");
+
+      const category = state.selectedCategory;
+
+      if (!category) {
+        homeResult.classList.remove("show");
+
+        document.getElementById(
+          "productSectionTitle"
+        ).textContent = "Pilih kategori";
+
+        document.getElementById(
+          "productsCount"
+        ).textContent = "0 produk";
+
+        grid.innerHTML = emptyProductsHTML(
+          "Pilih Jajan, Jasa, Jarik, atau Jamu untuk melihat produk."
+        );
+
+        return;
+      }
+
+      const categoryInfo =
+        CATEGORIES.find((item) => item.name === category);
+
+      let products = filterProducts();
+
+      products = sortProductsByLocation(products);
+
+      homeResult.classList.add("show");
+
+      document.getElementById(
+        "homeCategoryIcon"
+      ).textContent =
+        categoryInfo?.emoji || "🛍️";
+
+      document.getElementById(
+        "homeCategoryTitle"
+      ).textContent =
+        `Produk kategori ${category}`;
+
+      document.getElementById(
+        "homeCategoryStatus"
+      ).textContent = products.length
+        ? `${products.length} produk ditemukan${
+            state.location
+              ? " dan diurutkan berdasarkan lokasi."
+              : "."
+          }`
+        : "Belum ada produk yang sesuai.";
+
+      document.getElementById(
+        "homeMiniProducts"
+      ).innerHTML = products.length
+        ? products
+            .slice(0, 5)
+            .map((product) => {
+              return productCardHTML(product, true);
+            })
+            .join("")
+        : `
+          <p style="margin:6px;color:var(--muted);font-size:12px">
+            Produk belum tersedia.
+          </p>
+        `;
+
+      document.getElementById(
+        "productSectionTitle"
+      ).textContent =
+        `Produk ${category}`;
+
+      document.getElementById(
+        "productsCount"
+      ).textContent =
+        `${products.length} produk`;
+
+      grid.innerHTML = products.length
+        ? products
+            .map((product) => {
+              return productCardHTML(product, false);
+            })
+            .join("")
+        : emptyProductsHTML(
+            "Produk tidak ditemukan. Coba kata kunci atau kategori lain."
+          );
+    }
+
+    function filterProducts() {
+      const category =
+        normalizeText(state.selectedCategory);
+
+      const keywords =
+        normalizeText(state.search)
+          .split(/\s+/)
+          .filter(Boolean);
+
+      return state.products.filter((product) => {
+        if (
+          normalizeText(product.category) !== category
+        ) {
+          return false;
+        }
+
+        const searchable = normalizeText(
+          [
+            product.name,
+            product.village,
+            product.district,
+            product.city,
+            product.province
+          ].join(" ")
+        );
+
+        return keywords.every((keyword) => {
+          return searchable.includes(keyword);
+        });
+      });
+    }
+
+    function sortProductsByLocation(products) {
+      if (!state.location?.region) {
+        return products;
+      }
+
+      return products
+        .map((product, index) => {
+          return {
+            product,
+            index,
+            rank: locationRank(
+              product,
+              state.location.region
+            )
+          };
+        })
+        .sort((left, right) => {
+          return (
+            left.rank - right.rank ||
+            left.index - right.index
+          );
+        })
+        .map((item) => item.product);
+    }
+
+    function locationRank(product, location) {
+      const sameProvince = sameLocation(
+        product.province,
+        location.province
+      );
+
+      const sameCity = sameLocation(
+        product.city,
+        location.city
+      );
+
+      const sameDistrict = sameLocation(
+        product.district,
+        location.district
+      );
+
+      const sameVillage = sameLocation(
+        product.village,
+        location.village
+      );
+
+      if (
+        sameProvince &&
+        sameCity &&
+        sameDistrict &&
+        sameVillage
+      ) {
+        return 0;
+      }
+
+      if (
+        sameProvince &&
+        sameCity &&
+        sameDistrict
+      ) {
+        return 1;
+      }
+
+      if (sameProvince && sameCity) {
+        return 2;
+      }
+
+      if (sameProvince) {
+        return 3;
+      }
+
+      return 4;
+    }
+
+    function productCardHTML(product, mini) {
+      const productIndex =
+        state.products.indexOf(product);
+
+      const image = product.image
+        ? `
+          <img
+            src="${escapeAttribute(product.image)}"
+            alt="${escapeAttribute(product.name)}"
+            loading="lazy"
+            onerror="this.remove()"
+          >
+        `
+        : `
+          <span aria-hidden="true">
+            ${categoryEmoji(product.category)}
+          </span>
+        `;
+
+      const location =
+        [
+          product.village,
+          product.district,
+          product.city,
+          product.province
+        ]
+          .filter(Boolean)
+          .join(", ") ||
+        "Lokasi belum tersedia";
+
+      const progress = Math.round(
+        (Number(product.progress) || 0.6) * 100
+      );
+
+      return `
+        <article class="product-card${mini ? " mini" : ""}">
+          <div class="product-image">
+            ${image}
+
+            <span class="category-tag">
+              ${escapeHTML(
+                product.category ||
+                state.selectedCategory
+              )}
+            </span>
+          </div>
+
+          <div class="product-body">
+            <h3 class="product-name">
+              ${escapeHTML(product.name)}
+            </h3>
+
+            <p class="product-location">
+              📍 ${escapeHTML(location)}
+            </p>
+
+            <div class="old-price-row">
+              ${
+                product.oldPrice
+                  ? `
+                    <span class="old-price">
+                      ${escapeHTML(product.oldPrice)}
+                    </span>
+                  `
+                  : ""
+              }
+
+              ${
+                product.discount
+                  ? `
+                    <span class="discount">
+                      ${escapeHTML(product.discount)}
+                    </span>
+                  `
+                  : ""
+              }
+            </div>
+
+            <div class="product-price">
+              ${escapeHTML(
+                product.price ||
+                "Harga menyesuaikan"
+              )}
+            </div>
+
+            <div class="stock-bar">
+              <span
+                class="stock-fill"
+                style="width:${progress}%"
+              ></span>
+
+              <span class="stock-text">
+                ${escapeHTML(
+                  product.stock ||
+                  "Stok tersedia"
+                )}
+              </span>
+            </div>
+
+            <button
+              class="order-button"
+              type="button"
+              data-product-index="${productIndex}"
+            >
+              Pesan
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function emptyProductsHTML(message) {
+      return `
+        <div
+          class="empty-state"
+          style="grid-column:1/-1"
+        >
+          <div class="empty-icon">
+            <svg class="icon">
+              <use href="#icon-bag"></use>
+            </svg>
+          </div>
+
+          <h3>Belum ada produk</h3>
+
+          <p>${escapeHTML(message)}</p>
+        </div>
+      `;
+    }
+
+    /* ======================================================
+       KONTAK
+    ====================================================== */
+    function renderContactLoading() {
+      const html = Array.from(
+        { length: 3 },
+        () => `<div class="loading-card"></div>`
+      ).join("");
+
+      document.getElementById(
+        "homeContacts"
+      ).innerHTML = html;
+    }
+
+    function renderContacts() {
+      document.getElementById(
+        "homeContacts"
+      ).innerHTML = state.contacts
+        .map((contact, index) => {
+          return contactCardHTML(contact, index);
+        })
+        .join("");
+
+      document.getElementById(
+        "chatContacts"
+      ).innerHTML = state.contacts
+        .map((contact, index) => {
+          return chatRowHTML(contact, index);
+        })
+        .join("");
+    }
+
+    function contactCardHTML(contact, index) {
+      const initials = getInitials(contact.name);
+
+      const avatar = contact.photo
+        ? `
+          <img
+            src="${escapeAttribute(contact.photo)}"
+            alt=""
+            loading="lazy"
+            onerror="this.remove()"
+          >
+        `
+        : escapeHTML(initials);
+
+      return `
+        <article class="contact-card">
+          <div class="avatar">
+            ${avatar}
+          </div>
+
+          <h3 class="contact-name">
+            ${escapeHTML(contact.name)}
+          </h3>
+
+          <button
+            class="whatsapp-button"
+            type="button"
+            data-contact-index="${index}"
+          >
+            ✆ Kirim Pesan
+          </button>
+        </article>
+      `;
+    }
+
+    function chatRowHTML(contact, index) {
+      const initials = getInitials(contact.name);
+
+      const avatar = contact.photo
+        ? `
+          <img
+            src="${escapeAttribute(contact.photo)}"
+            alt=""
+            loading="lazy"
+            onerror="this.remove()"
+          >
+        `
+        : escapeHTML(initials);
+
+      return `
+        <button
+          class="chat-row card"
+          type="button"
+          data-contact-index="${index}"
+        >
+          <div class="avatar">
+            ${avatar}
+          </div>
+
+          <div class="chat-copy">
+            <strong>
+              ${escapeHTML(contact.name)}
+            </strong>
+
+            <span>
+              Hubungi melalui WhatsApp
+            </span>
+          </div>
+
+          <svg
+            class="icon"
+            style="width:18px;height:18px;color:var(--primary)"
+          >
+            <use href="#icon-chevron"></use>
+          </svg>
+        </button>
+      `;
+    }
+
+    /* ======================================================
+       MATERI
+    ====================================================== */
+    function renderMaterialLoading() {
+      document.getElementById(
+        "materialList"
+      ).innerHTML = Array.from(
+        { length: 3 },
+        () => {
+          return `
+            <div
+              class="loading-card"
+              style="
+                width:166px;
+                min-width:166px;
+                height:203px
+              "
+            ></div>
+          `;
+        }
+      ).join("");
+    }
+
+    function renderMaterials() {
+      document.getElementById(
+        "materialList"
+      ).innerHTML = state.materials
+        .map((item, index) => {
+          const image = item.images[0]
+            ? `
+              <img
+                src="${escapeAttribute(item.images[0])}"
+                alt=""
+                loading="lazy"
+                onerror="this.remove()"
+              >
+            `
+            : "📘";
+
+          return `
+            <button
+              class="material-card"
+              type="button"
+              data-material-index="${index}"
+            >
+              <div class="material-image">
+                ${image}
+              </div>
+
+              <div class="material-body">
+                <h3 class="material-title">
+                  ${escapeHTML(
+                    item.title ||
+                    "Materi Edukasi"
+                  )}
+                </h3>
+
+                <div class="detail-label">
+                  Baca Detail
+                </div>
+              </div>
+            </button>
+          `;
+        })
+        .join("");
+    }
+
+    function openMaterial(index) {
+      const item = state.materials[index];
+
+      if (!item) {
+        return;
+      }
+
+      const image =
+        document.getElementById("materialModalImage");
+
+      const examButton =
+        document.getElementById("examButton");
+
+      document.getElementById(
+        "materialModalTitle"
+      ).textContent =
+        item.title || "Detail Materi";
+
+      document.getElementById(
+        "materialModalContent"
+      ).textContent =
+        item.content ||
+        "Isi materi belum tersedia. Silakan muat ulang beberapa saat lagi.";
+
+      if (item.images[0]) {
+        image.src = item.images[0];
+        image.hidden = false;
+      } else {
+        image.removeAttribute("src");
+        image.hidden = true;
+      }
+
+      examButton.hidden = !item.examUrl;
+      examButton.dataset.url = item.examUrl || "";
+
+      openModal("materialModal");
+    }
+
+    /* ======================================================
+       GPS
+    ====================================================== */
+    function requestLocation() {
+      const status =
+        document.getElementById("locationStatus");
+
+      const button =
+        document.getElementById("locationButton");
+
+      if (!navigator.geolocation) {
+        status.textContent =
+          "Browser ini tidak mendukung pembacaan lokasi.";
+
+        showToast(
+          "GPS tidak didukung oleh browser ini."
+        );
+
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Memuat...";
+
+      status.textContent =
+        "Meminta izin dan membaca lokasi perangkat...";
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          state.location = {
+            latitude,
+            longitude,
+            region: null
+          };
+
+          status.textContent =
+            `GPS aktif: ${latitude.toFixed(5)}, ` +
+            `${longitude.toFixed(5)}. ` +
+            "Mengambil nama wilayah...";
+
+          try {
+            const url =
+              "https://api.bigdatacloud.net/data/reverse-geocode-client" +
+              `?latitude=${latitude}` +
+              `&longitude=${longitude}` +
+              "&localityLanguage=id";
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+              throw new Error("Reverse geocode gagal");
+            }
+
+            const data = await response.json();
+
+            state.location.region = {
+              province:
+                data.principalSubdivision || "",
+
+              city:
+                data.city ||
+                data.locality ||
+                "",
+
+              district:
+                data.localAdministrativeArea ||
+                "",
+
+              village:
+                data.locality || ""
+            };
+
+            const display = [
+              state.location.region.village,
+              state.location.region.district,
+              state.location.region.city,
+              state.location.region.province
+            ]
+              .filter(Boolean)
+              .join(", ");
+
+            status.textContent = display
+              ? `Lokasi aktif: ${display}`
+              : `GPS aktif: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+          } catch (error) {
+            status.textContent =
+              `GPS aktif: ${latitude.toFixed(5)}, ` +
+              `${longitude.toFixed(5)}. ` +
+              "Nama wilayah belum dapat dibaca.";
+          }
+
+          button.disabled = false;
+          button.textContent = "Perbarui";
+
+          renderSelectedCategory();
+
+          showToast("Lokasi berhasil diperbarui.");
+        },
+
+        (error) => {
+          const messages = {
+            1:
+              "Izin lokasi ditolak. Aktifkan izin lokasi pada pengaturan browser.",
+
+            2:
+              "Lokasi perangkat belum dapat ditemukan.",
+
+            3:
+              "Waktu membaca lokasi habis. Silakan coba lagi."
+          };
+
+          status.textContent =
+            messages[error.code] ||
+            "Gagal membaca lokasi perangkat.";
+
+          button.disabled = false;
+          button.textContent = "Coba lagi";
+
+          showToast(status.textContent);
+        },
+
+        {
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 60000
+        }
+      );
+    }
+
+    /* ======================================================
+       WHATSAPP
+    ====================================================== */
+    function openProductWhatsApp(index) {
+      const product = state.products[index];
+
+      if (!product) {
+        return;
+      }
+
+      const phone = normalizePhone(product.phone);
+
+      if (!phone) {
+        showToast(
+          "Nomor WhatsApp penjual belum tersedia."
+        );
+
+        return;
+      }
+
+      const message =
+        `Saya mau membeli ${product.name} ` +
+        `dengan harga retail ${
+          product.price || "yang tertera"
+        }`;
+
+      window.open(
+        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    }
+
+    function openContactWhatsApp(index) {
+      const contact = state.contacts[index];
+
+      if (!contact) {
+        return;
+      }
+
+      const phone = normalizePhone(contact.phone);
+
+      if (!phone) {
+        showToast(
+          "Nomor WhatsApp kontak belum tersedia."
+        );
+
+        return;
+      }
+
+      window.open(
+        `https://wa.me/${phone}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    }
+
+    /* ======================================================
+       FORMAT DATA
+    ====================================================== */
+    function parseNumber(value) {
+      let text = String(value || "")
+        .trim()
+        .replace(/[^0-9,.-]/g, "");
+
+      if (!text) {
+        return 0;
+      }
+
+      const indonesianThousands =
+        /^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(text);
+
+      if (indonesianThousands) {
+        text = text
+          .replace(/\./g, "")
+          .replace(",", ".");
+      } else if (
+        text.includes(".") &&
+        text.includes(",")
+      ) {
+        text = text
+          .replace(/\./g, "")
+          .replace(",", ".");
+      } else if (text.includes(",")) {
+        text = text.replace(",", ".");
+      }
+
+      const number = Number(text);
+
+      return Number.isFinite(number)
+        ? number
+        : 0;
+    }
+
+    function formatRupiah(value) {
+      const raw = String(value || "").trim();
+
+      if (!raw) {
+        return "";
+      }
+
+      const number = parseNumber(raw);
+
+      return (
+        "Rp" +
+        Math.round(number).toLocaleString("id-ID")
+      );
+    }
+
+    function formatDiscount(value) {
+      let raw = String(value || "")
+        .trim()
+        .replace(/^-/, "");
+
+      if (!raw) {
+        return "";
+      }
+
+      let number = parseNumber(raw);
+
+      if (number > 0 && number <= 1) {
+        number *= 100;
+      }
+
+      const label =
+        number || raw.replace("%", "");
+
+      return `-${label}%`;
+    }
+
+    function normalizePhone(value) {
+      let phone = String(value || "")
+        .replace(/[^0-9+]/g, "");
+
+      if (phone.startsWith("+")) {
+        phone = phone.slice(1);
+      }
+
+      if (phone.startsWith("0")) {
+        phone = `62${phone.slice(1)}`;
+      } else if (phone.startsWith("8")) {
+        phone = `62${phone}`;
+      }
+
+      return phone;
+    }
+
+    function normalizeText(value) {
+      return String(value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function normalizeLocation(value) {
+      return normalizeText(value)
+        .replace(
+          /\b(provinsi|propinsi|kabupaten|kab|kota|kecamatan|kec|kelurahan|kel|desa)\b/g,
+          ""
+        )
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function sameLocation(left, right) {
+      const first = normalizeLocation(left);
+      const second = normalizeLocation(right);
+
+      return Boolean(
+        first &&
+        second &&
+        first === second
+      );
+    }
+
+    function categoryEmoji(category) {
+      return (
+        CATEGORIES.find((item) => {
+          return (
+            normalizeText(item.name) ===
+            normalizeText(category)
+          );
+        })?.emoji || "🛍️"
+      );
+    }
+
+    function titleCase(value) {
+      return String(value).replace(
+        /\b\w/g,
+        (character) => character.toUpperCase()
+      );
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(
+        /[&<>'"]/g,
+        (character) => {
+          const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            "'": "&#39;",
+            '"': "&quot;"
+          };
+
+          return entities[character];
+        }
+      );
+    }
+
+    function escapeAttribute(value) {
+      return escapeHTML(value).replace(
+        /`/g,
+        "&#96;"
+      );
+    }
+
+    /* ======================================================
+       EVENT
+    ====================================================== */
+    function bindEvents() {
+      document
+        .getElementById("openDrawerButton")
+        .addEventListener("click", openDrawer);
+
+      document
+        .getElementById("drawerBackdrop")
+        .addEventListener("click", closeDrawer);
+
+      document
+        .querySelectorAll(".nav-button")
+        .forEach((button) => {
+          button.addEventListener("click", () => {
+            switchTab(button.dataset.tab);
+          });
+        });
+
+      document.addEventListener("click", (event) => {
+        const categoryButton =
+          event.target.closest(".category-button");
+
+        if (categoryButton) {
+          selectCategory(
+            categoryButton.dataset.category
+          );
+
+          return;
+        }
+
+        const productButton =
+          event.target.closest("[data-product-index]");
+
+        if (productButton) {
+          openProductWhatsApp(
+            Number(productButton.dataset.productIndex)
+          );
+
+          return;
+        }
+
+        const contactButton =
+          event.target.closest("[data-contact-index]");
+
+        if (contactButton) {
+          openContactWhatsApp(
+            Number(contactButton.dataset.contactIndex)
+          );
+
+          return;
+        }
+
+        const materialButton =
+          event.target.closest("[data-material-index]");
+
+        if (materialButton) {
+          openMaterial(
+            Number(materialButton.dataset.materialIndex)
+          );
+
+          return;
+        }
+
+        const bannerDot =
+          event.target.closest("[data-banner-index]");
+
+        if (bannerDot) {
+          updateBanner(
+            Number(bannerDot.dataset.bannerIndex)
+          );
+
+          return;
+        }
+
+        const accessButton =
+          event.target.closest("[data-access]");
+
+        if (accessButton) {
+          const key = accessButton.dataset.access;
+          const item = ACCESS[key];
+
+          if (!item) {
+            showToast(
+              `Akses tidak dikenali: ${key}`
+            );
+
+            return;
+          }
+
+          if (key === CURRENT_ACCESS) {
+            closeDrawer();
+            switchTab("home");
+            return;
+          }
+
+          window.location.href = item.route;
+        }
+      });
+
+      document
+        .querySelectorAll("[data-close-modal]")
+        .forEach((button) => {
+          button.addEventListener("click", () => {
+            closeModal(button.dataset.closeModal);
+          });
+        });
+
+      document
+        .querySelectorAll(".modal-backdrop")
+        .forEach((backdrop) => {
+          backdrop.addEventListener(
+            "click",
+            (event) => {
+              if (event.target === backdrop) {
+                closeModal(backdrop.id);
+              }
+            }
+          );
+        });
+
+      [
+        "topLogoutButton",
+        "drawerLogoutButton",
+        "profileLogoutButton"
+      ].forEach((id) => {
+        document
+          .getElementById(id)
+          .addEventListener("click", () => {
+            openModal("logoutModal");
+          });
+      });
+
+      document
+        .getElementById("confirmLogoutButton")
+        .addEventListener(
+          "click",
+          performLogout
+        );
+
+      document
+        .getElementById("refreshContactsButton")
+        .addEventListener("click", () => {
+          loadContacts(true);
+        });
+
+      document
+        .getElementById("locationButton")
+        .addEventListener(
+          "click",
+          requestLocation
+        );
+
+      const search =
+        document.getElementById("productSearch");
+
+      const clearSearchButton =
+        document.getElementById("clearSearchButton");
+
+      search.addEventListener("input", () => {
+        state.search = search.value;
+
+        clearSearchButton.classList.toggle(
+          "show",
+          Boolean(search.value.trim())
+        );
+
+        renderSelectedCategory();
+      });
+
+      clearSearchButton.addEventListener(
+        "click",
+        () => {
+          search.value = "";
+          state.search = "";
+
+          clearSearchButton.classList.remove("show");
+
+          search.focus();
+          renderSelectedCategory();
+        }
+      );
+
+      document
+        .getElementById("examButton")
+        .addEventListener("click", (event) => {
+          const url =
+            event.currentTarget.dataset.url;
+
+          if (url) {
+            window.open(
+              url,
+              "_blank",
+              "noopener,noreferrer"
+            );
+          }
+        });
+
+      document.addEventListener(
+        "keydown",
+        (event) => {
+          if (event.key !== "Escape") {
+            return;
+          }
+
+          closeDrawer();
+
+          document
+            .querySelectorAll(".modal-backdrop.open")
+            .forEach((modal) => {
+              closeModal(modal.id);
+            });
+        }
+      );
+    }
+
+    /* ======================================================
+       INISIALISASI
+    ====================================================== */
+    function runDeferred(task, delay = 0) {
+      window.setTimeout(task, delay);
+    }
+
+    function init() {
+      if (!requireSession()) {
+        return;
+      }
+
+      fillSessionUI();
+      bindEvents();
+      renderCategories();
+      renderBanners();
+      renderSelectedCategory();
+
+      loadBanners();
+      loadMaterials();
+      loadProducts();
+      runDeferred(loadContacts, 220);
+    }
+
+    init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,4261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+  <meta name="theme-color" content="#ffffff">
+  <title>Pembelajaran Kampus Herbal</title>
+
+  <style>
+    :root {
+      --green: #2e7d32;
+      --green-dark: #1b5e20;
+      --green-soft: #e8f5e9;
+      --blue: #1565c0;
+      --purple: #6a1b9a;
+      --orange: #ef6c00;
+      --gold: #d6a84f;
+      --red: #e7553c;
+      --ink: #1e293b;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --background: #f7fafc;
+      --shadow: 0 10px 26px rgba(15, 23, 42, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      overflow: hidden;
+      color: var(--ink);
+      background: #e5e7eb;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .app-shell {
+      position: relative;
+      width: min(100%, 430px);
+      height: 100vh;
+      height: 100dvh;
+      margin: 0 auto;
+      overflow: hidden;
+      background: var(--background);
+      box-shadow: 0 0 32px rgba(15, 23, 42, 0.2);
+      isolation: isolate;
+    }
+
+    .icon {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
+
+    .app-header {
+      position: absolute;
+      z-index: 20;
+      inset: 0 0 auto;
+      height: calc(68px + env(safe-area-inset-top));
+      padding: env(safe-area-inset-top) 10px 0;
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr) 46px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid #edf1f5;
+      backdrop-filter: blur(14px);
+    }
+
+    .header-button {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      background: transparent;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    .header-button:active {
+      transform: scale(0.96);
+      background: #f1f5f9;
+    }
+
+    .header-button.logout {
+      color: var(--red);
+      background: rgba(231, 85, 60, 0.1);
+    }
+
+    .header-title {
+      min-width: 0;
+      padding-left: 3px;
+    }
+
+    .header-title h1 {
+      margin: 0;
+      overflow: hidden;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .header-title p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .app-main {
+      position: absolute;
+      inset: calc(68px + env(safe-area-inset-top)) 0 0;
+      overflow: auto;
+      overscroll-behavior-y: contain;
+      scrollbar-width: none;
+    }
+
+    .app-main::-webkit-scrollbar,
+    .drawer-body::-webkit-scrollbar,
+    .modal-scroll::-webkit-scrollbar,
+    .webinar-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .loading-page,
+    .error-page {
+      min-height: calc(100dvh - 68px - env(safe-area-inset-top));
+      padding: 40px 24px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+
+    .loading-box,
+    .error-box {
+      width: 100%;
+      padding: 26px 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      margin: 0 auto;
+      border: 3px solid #d7ead9;
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-box p,
+    .error-box p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .error-box h2 {
+      margin: 14px 0 0;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .hero {
+      padding: 24px 20px 20px;
+      color: #fff;
+      text-align: center;
+      background: linear-gradient(145deg, var(--green), var(--green-dark));
+      border-radius: 0 0 28px 28px;
+    }
+
+    .hero-logo {
+      width: 94px;
+      height: 94px;
+      margin: 0 auto;
+      padding: 10px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: var(--green);
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .hero-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 17px;
+    }
+
+    .hero-logo .icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .hero h2 {
+      margin: 14px 0 0;
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      margin: 7px 0 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 14px;
+      font-weight: 550;
+    }
+
+    .carousel {
+      margin-top: 18px;
+    }
+
+    .carousel-viewport {
+      margin: 0 16px;
+      aspect-ratio: 16 / 8.5;
+      overflow: hidden;
+      background: var(--green-soft);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .carousel-track {
+      height: 100%;
+      display: flex;
+      transition: transform 450ms ease-out;
+    }
+
+    .carousel-slide {
+      position: relative;
+      flex: 0 0 100%;
+      height: 100%;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .carousel-dots {
+      min-height: 21px;
+      padding-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      background: #c8e6c9;
+      border-radius: 99px;
+      transition: 220ms ease;
+      cursor: pointer;
+    }
+
+    .carousel-dot.active {
+      width: 22px;
+      background: var(--green);
+    }
+
+    .important-info {
+      margin: 18px 16px 8px;
+      padding: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: #4e342e;
+      background: #fff8e1;
+      border: 1px solid rgba(214, 168, 79, 0.45);
+      border-radius: 18px;
+    }
+
+    .important-info .icon {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      color: var(--gold);
+    }
+
+    .important-info p {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .section-title {
+      padding: 20px 18px 8px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      color: var(--green-dark);
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 550;
+    }
+
+    .refresh-button {
+      width: 39px;
+      height: 39px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: var(--green);
+      background: var(--green-soft);
+      border-radius: 13px;
+      cursor: pointer;
+    }
+
+    .webinar-group {
+      margin-top: 10px;
+    }
+
+    .group-title {
+      padding: 0 18px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .group-title .icon {
+      color: var(--green);
+    }
+
+    .group-title h3 {
+      min-width: 0;
+      margin: 0;
+      flex: 1;
+      font-size: 17px;
+      font-weight: 850;
+    }
+
+    .group-count {
+      padding: 5px 10px;
+      color: var(--green);
+      background: var(--green-soft);
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .webinar-track {
+      padding: 0 16px 8px;
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .webinar-card {
+      width: 238px;
+      min-width: 238px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      scroll-snap-align: start;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 5px 16px rgba(15, 23, 42, 0.06);
+    }
+
+    .material-code {
+      width: fit-content;
+      padding: 5px 10px;
+      color: var(--green);
+      background: var(--green-soft);
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 0.04em;
+    }
+
+    .webinar-image {
+      position: relative;
+      height: 100px;
+      margin-top: 9px;
+      overflow: hidden;
+      background: #edf3ef;
+      border-radius: 14px;
+    }
+
+    .webinar-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .webinar-image-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .discount-badge {
+      position: absolute;
+      z-index: 2;
+      top: 8px;
+      right: 8px;
+      padding: 5px 9px;
+      color: #fff;
+      background: #ef4444;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .webinar-card h4 {
+      min-height: 47px;
+      margin: 10px 0 0;
+      overflow: hidden;
+      display: -webkit-box;
+      font-size: 17px;
+      font-weight: 850;
+      line-height: 1.35;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+    }
+
+    .short-description {
+      min-height: 57px;
+      margin: 8px 0 0;
+      overflow: hidden;
+      display: -webkit-box;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 550;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      line-clamp: 3;
+      -webkit-line-clamp: 3;
+    }
+
+    .price-box {
+      min-height: 35px;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+    }
+
+    .old-price {
+      color: #94a3b8;
+      font-size: 12px;
+      text-decoration: line-through;
+    }
+
+    .new-price {
+      color: var(--green);
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .locked-status {
+      margin-top: 7px;
+      padding: 11px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      color: var(--orange);
+      background: #fff3e0;
+      border: 1px solid #ffcc80;
+      border-radius: 13px;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .card-actions {
+      margin-top: 9px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .card-actions.purchase {
+      grid-template-columns: auto 1fr;
+    }
+
+    .card-button {
+      min-width: 0;
+      min-height: 42px;
+      padding: 9px 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: #fff;
+      background: var(--green);
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .card-button .icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .card-button.outline {
+      color: var(--green);
+      background: #fff;
+      border: 1px solid var(--green);
+    }
+
+    .card-button.blue {
+      background: var(--blue);
+    }
+
+    .card-button.purple {
+      background: var(--purple);
+    }
+
+    .card-button.whatsapp {
+      background: #25d366;
+    }
+
+    .empty-group {
+      margin: 0 16px;
+      padding: 17px;
+      color: var(--muted);
+      text-align: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .page-bottom-space {
+      height: calc(28px + env(safe-area-inset-bottom));
+    }
+
+    .drawer-backdrop,
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      visibility: hidden;
+      background: rgba(15, 23, 42, 0.48);
+      opacity: 0;
+      transition: opacity 220ms ease, visibility 220ms ease;
+    }
+
+    .drawer-backdrop {
+      z-index: 50;
+    }
+
+    .drawer-backdrop.show,
+    .modal-backdrop.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .drawer {
+      position: absolute;
+      z-index: 60;
+      inset: 0 auto 0 0;
+      width: min(84%, 340px);
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      box-shadow: 16px 0 36px rgba(15, 23, 42, 0.2);
+      transform: translateX(-105%);
+      transition: transform 240ms ease;
+    }
+
+    .drawer.show {
+      transform: translateX(0);
+    }
+
+    .drawer-head {
+      padding: calc(22px + env(safe-area-inset-top)) 20px 20px;
+      color: #fff;
+      background: linear-gradient(145deg, var(--green), var(--green-dark));
+    }
+
+    .drawer-head h2 {
+      margin: 0;
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .drawer-profile {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: var(--green-dark);
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .drawer-profile strong,
+    .drawer-profile span {
+      display: block;
+      max-width: 210px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .drawer-profile strong {
+      font-size: 13px;
+    }
+
+    .drawer-profile span {
+      margin-top: 3px;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 11px;
+    }
+
+    .drawer-body {
+      flex: 1;
+      padding: 12px;
+      overflow: auto;
+    }
+
+    .drawer-label {
+      margin: 6px 9px 8px;
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .drawer-link {
+      width: 100%;
+      min-height: 50px;
+      margin-bottom: 5px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #475569;
+      background: transparent;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 760;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .drawer-link.current {
+      color: var(--green-dark);
+      background: var(--green-soft);
+    }
+
+    .drawer-link .chevron {
+      width: 17px;
+      height: 17px;
+      margin-left: auto;
+      color: #94a3b8;
+    }
+
+    .drawer-footer {
+      padding: 10px 12px calc(12px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--line);
+    }
+
+    .drawer-link.logout-link {
+      margin: 0;
+      color: #dc2626;
+    }
+
+    .modal-backdrop {
+      z-index: 80;
+      padding: 12px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-height: calc(100% - 20px - env(safe-area-inset-top));
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 24px 64px rgba(15, 23, 42, 0.25);
+      transform: translateY(30px) scale(0.98);
+      transition: transform 220ms ease;
+    }
+
+    .modal-backdrop.show .modal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-card.tall {
+      height: min(92%, 760px);
+    }
+
+    .modal-card.dialog {
+      max-width: 360px;
+      margin: auto;
+    }
+
+    .modal-handle {
+      width: 44px;
+      height: 5px;
+      margin: 8px auto 2px;
+      flex: 0 0 auto;
+      background: #cbd5e1;
+      border-radius: 99px;
+    }
+
+    .modal-header {
+      min-height: 67px;
+      padding: 10px 10px 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .modal-title-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: var(--green);
+      background: var(--green-soft);
+      border-radius: 50%;
+    }
+
+    .modal-title {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .modal-title h3 {
+      margin: 0;
+      overflow: hidden;
+      font-size: 17px;
+      font-weight: 900;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .modal-title p {
+      margin: 3px 0 0;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 10.5px;
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .close-button {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: #475569;
+      background: transparent;
+      border-radius: 13px;
+      cursor: pointer;
+    }
+
+    .modal-scroll {
+      flex: 1;
+      min-height: 0;
+      padding: 16px;
+      overflow: auto;
+      scrollbar-width: none;
+    }
+
+    .modal-footer {
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .primary-button,
+    .secondary-button,
+    .danger-button {
+      min-height: 45px;
+      padding: 11px 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .primary-button {
+      color: #fff;
+      background: var(--green);
+    }
+
+    .primary-button.blue {
+      background: var(--blue);
+    }
+
+    .secondary-button {
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .danger-button {
+      color: #fff;
+      background: var(--red);
+    }
+
+    .modal-description {
+      margin: 0;
+      color: #475569;
+      font-size: 14px;
+      font-weight: 550;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .modal-state {
+      min-height: 180px;
+      display: grid;
+      place-items: center;
+      gap: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .modal-state h4 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .modal-state p {
+      max-width: 290px;
+      margin: 0;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .material-list,
+    .playlist-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .material-link,
+    .playlist-button {
+      width: 100%;
+      min-height: 51px;
+      padding: 11px 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      background: var(--purple);
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .playlist-button {
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .playlist-button.active {
+      color: var(--green-dark);
+      background: var(--green-soft);
+      border-color: #a5d6a7;
+    }
+
+    .video-frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      margin-bottom: 14px;
+      overflow: hidden;
+      background: #0f172a;
+      border-radius: 17px;
+    }
+
+    .video-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .quiz-code {
+      width: fit-content;
+      padding: 5px 10px;
+      color: var(--green);
+      background: var(--green-soft);
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .quiz-progress-label {
+      margin: 12px 0 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .quiz-progress {
+      height: 7px;
+      overflow: hidden;
+      background: #e2e8f0;
+      border-radius: 99px;
+    }
+
+    .quiz-progress span {
+      display: block;
+      height: 100%;
+      background: var(--blue);
+      border-radius: inherit;
+      transition: width 220ms ease;
+    }
+
+    .quiz-question {
+      margin: 20px 0 16px;
+      font-size: 18px;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .quiz-option {
+      width: 100%;
+      padding: 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      color: var(--ink);
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .quiz-option:disabled {
+      opacity: 1;
+      cursor: default;
+    }
+
+    .quiz-option.correct {
+      color: #166534;
+      background: #f0fdf4;
+      border-color: #22c55e;
+    }
+
+    .quiz-option.wrong {
+      color: #991b1b;
+      background: #fef2f2;
+      border-color: #ef4444;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .option-text {
+      padding-top: 5px;
+      font-size: 13px;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .quiz-feedback {
+      margin-top: 13px;
+      padding: 13px;
+      color: #166534;
+      background: #f0fdf4;
+      border: 1px solid #22c55e;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .quiz-feedback.wrong {
+      color: #991b1b;
+      background: #fef2f2;
+      border-color: #ef4444;
+    }
+
+    .quiz-next {
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .quiz-result {
+      padding: 12px 4px;
+      text-align: center;
+    }
+
+    .result-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      color: #16a34a;
+      background: #f0fdf4;
+      border-radius: 50%;
+    }
+
+    .result-icon.failed {
+      color: var(--orange);
+      background: #fff7ed;
+    }
+
+    .quiz-result h4 {
+      margin: 13px 0 0;
+      font-size: 23px;
+      font-weight: 900;
+    }
+
+    .score-label {
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .score-number {
+      margin: 0;
+      color: #16a34a;
+      font-size: 58px;
+      font-weight: 950;
+      line-height: 1.1;
+    }
+
+    .score-number.failed {
+      color: var(--orange);
+    }
+
+    .result-message {
+      margin: 18px 0 0;
+      padding: 15px;
+      color: #166534;
+      background: #f0fdf4;
+      border: 1px solid #22c55e;
+      border-radius: 15px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .result-message.failed {
+      color: #9a3412;
+      background: #fff7ed;
+      border-color: #fb923c;
+    }
+
+    .result-actions {
+      margin-top: 14px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .dialog-content {
+      padding: 24px 20px 8px;
+      text-align: center;
+    }
+
+    .dialog-icon {
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 14px;
+      display: grid;
+      place-items: center;
+      color: var(--red);
+      background: #fff1f2;
+      border-radius: 50%;
+    }
+
+    .dialog-content h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .dialog-content p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .toast {
+      position: absolute;
+      z-index: 120;
+      left: 50%;
+      bottom: calc(22px + env(safe-area-inset-bottom));
+      max-width: calc(100% - 36px);
+      padding: 11px 15px;
+      visibility: hidden;
+      color: #fff;
+      background: #1e293b;
+      border-radius: 13px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+      opacity: 0;
+      transform: translate(-50%, 15px);
+      transition: 180ms ease;
+      font-size: 12px;
+      font-weight: 750;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 360px) {
+      .webinar-card {
+        width: 224px;
+        min-width: 224px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      html,
+      body {
+        background: var(--background);
+      }
+
+      .app-shell {
+        width: 100%;
+        box-shadow: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell">
+    <svg class="sr-only" aria-hidden="true">
+      <symbol id="i-menu" viewBox="0 0 24 24">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </symbol>
+
+      <symbol id="i-logout" viewBox="0 0 24 24">
+        <path d="M10 17l5-5-5-5M15 12H3M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/>
+      </symbol>
+
+      <symbol id="i-close" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M18 6 6 18"/>
+      </symbol>
+
+      <symbol id="i-chevron" viewBox="0 0 24 24">
+        <path d="m9 18 6-6-6-6"/>
+      </symbol>
+
+      <symbol id="i-leaf" viewBox="0 0 24 24">
+        <path d="M20 4C12 4 5 8 5 15c0 3 2 5 5 5 7 0 10-8 10-16Z"/>
+        <path d="M4 21c3-6 7-9 12-12"/>
+      </symbol>
+
+      <symbol id="i-info" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 11v5M12 8h.01"/>
+      </symbol>
+
+      <symbol id="i-campaign" viewBox="0 0 24 24">
+        <path d="M3 11v2a2 2 0 0 0 2 2h2l2 5h3l-2-5 8 3V6L7 9H5a2 2 0 0 0-2 2Z"/>
+        <path d="M21 9v6"/>
+      </symbol>
+
+      <symbol id="i-play" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="m10 8 6 4-6 4V8Z"/>
+      </symbol>
+
+      <symbol id="i-certificate" viewBox="0 0 24 24">
+        <rect x="4" y="3" width="16" height="14" rx="2"/>
+        <path d="M8 7h8M8 11h5M9 17v4l3-2 3 2v-4"/>
+      </symbol>
+
+      <symbol id="i-quiz" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="16" rx="2"/>
+        <path d="M9.5 9a2.5 2.5 0 1 1 4.3 1.7c-.8.8-1.8 1.2-1.8 2.3M12 16h.01"/>
+      </symbol>
+
+      <symbol id="i-book" viewBox="0 0 24 24">
+        <path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/>
+        <path d="M20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6V4Z"/>
+      </symbol>
+
+      <symbol id="i-lock" viewBox="0 0 24 24">
+        <rect x="4" y="10" width="16" height="11" rx="2"/>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+      </symbol>
+
+      <symbol id="i-chat" viewBox="0 0 24 24">
+        <path d="M21 11a8 8 0 0 1-12 7l-5 2 2-5A8 8 0 1 1 21 11Z"/>
+        <path d="M9 10h.01M12 10h.01M15 10h.01"/>
+      </symbol>
+
+      <symbol id="i-refresh" viewBox="0 0 24 24">
+        <path d="M20 7h-5V2M4 17h5v5"/>
+        <path d="M19 12a7 7 0 0 0-12-5l-2 2M5 12a7 7 0 0 0 12 5l2-2"/>
+      </symbol>
+
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="m8 12 3 3 5-6"/>
+      </symbol>
+
+      <symbol id="i-warning" viewBox="0 0 24 24">
+        <path d="M12 3 2.8 20h18.4L12 3Z"/>
+        <path d="M12 9v4M12 17h.01"/>
+      </symbol>
+
+      <symbol id="i-external" viewBox="0 0 24 24">
+        <path d="M14 4h6v6M20 4l-9 9"/>
+        <path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/>
+      </symbol>
+
+      <symbol id="i-image" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="16" rx="2"/>
+        <circle cx="9" cy="9" r="2"/>
+        <path d="m21 15-5-5L5 20"/>
+      </symbol>
+
+      <symbol id="i-home" viewBox="0 0 24 24">
+        <path d="m3 11 9-8 9 8"/>
+        <path d="M5 10v10h14V10M9 20v-6h6v6"/>
+      </symbol>
+
+      <symbol id="i-grid" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </symbol>
+    </svg>
+
+    <header class="app-header">
+      <button
+        class="header-button"
+        id="menuButton"
+        type="button"
+        aria-label="Buka menu"
+      >
+        <svg class="icon">
+          <use href="#i-menu"></use>
+        </svg>
+      </button>
+
+      <div class="header-title">
+        <h1 id="appBarTitle">Kampus Herbal</h1>
+        <p>Beranda</p>
+      </div>
+
+      <button
+        class="header-button logout"
+        id="logoutButton"
+        type="button"
+        aria-label="Logout"
+      >
+        <svg class="icon">
+          <use href="#i-logout"></use>
+        </svg>
+      </button>
+    </header>
+
+    <main class="app-main" id="appMain">
+      <section class="loading-page">
+        <div class="loading-box">
+          <div class="spinner"></div>
+          <p>Memuat data pembelajaran...</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+    <aside class="drawer" id="drawer" aria-label="Menu Pak Teguh">
+      <div class="drawer-head">
+        <h2>Menu Pak Teguh</h2>
+
+        <div class="drawer-profile">
+          <div class="avatar js-user-initials">KH</div>
+
+          <div>
+            <strong class="js-user-name">Pengguna</strong>
+            <span class="js-user-phone">-</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-body">
+        <p class="drawer-label">Akses halaman</p>
+        <div id="drawerAccessList"></div>
+      </div>
+
+      <div class="drawer-footer">
+        <button
+          class="drawer-link logout-link"
+          id="drawerLogoutButton"
+          type="button"
+        >
+          <svg class="icon">
+            <use href="#i-logout"></use>
+          </svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <div
+      class="modal-backdrop"
+      id="mainModal"
+      role="dialog"
+      aria-modal="true"
+    >
+      <article class="modal-card" id="mainModalCard">
+        <div class="modal-handle"></div>
+
+        <header class="modal-header">
+          <div class="modal-title-icon">
+            <svg class="icon">
+              <use id="mainModalIcon" href="#i-info"></use>
+            </svg>
+          </div>
+
+          <div class="modal-title">
+            <h3 id="mainModalTitle">Informasi</h3>
+            <p id="mainModalSubtitle"></p>
+          </div>
+
+          <button
+            class="close-button"
+            type="button"
+            data-close-modal="mainModal"
+            aria-label="Tutup"
+          >
+            <svg class="icon">
+              <use href="#i-close"></use>
+            </svg>
+          </button>
+        </header>
+
+        <div class="modal-scroll" id="mainModalContent"></div>
+        <footer
+          class="modal-footer"
+          id="mainModalFooter"
+          hidden
+        ></footer>
+      </article>
+    </div>
+
+    <div
+      class="modal-backdrop"
+      id="logoutModal"
+      role="dialog"
+      aria-modal="true"
+    >
+      <article class="modal-card dialog">
+        <div class="dialog-content">
+          <div class="dialog-icon">
+            <svg class="icon" style="width:30px;height:30px">
+              <use href="#i-logout"></use>
+            </svg>
+          </div>
+
+          <h3>Keluar dari akun?</h3>
+          <p>Sesi login pada perangkat ini akan dihapus.</p>
+        </div>
+
+        <footer class="modal-footer">
+          <button
+            class="secondary-button"
+            type="button"
+            data-close-modal="logoutModal"
+          >
+            Batal
+          </button>
+
+          <button
+            class="danger-button"
+            id="confirmLogoutButton"
+            type="button"
+          >
+            Ya, Logout
+          </button>
+        </footer>
+      </article>
+    </div>
+
+    <div
+      class="toast"
+      id="toast"
+      role="status"
+      aria-live="polite"
+    ></div>
+  </div>
+
+  <script>
+    "use strict";
+
+    const STORAGE = {
+      session: "auth_session_payload_v2",
+      logoutNotice: "auth_logout_notice_v1"
+    };
+
+    const CURRENT_ACCESS = "pak teguh";
+
+    const ACCESS = {
+      "umkm": {
+        title: "UMKM",
+        route: "dashboard-umkm.html",
+        icon: "i-home"
+      },
+      "aspetri dpd jatim": {
+        title: "ASPETRI DPD Jawa Timur",
+        route: "dashboard-aspetri.html",
+        icon: "i-grid"
+      },
+      "gp jamu jatim": {
+        title: "GP Jamu Jawa Timur",
+        route: "dashboard-gp-jamu.html",
+        icon: "i-grid"
+      },
+      "pak teguh": {
+        title: "Pembelajaran Pak Teguh",
+        route: "pembelajaran.html",
+        icon: "i-book"
+      },
+      "mitra 4ja-in": {
+        title: "Mitra 4JA-IN",
+        route: "mitra-4jain.html",
+        icon: "i-grid"
+      }
+    };
+
+    const COMPANY_SHEET_ID =
+      "1yuV-lpnTXdnpF2mvUW4gtAGNCQcKjIbVfkKOBaeEc80";
+
+    const WEBINAR_SHEET_ID =
+      "18dzpXVspqeef9bYZ3whF9qaeOx_NOsHFOsabg3Qk5bE";
+
+    const PARTICIPANT_SHEET_ID =
+      "1pYYUldiw_ocszq135AtfCd20cVwx5Pgl1qv1LY12NEE";
+
+    const EXAM_SHEET_ID =
+      "1BitexeCKLk0Hb1XIzjzbzlRPTGQdOgwWkHSO25IwAQk";
+
+    const WHATSAPP_ADMIN = "6287846164681";
+
+    const URLS = {
+      company: googleExportUrl(COMPANY_SHEET_ID, "0"),
+      carousel: googleExportUrl(COMPANY_SHEET_ID, "1164363476"),
+      webinars: googleExportUrl(WEBINAR_SHEET_ID, "0"),
+      participants: googleExportUrl(PARTICIPANT_SHEET_ID, "0"),
+      materials: googleExportUrl(PARTICIPANT_SHEET_ID, "674110148"),
+      exams: googleExportUrl(EXAM_SHEET_ID, "0")
+    };
+
+    const state = {
+      session: null,
+
+      profile: {
+        logoUrl: "",
+        appName: "Kampus Herbal",
+        importantInfo: ""
+      },
+
+      carousel: [],
+      carouselIndex: 0,
+      carouselTimer: null,
+      pointerStartX: null,
+
+      webinars: [],
+      examScores: {},
+      exam: null,
+      activeVideoItem: null,
+
+      csvCache: new Map(),
+      toastTimer: null
+    };
+
+    function readSession() {
+      try {
+        const raw = localStorage.getItem(STORAGE.session);
+
+        if (!raw) {
+          return null;
+        }
+
+        const value = JSON.parse(raw);
+
+        return value && typeof value === "object"
+          ? value
+          : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function isValidSession(session) {
+      return Boolean(
+        session &&
+        String(session.nomor_hp || "").trim() &&
+        String(session.nama || "").trim() &&
+        String(session.status || "").trim() &&
+        String(session.session_id || "").trim() &&
+        String(session.device_id || "").trim() &&
+        Array.isArray(session.akses) &&
+        session.akses.length
+      );
+    }
+
+    function requireSession() {
+      state.session = readSession();
+
+      if (!isValidSession(state.session)) {
+        localStorage.removeItem(STORAGE.session);
+        window.location.replace("login.html");
+        return false;
+      }
+
+      const accesses = state.session.akses.map(value =>
+        String(value).trim().toLowerCase()
+      );
+
+      if (!accesses.includes(CURRENT_ACCESS)) {
+        const destination =
+          ACCESS[accesses[0]]?.route || "login.html";
+
+        window.location.replace(destination);
+        return false;
+      }
+
+      return true;
+    }
+
+    function getAccessList() {
+      const raw = state.session?.akses;
+
+      const values = Array.isArray(raw)
+        ? raw
+        : typeof raw === "string"
+          ? raw.split(",")
+          : [];
+
+      const result = values
+        .map(value => String(value).trim().toLowerCase())
+        .filter(Boolean);
+
+      if (!result.includes(CURRENT_ACCESS)) {
+        result.unshift(CURRENT_ACCESS);
+      }
+
+      return [...new Set(result)];
+    }
+
+    function getInitials(name) {
+      const words = String(name || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2);
+
+      return words
+        .map(word => word.charAt(0).toUpperCase())
+        .join("") || "KH";
+    }
+
+    function fillSessionUI() {
+      const name =
+        String(state.session?.nama || "Pengguna").trim();
+
+      const phone =
+        String(state.session?.nomor_hp || "-").trim();
+
+      document
+        .querySelectorAll(".js-user-name")
+        .forEach(element => {
+          element.textContent = name;
+        });
+
+      document
+        .querySelectorAll(".js-user-phone")
+        .forEach(element => {
+          element.textContent = phone;
+        });
+
+      document
+        .querySelectorAll(".js-user-initials")
+        .forEach(element => {
+          element.textContent = getInitials(name);
+        });
+
+      renderDrawerAccess();
+    }
+
+    function renderDrawerAccess() {
+      const target =
+        document.getElementById("drawerAccessList");
+
+      target.innerHTML = getAccessList()
+        .map(key => {
+          const item = ACCESS[key] || {
+            title: titleCase(key),
+            route: "#",
+            icon: "i-grid"
+          };
+
+          const current = key === CURRENT_ACCESS;
+
+          return `
+            <button
+              class="drawer-link${current ? " current" : ""}"
+              type="button"
+              data-access="${escapeAttribute(key)}"
+            >
+              <svg class="icon">
+                <use href="#${item.icon}"></use>
+              </svg>
+
+              <span>${escapeHtml(item.title)}</span>
+
+              ${
+                current
+                  ? ""
+                  : `
+                    <svg class="icon chevron">
+                      <use href="#i-chevron"></use>
+                    </svg>
+                  `
+              }
+            </button>
+          `;
+        })
+        .join("");
+    }
+
+    function openDrawer() {
+      document
+        .getElementById("drawer")
+        .classList.add("show");
+
+      document
+        .getElementById("drawerBackdrop")
+        .classList.add("show");
+    }
+
+    function closeDrawer() {
+      document
+        .getElementById("drawer")
+        .classList.remove("show");
+
+      document
+        .getElementById("drawerBackdrop")
+        .classList.remove("show");
+    }
+
+    function openAccess(access) {
+      const key = String(access || "")
+        .trim()
+        .toLowerCase();
+
+      closeDrawer();
+
+      if (key === CURRENT_ACCESS) {
+        return;
+      }
+
+      const route = ACCESS[key]?.route;
+
+      if (!route || route === "#") {
+        showToast(`Akses tidak dikenali: ${access}`);
+        return;
+      }
+
+      window.location.href = route;
+    }
+
+    function googleExportUrl(spreadsheetId, gid) {
+      return (
+        `https://docs.google.com/spreadsheets/d/` +
+        `${spreadsheetId}/export?format=csv&gid=${gid}`
+      );
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function escapeAttribute(value) {
+      return escapeHtml(value)
+        .replaceAll("`", "&#096;");
+    }
+
+    function titleCase(value) {
+      return String(value || "")
+        .split(/\s+/)
+        .filter(Boolean)
+        .map(word =>
+          word.charAt(0).toUpperCase() +
+          word.slice(1)
+        )
+        .join(" ");
+    }
+
+    function parseCsv(csvText) {
+      const rows = [];
+
+      let row = [];
+      let field = "";
+      let quoted = false;
+
+      for (
+        let index = 0;
+        index < csvText.length;
+        index += 1
+      ) {
+        const character = csvText[index];
+
+        if (character === '"') {
+          if (
+            quoted &&
+            csvText[index + 1] === '"'
+          ) {
+            field += '"';
+            index += 1;
+          } else {
+            quoted = !quoted;
+          }
+
+          continue;
+        }
+
+        if (
+          character === "," &&
+          !quoted
+        ) {
+          row.push(field);
+          field = "";
+          continue;
+        }
+
+        if (
+          (character === "\n" || character === "\r") &&
+          !quoted
+        ) {
+          if (
+            character === "\r" &&
+            csvText[index + 1] === "\n"
+          ) {
+            index += 1;
+          }
+
+          row.push(field);
+          field = "";
+
+          if (
+            row.some(value =>
+              String(value).trim() !== ""
+            )
+          ) {
+            rows.push(row);
+          }
+
+          row = [];
+          continue;
+        }
+
+        field += character;
+      }
+
+      row.push(field);
+
+      if (
+        row.some(value =>
+          String(value).trim() !== ""
+        )
+      ) {
+        rows.push(row);
+      }
+
+      return rows;
+    }
+
+    async function fetchCsv(
+      url,
+      forceRefresh = false
+    ) {
+      const cached = state.csvCache.get(url);
+      const tenMinutes = 10 * 60 * 1000;
+
+      if (
+        !forceRefresh &&
+        cached &&
+        Date.now() - cached.time < tenMinutes
+      ) {
+        return cached.rows;
+      }
+
+      let lastError = null;
+
+      for (
+        let attempt = 1;
+        attempt <= 2;
+        attempt += 1
+      ) {
+        try {
+          const response = await fetch(url, {
+            headers: {
+              Accept: "text/csv,*/*"
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error(
+              `Respons server ${response.status}.`
+            );
+          }
+
+          const text = await response.text();
+          const opening =
+            text.trimStart().toLowerCase();
+
+          if (!text.trim()) {
+            throw new Error(
+              "Sumber data kosong."
+            );
+          }
+
+          if (
+            opening.startsWith("<!doctype html") ||
+            opening.startsWith("<html")
+          ) {
+            throw new Error(
+              "Format sumber data tidak sesuai."
+            );
+          }
+
+          const rows = parseCsv(text);
+
+          state.csvCache.set(url, {
+            rows,
+            time: Date.now()
+          });
+
+          return rows;
+        } catch (error) {
+          lastError = error;
+
+          if (attempt < 2) {
+            await delay(700);
+          }
+        }
+      }
+
+      if (cached?.rows) {
+        return cached.rows;
+      }
+
+      throw (
+        lastError ||
+        new Error(
+          "Koneksi ke server data sedang terganggu."
+        )
+      );
+    }
+
+    function delay(milliseconds) {
+      return new Promise(resolve =>
+        setTimeout(resolve, milliseconds)
+      );
+    }
+
+    function getCell(row, index) {
+      if (
+        !Array.isArray(row) ||
+        index >= row.length
+      ) {
+        return "";
+      }
+
+      return String(row[index] ?? "").trim();
+    }
+
+    function normalizePhone(value) {
+      const number = String(value || "")
+        .replace(/[^0-9]/g, "");
+
+      if (number.startsWith("0")) {
+        return `62${number.slice(1)}`;
+      }
+
+      if (number.startsWith("8")) {
+        return `62${number}`;
+      }
+
+      return number;
+    }
+
+    function checkboxIsTrue(value) {
+      return [
+        "true",
+        "1",
+        "ya",
+        "yes",
+        "checked"
+      ].includes(
+        String(value || "")
+          .trim()
+          .toLowerCase()
+      );
+    }
+
+    function driveImageUrl(value) {
+      const input = String(value || "").trim();
+
+      if (!input) {
+        return "";
+      }
+
+      const fileMatch = input.match(
+        /\/file\/d\/([a-zA-Z0-9_-]+)/
+      );
+
+      const idMatch = input.match(
+        /[?&]id=([a-zA-Z0-9_-]+)/
+      );
+
+      const fileId =
+        fileMatch?.[1] || idMatch?.[1];
+
+      if (fileId) {
+        return (
+          `https://drive.google.com/thumbnail?id=` +
+          `${encodeURIComponent(fileId)}&sz=w1000`
+        );
+      }
+
+      return /^https?:\/\//i.test(input)
+        ? input
+        : "";
+    }
+
+    function formatPrice(value) {
+      const text =
+        String(value || "").trim();
+
+      if (!text) {
+        return "-";
+      }
+
+      if (/^rp/i.test(text)) {
+        return text;
+      }
+
+      const digits =
+        text.replace(/[^0-9]/g, "");
+
+      if (!digits) {
+        return text;
+      }
+
+      return (
+        `Rp${Number(digits).toLocaleString("id-ID")}`
+      );
+    }
+
+    function cleanError(error) {
+      const message = String(
+        error?.message ||
+        error ||
+        "Terjadi kesalahan."
+      )
+        .replace(/^Error:\s*/i, "")
+        .trim();
+
+      if (/(drive|docs)\.google\.com|https?:\/\//i.test(message)) {
+        return "data tidak terbaca silakan refresh kembali";
+      }
+
+      return message;
+    }
+
+    function showToast(message) {
+      const toast =
+        document.getElementById("toast");
+
+      clearTimeout(state.toastTimer);
+
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      state.toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2700);
+    }
+
+    function openExternalUrl(url) {
+      const value =
+        String(url || "").trim();
+
+      if (!/^https?:\/\//i.test(value)) {
+        showToast("Format link tidak valid.");
+        return;
+      }
+
+      const newWindow =
+        window.open(value, "_blank");
+
+      if (newWindow) {
+        newWindow.opener = null;
+      } else {
+        window.location.href = value;
+      }
+    }
+
+    async function loadPageData(
+      forceRefresh = false
+    ) {
+      renderPageLoading();
+
+      try {
+        if (forceRefresh) {
+          state.csvCache.clear();
+        }
+
+        const [
+          companyRows,
+          carouselRows,
+          webinarRows,
+          participantRows
+        ] = await Promise.all([
+          fetchCsv(
+            URLS.company,
+            forceRefresh
+          ),
+          fetchCsv(
+            URLS.carousel,
+            forceRefresh
+          ),
+          fetchCsv(
+            URLS.webinars,
+            forceRefresh
+          ),
+          fetchCsv(
+            URLS.participants,
+            forceRefresh
+          )
+        ]);
+
+        state.profile =
+          parseProfile(companyRows);
+
+        state.carousel =
+          parseCarousel(carouselRows);
+
+        const purchasedCodes =
+          parsePurchasedCodes(
+            participantRows,
+            normalizePhone(
+              state.session?.nomor_hp
+            )
+          );
+
+        state.webinars =
+          parseWebinars(
+            webinarRows,
+            purchasedCodes
+          );
+
+        document
+          .getElementById("appBarTitle")
+          .textContent =
+            state.profile.appName;
+
+        renderPage();
+      } catch (error) {
+        renderPageError(
+          cleanError(error)
+        );
+      }
+    }
+
+    function parseProfile(rows) {
+      if (rows.length < 2) {
+        return {
+          logoUrl: "",
+          appName: "Kampus Herbal",
+          importantInfo: ""
+        };
+      }
+
+      const row = rows[1];
+
+      return {
+        logoUrl:
+          driveImageUrl(getCell(row, 0)),
+
+        appName:
+          getCell(row, 1) ||
+          "Kampus Herbal",
+
+        importantInfo:
+          getCell(row, 2)
+      };
+    }
+
+    function parseCarousel(rows) {
+      return rows
+        .slice(1)
+        .map(row =>
+          driveImageUrl(
+            getCell(row, 0)
+          )
+        )
+        .filter(Boolean);
+    }
+
+    function parsePurchasedCodes(
+      rows,
+      loginPhone
+    ) {
+      const result = new Set();
+
+      if (
+        rows.length < 2 ||
+        !loginPhone
+      ) {
+        return result;
+      }
+
+      const header = rows[0];
+
+      for (
+        let rowIndex = 1;
+        rowIndex < rows.length;
+        rowIndex += 1
+      ) {
+        const row = rows[rowIndex];
+
+        if (
+          normalizePhone(
+            getCell(row, 0)
+          ) !== loginPhone
+        ) {
+          continue;
+        }
+
+        for (
+          let columnIndex = 2;
+          columnIndex < header.length;
+          columnIndex += 1
+        ) {
+          const code =
+            getCell(
+              header,
+              columnIndex
+            ).toUpperCase();
+
+          if (
+            code &&
+            checkboxIsTrue(
+              getCell(
+                row,
+                columnIndex
+              )
+            )
+          ) {
+            result.add(code);
+          }
+        }
+
+        break;
+      }
+
+      return result;
+    }
+
+    function parseWebinars(
+      rows,
+      purchasedCodes
+    ) {
+      const items = [];
+
+      rows.slice(1).forEach(row => {
+        const code = getCell(row, 0);
+        const title = getCell(row, 1);
+
+        if (!code && !title) {
+          return;
+        }
+
+        const mainYoutubeLink =
+          getCell(row, 2);
+
+        const playlist = [];
+
+        for (
+          let index = 9;
+          index < row.length - 1;
+          index += 2
+        ) {
+          const videoTitle =
+            getCell(row, index);
+
+          const videoLink =
+            getCell(row, index + 1);
+
+          if (
+            videoTitle &&
+            videoLink
+          ) {
+            playlist.push({
+              title: videoTitle,
+              link: videoLink
+            });
+          }
+        }
+
+        if (
+          !playlist.length &&
+          mainYoutubeLink
+        ) {
+          playlist.push({
+            title: "Video Pembelajaran",
+            link: mainYoutubeLink
+          });
+        }
+
+        items.push({
+          index: items.length,
+          code,
+
+          title:
+            title ||
+            "Judul materi belum tersedia",
+
+          youtubeLink:
+            mainYoutubeLink,
+
+          description:
+            getCell(row, 3),
+
+          certificateLink:
+            getCell(row, 4),
+
+          imageUrl:
+            driveImageUrl(
+              getCell(row, 5)
+            ),
+
+          price:
+            getCell(row, 6),
+
+          discountPrice:
+            getCell(row, 7),
+
+          discount:
+            getCell(row, 8),
+
+          playlist,
+
+          purchased:
+            purchasedCodes.has(
+              code
+                .trim()
+                .toUpperCase()
+            )
+        });
+      });
+
+      return items;
+    }
+
+    function renderPageLoading() {
+      document
+        .getElementById("appMain")
+        .innerHTML = `
+          <section class="loading-page">
+            <div class="loading-box">
+              <div class="spinner"></div>
+              <p>Memuat data pembelajaran...</p>
+            </div>
+          </section>
+        `;
+    }
+
+    function renderPageError(message) {
+      document
+        .getElementById("appMain")
+        .innerHTML = `
+          <section class="error-page">
+            <div class="error-box">
+              <svg
+                class="icon"
+                style="width:60px;height:60px;color:#94a3b8"
+              >
+                <use href="#i-warning"></use>
+              </svg>
+
+              <h2>Data belum bisa dimuat</h2>
+
+              <p>
+                ${escapeHtml(
+                  message ||
+                  "Periksa koneksi internet, kemudian tekan Muat Ulang."
+                )}
+              </p>
+
+              <button
+                class="primary-button"
+                id="retryPageButton"
+                type="button"
+                style="margin-top:20px"
+              >
+                <svg class="icon">
+                  <use href="#i-refresh"></use>
+                </svg>
+                Muat Ulang
+              </button>
+            </div>
+          </section>
+        `;
+
+      document
+        .getElementById("retryPageButton")
+        ?.addEventListener(
+          "click",
+          () => loadPageData(true)
+        );
+    }
+
+    function renderPage() {
+      const purchased =
+        state.webinars.filter(
+          item => item.purchased
+        );
+
+      const notPurchased =
+        state.webinars.filter(
+          item => !item.purchased
+        );
+
+      document
+        .getElementById("appMain")
+        .innerHTML = `
+          ${renderHero()}
+          ${renderCarouselSection()}
+          ${renderImportantInfo()}
+
+          <div class="section-title">
+            <div>
+              <h2>Materi Webinar</h2>
+              <p>
+                Pilih materi pembelajaran yang tersedia
+              </p>
+            </div>
+
+            <button
+              class="refresh-button"
+              id="refreshPageButton"
+              type="button"
+              aria-label="Muat ulang data"
+            >
+              <svg class="icon">
+                <use href="#i-refresh"></use>
+              </svg>
+            </button>
+          </div>
+
+          ${renderWebinarGroup(
+            "Webinar Sudah Dibeli",
+            "i-check",
+            purchased,
+            "Belum ada webinar yang sudah dibeli."
+          )}
+
+          ${renderWebinarGroup(
+            "Webinar Belum Dibeli",
+            "i-lock",
+            notPurchased,
+            "Semua webinar sudah dibeli."
+          )}
+
+          <div class="page-bottom-space"></div>
+        `;
+
+      bindRenderedPageEvents();
+      startCarouselTimer();
+    }
+
+    function renderHero() {
+      const logo =
+        state.profile.logoUrl
+          ? `
+            <img
+              src="${escapeAttribute(state.profile.logoUrl)}"
+              alt="Logo ${escapeAttribute(state.profile.appName)}"
+            >
+          `
+          : `
+            <svg class="icon">
+              <use href="#i-leaf"></use>
+            </svg>
+          `;
+
+      return `
+        <section class="hero">
+          <div class="hero-logo">
+            ${logo}
+          </div>
+
+          <h2>
+            ${escapeHtml(state.profile.appName)}
+          </h2>
+
+          <p>
+            Platform pembelajaran herbal dan webinar
+          </p>
+        </section>
+      `;
+    }
+
+    function renderCarouselSection() {
+      if (!state.carousel.length) {
+        return "";
+      }
+
+      return `
+        <section class="carousel">
+          <div
+            class="carousel-viewport"
+            id="carouselViewport"
+          >
+            <div
+              class="carousel-track"
+              id="carouselTrack"
+            >
+              ${state.carousel
+                .map((url, index) => `
+                  <div class="carousel-slide">
+                    <img
+                      src="${escapeAttribute(url)}"
+                      alt="Informasi pembelajaran ${index + 1}"
+                      loading="${index === 0 ? "eager" : "lazy"}"
+                    >
+
+                    <div class="image-fallback">
+                      <svg
+                        class="icon"
+                        style="width:40px;height:40px"
+                      >
+                        <use href="#i-image"></use>
+                      </svg>
+                    </div>
+                  </div>
+                `)
+                .join("")}
+            </div>
+          </div>
+
+          <div
+            class="carousel-dots"
+            id="carouselDots"
+          >
+            ${state.carousel
+              .map((_, index) => `
+                <button
+                  class="carousel-dot${index === 0 ? " active" : ""}"
+                  type="button"
+                  data-slide="${index}"
+                  aria-label="Tampilkan gambar ${index + 1}"
+                ></button>
+              `)
+              .join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderImportantInfo() {
+      if (
+        !state.profile.importantInfo.trim()
+      ) {
+        return "";
+      }
+
+      return `
+        <section class="important-info">
+          <svg class="icon">
+            <use href="#i-campaign"></use>
+          </svg>
+
+          <p>
+            ${escapeHtml(
+              state.profile.importantInfo
+            )}
+          </p>
+        </section>
+      `;
+    }
+
+    function renderWebinarGroup(
+      title,
+      icon,
+      items,
+      emptyMessage
+    ) {
+      return `
+        <section class="webinar-group">
+          <div class="group-title">
+            <svg class="icon">
+              <use href="#${icon}"></use>
+            </svg>
+
+            <h3>${escapeHtml(title)}</h3>
+
+            <span class="group-count">
+              ${items.length}
+            </span>
+          </div>
+
+          ${
+            items.length
+              ? `
+                <div class="webinar-track">
+                  ${items
+                    .map(renderWebinarCard)
+                    .join("")}
+                </div>
+              `
+              : `
+                <div class="empty-group">
+                  ${escapeHtml(emptyMessage)}
+                </div>
+              `
+          }
+        </section>
+      `;
+    }
+
+    function renderWebinarCard(item) {
+      const image = item.imageUrl
+        ? `
+          <img
+            src="${escapeAttribute(item.imageUrl)}"
+            alt="${escapeAttribute(item.title)}"
+            loading="lazy"
+          >
+        `
+        : "";
+
+      const fallbackDisplay =
+        item.imageUrl
+          ? ""
+          : "display:grid";
+
+      return `
+        <article class="webinar-card">
+          <span class="material-code">
+            ${escapeHtml(item.code)}
+          </span>
+
+          <div class="webinar-image">
+            ${image}
+
+            <div
+              class="webinar-image-fallback"
+              style="${fallbackDisplay}"
+            >
+              <svg
+                class="icon"
+                style="width:35px;height:35px"
+              >
+                <use href="#i-book"></use>
+              </svg>
+            </div>
+
+            ${
+              !item.purchased &&
+              item.discount
+                ? `
+                  <span class="discount-badge">
+                    ${escapeHtml(item.discount)}
+                  </span>
+                `
+                : ""
+            }
+          </div>
+
+          <h4>${escapeHtml(item.title)}</h4>
+
+          ${
+            item.purchased
+              ? renderPurchasedActions(item)
+              : renderPurchaseActions(item)
+          }
+        </article>
+      `;
+    }
+
+    function renderPurchasedActions(item) {
+      const description =
+        item.description ||
+        "Deskripsi materi belum tersedia.";
+
+      return `
+        <p class="short-description">
+          ${escapeHtml(description)}
+        </p>
+
+        <div class="card-actions">
+          <button
+            class="card-button"
+            type="button"
+            data-action="video"
+            data-index="${item.index}"
+          >
+            <svg class="icon">
+              <use href="#i-play"></use>
+            </svg>
+            Video
+          </button>
+
+          <button
+            class="card-button outline"
+            type="button"
+            data-action="certificate"
+            data-index="${item.index}"
+          >
+            <svg class="icon">
+              <use href="#i-certificate"></use>
+            </svg>
+            Sertifikat
+          </button>
+
+          <button
+            class="card-button blue"
+            type="button"
+            data-action="exam"
+            data-index="${item.index}"
+          >
+            <svg class="icon">
+              <use href="#i-quiz"></use>
+            </svg>
+            Ujian
+          </button>
+
+          <button
+            class="card-button purple"
+            type="button"
+            data-action="material"
+            data-index="${item.index}"
+          >
+            <svg class="icon">
+              <use href="#i-book"></use>
+            </svg>
+            Materi
+          </button>
+        </div>
+      `;
+    }
+
+    function renderPurchaseActions(item) {
+      return `
+        <div class="price-box">
+          ${
+            item.price
+              ? `
+                <span class="old-price">
+                  ${escapeHtml(
+                    formatPrice(item.price)
+                  )}
+                </span>
+              `
+              : ""
+          }
+
+          <span class="new-price">
+            ${escapeHtml(
+              formatPrice(
+                item.discountPrice ||
+                item.price
+              )
+            )}
+          </span>
+        </div>
+
+        <div class="locked-status">
+          <svg
+            class="icon"
+            style="width:18px;height:18px"
+          >
+            <use href="#i-lock"></use>
+          </svg>
+          Webinar belum dibeli
+        </div>
+
+        <div class="card-actions purchase">
+          <button
+            class="card-button outline"
+            type="button"
+            data-action="info"
+            data-index="${item.index}"
+          >
+            <svg class="icon">
+              <use href="#i-info"></use>
+            </svg>
+            Info
+          </button>
+
+          <button
+            class="card-button whatsapp"
+            type="button"
+            data-action="buy"
+            data-index="${item.index}"
+          >
+            <svg class="icon">
+              <use href="#i-chat"></use>
+            </svg>
+            Beli WhatsApp
+          </button>
+        </div>
+      `;
+    }
+
+    function bindRenderedPageEvents() {
+      document
+        .getElementById("refreshPageButton")
+        ?.addEventListener(
+          "click",
+          () => loadPageData(true)
+        );
+
+      document
+        .querySelectorAll(".webinar-image img")
+        .forEach(image => {
+          image.addEventListener(
+            "error",
+            () => {
+              image.style.display = "none";
+
+              image
+                .nextElementSibling
+                .style.display = "grid";
+            }
+          );
+        });
+
+      document
+        .querySelectorAll(".carousel-slide img")
+        .forEach(image => {
+          image.addEventListener(
+            "error",
+            () => {
+              image.style.display = "none";
+
+              image
+                .nextElementSibling
+                .style.display = "grid";
+            }
+          );
+        });
+
+      const carouselDots =
+        document.getElementById(
+          "carouselDots"
+        );
+
+      carouselDots?.addEventListener(
+        "click",
+        event => {
+          const button =
+            event.target.closest(
+              "[data-slide]"
+            );
+
+          if (button) {
+            setCarouselIndex(
+              Number(
+                button.dataset.slide
+              )
+            );
+          }
+        }
+      );
+
+      const viewport =
+        document.getElementById(
+          "carouselViewport"
+        );
+
+      viewport?.addEventListener(
+        "pointerdown",
+        event => {
+          state.pointerStartX =
+            event.clientX;
+        }
+      );
+
+      viewport?.addEventListener(
+        "pointerup",
+        event => {
+          if (
+            state.pointerStartX === null
+          ) {
+            return;
+          }
+
+          const distance =
+            event.clientX -
+            state.pointerStartX;
+
+          state.pointerStartX = null;
+
+          if (
+            Math.abs(distance) < 42
+          ) {
+            return;
+          }
+
+          setCarouselIndex(
+            state.carouselIndex +
+            (distance < 0 ? 1 : -1)
+          );
+        }
+      );
+    }
+
+    function setCarouselIndex(
+      index,
+      restartTimer = true
+    ) {
+      if (!state.carousel.length) {
+        return;
+      }
+
+      const total =
+        state.carousel.length;
+
+      state.carouselIndex =
+        (index + total) % total;
+
+      const track =
+        document.getElementById(
+          "carouselTrack"
+        );
+
+      if (track) {
+        track.style.transform =
+          `translateX(-${state.carouselIndex * 100}%)`;
+      }
+
+      document
+        .querySelectorAll(".carousel-dot")
+        .forEach((dot, dotIndex) => {
+          dot.classList.toggle(
+            "active",
+            dotIndex ===
+              state.carouselIndex
+          );
+        });
+
+      if (restartTimer) {
+        startCarouselTimer();
+      }
+    }
+
+    function startCarouselTimer() {
+      clearInterval(
+        state.carouselTimer
+      );
+
+      if (
+        state.carousel.length <= 1
+      ) {
+        return;
+      }
+
+      state.carouselTimer =
+        setInterval(() => {
+          setCarouselIndex(
+            state.carouselIndex + 1,
+            false
+          );
+        }, 4000);
+    }
+
+    function openMainModal({
+      title,
+      subtitle = "",
+      icon = "i-info",
+      content = "",
+      footer = "",
+      tall = false
+    }) {
+      document
+        .getElementById("mainModalTitle")
+        .textContent = title;
+
+      document
+        .getElementById("mainModalSubtitle")
+        .textContent = subtitle;
+
+      document
+        .getElementById("mainModalIcon")
+        .setAttribute("href", `#${icon}`);
+
+      document
+        .getElementById("mainModalContent")
+        .innerHTML = content;
+
+      const footerElement =
+        document.getElementById(
+          "mainModalFooter"
+        );
+
+      footerElement.innerHTML = footer;
+      footerElement.hidden = !footer;
+
+      document
+        .getElementById("mainModalCard")
+        .classList.toggle("tall", tall);
+
+      document
+        .getElementById("mainModal")
+        .classList.add("show");
+    }
+
+    function closeModal(id) {
+      document
+        .getElementById(id)
+        ?.classList.remove("show");
+
+      if (id === "mainModal") {
+        document
+          .getElementById("mainModalContent")
+          .innerHTML = "";
+
+        document
+          .getElementById("mainModalFooter")
+          .innerHTML = "";
+
+        state.activeVideoItem = null;
+      }
+    }
+
+    function showInfo(item) {
+      openMainModal({
+        title: item.title,
+        subtitle: item.code,
+        icon: "i-info",
+
+        content: `
+          <p class="modal-description">
+            ${escapeHtml(
+              item.description ||
+              "Deskripsi webinar belum tersedia."
+            )}
+          </p>
+        `,
+
+        footer: `
+          <button
+            class="secondary-button"
+            type="button"
+            data-close-modal="mainModal"
+          >
+            Tutup
+          </button>
+
+          <button
+            class="primary-button"
+            type="button"
+            data-modal-action="buy"
+            data-index="${item.index}"
+          >
+            Beli Webinar
+          </button>
+        `
+      });
+    }
+
+    function buyWebinar(item) {
+      const participantName =
+        String(
+          state.session?.nama || "-"
+        ).trim() || "-";
+
+      const participantPhone =
+        String(
+          state.session?.nomor_hp || "-"
+        ).trim() || "-";
+
+      const message = [
+        "Halo Admin Kampus Herbal,",
+        "",
+        "Saya ingin membeli webinar berikut:",
+        "",
+        `Kode Webinar: ${item.code}`,
+        `Judul Webinar: ${item.title}`,
+        "",
+        `Nama Peserta: ${participantName}`,
+        `Nomor HP Akun: ${participantPhone}`,
+        "",
+        "Mohon informasi mengenai pembayaran dan proses aktivasi webinar.",
+        "",
+        "Terima kasih."
+      ].join("\n");
+
+      const url =
+        `https://wa.me/${WHATSAPP_ADMIN}` +
+        `?text=${encodeURIComponent(message)}`;
+
+      openExternalUrl(url);
+    }
+
+    async function openMaterials(item) {
+      openMainModal({
+        title: `Materi ${item.code}`,
+        subtitle: item.title,
+        icon: "i-book",
+        tall: true,
+
+        content: `
+          <div class="modal-state">
+            <div>
+              <div class="spinner"></div>
+              <p style="margin-top:14px">
+                Memuat daftar materi...
+              </p>
+            </div>
+          </div>
+        `
+      });
+
+      try {
+        const rows =
+          await fetchCsv(URLS.materials);
+
+        if (rows.length < 2) {
+          throw new Error(
+            "Data materi masih kosong."
+          );
+        }
+
+        const targetCode =
+          item.code
+            .trim()
+            .toUpperCase();
+
+        const header = rows[0];
+
+        const columnIndex =
+          header.findIndex(cell =>
+            String(cell || "")
+              .trim()
+              .toUpperCase() ===
+              targetCode
+          );
+
+        if (columnIndex === -1) {
+          throw new Error(
+            `Kode ${targetCode} belum ditemukan pada data materi.`
+          );
+        }
+
+        const links = [];
+
+        rows.slice(1).forEach(row => {
+          const link =
+            getCell(row, columnIndex);
+
+          if (
+            link &&
+            !links.includes(link)
+          ) {
+            links.push(link);
+          }
+        });
+
+        if (!links.length) {
+          throw new Error(
+            `Materi untuk ${targetCode} belum tersedia.`
+          );
+        }
+
+        document
+          .getElementById("mainModalContent")
+          .innerHTML = `
+            <div class="material-list">
+              ${links
+                .map((link, index) => `
+                  <a
+                    class="material-link"
+                    href="${escapeAttribute(link)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg class="icon">
+                      <use href="#i-external"></use>
+                    </svg>
+
+                    <span>
+                      Buka Materi ${index + 1}
+                    </span>
+                  </a>
+                `)
+                .join("")}
+            </div>
+          `;
+      } catch (error) {
+        document
+          .getElementById("mainModalContent")
+          .innerHTML = `
+            <div class="modal-state">
+              <div>
+                <svg
+                  class="icon"
+                  style="width:43px;height:43px;color:#e11d48"
+                >
+                  <use href="#i-warning"></use>
+                </svg>
+
+                <h4>Materi gagal dimuat</h4>
+
+                <p>
+                  ${escapeHtml(
+                    cleanError(error)
+                  )}
+                </p>
+              </div>
+            </div>
+          `;
+      }
+    }
+
+    function getYoutubeVideoId(value) {
+      const input =
+        String(value || "").trim();
+
+      if (!input) {
+        return "";
+      }
+
+      const patterns = [
+        /youtu\.be\/([a-zA-Z0-9_-]{6,})/,
+        /youtube\.com\/watch\?[^#]*v=([a-zA-Z0-9_-]{6,})/,
+        /youtube\.com\/(?:embed|shorts)\/([a-zA-Z0-9_-]{6,})/
+      ];
+
+      for (const pattern of patterns) {
+        const match =
+          input.match(pattern);
+
+        if (match) {
+          return match[1];
+        }
+      }
+
+      return /^[a-zA-Z0-9_-]{6,}$/.test(input)
+        ? input
+        : "";
+    }
+
+    function openVideo(
+      item,
+      selectedIndex = 0
+    ) {
+      if (!item.playlist.length) {
+        showToast(
+          "Video pembelajaran belum tersedia."
+        );
+        return;
+      }
+
+      state.activeVideoItem = item;
+
+      const selectedVideo =
+        item.playlist[selectedIndex] ||
+        item.playlist[0];
+
+      const videoId =
+        getYoutubeVideoId(
+          selectedVideo.link
+        );
+
+      const player = videoId
+        ? `
+          <div class="video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&playsinline=1&rel=0"
+              title="${escapeAttribute(selectedVideo.title)}"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        `
+        : `
+          <div
+            class="modal-state"
+            style="min-height:130px"
+          >
+            <button
+              class="primary-button"
+              type="button"
+              data-modal-action="open-video-link"
+              data-url="${escapeAttribute(selectedVideo.link)}"
+            >
+              Buka Video
+            </button>
+          </div>
+        `;
+
+      openMainModal({
+        title: `Video ${item.code}`,
+        subtitle: selectedVideo.title,
+        icon: "i-play",
+        tall: true,
+
+        content: `
+          ${player}
+
+          <div class="playlist-list">
+            ${item.playlist
+              .map((video, index) => `
+                <button
+                  class="playlist-button${index === selectedIndex ? " active" : ""}"
+                  type="button"
+                  data-modal-action="select-video"
+                  data-video-index="${index}"
+                >
+                  <svg class="icon">
+                    <use href="#i-play"></use>
+                  </svg>
+
+                  <span>
+                    ${escapeHtml(video.title)}
+                  </span>
+                </button>
+              `)
+              .join("")}
+          </div>
+        `
+      });
+    }
+
+    async function openExam(item) {
+      openMainModal({
+        title: `Ujian ${item.code}`,
+        subtitle: item.title,
+        icon: "i-quiz",
+        tall: true,
+
+        content: `
+          <div class="modal-state">
+            <div>
+              <div class="spinner"></div>
+
+              <p style="margin-top:14px">
+                Memuat soal ujian...
+              </p>
+            </div>
+          </div>
+        `
+      });
+
+      try {
+        const rows =
+          await fetchCsv(URLS.exams);
+
+        const targetCode =
+          item.code
+            .trim()
+            .toLowerCase();
+
+        const questions = [];
+
+        rows.slice(1).forEach(row => {
+          if (
+            getCell(row, 0)
+              .toLowerCase() !==
+              targetCode
+          ) {
+            return;
+          }
+
+          const question =
+            getCell(row, 2);
+
+          const options = {
+            a: getCell(row, 3),
+            b: getCell(row, 4),
+            c: getCell(row, 5),
+            d: getCell(row, 6)
+          };
+
+          const answer =
+            getCell(row, 7)
+              .toLowerCase();
+
+          if (
+            question &&
+            options.a &&
+            options.b &&
+            options.c &&
+            options.d &&
+            ["a", "b", "c", "d"].includes(answer)
+          ) {
+            questions.push({
+              question,
+              options,
+              answer
+            });
+          }
+        });
+
+        if (!questions.length) {
+          throw new Error(
+            `Soal untuk ${item.code} belum tersedia.`
+          );
+        }
+
+        state.exam = {
+          item,
+          questions:
+            shuffleArray(questions),
+          index: 0,
+          correct: 0,
+          selected: null,
+          finished: false,
+          score: 0
+        };
+
+        renderExam();
+      } catch (error) {
+        document
+          .getElementById("mainModalContent")
+          .innerHTML = `
+            <div class="modal-state">
+              <div>
+                <svg
+                  class="icon"
+                  style="width:43px;height:43px;color:#e11d48"
+                >
+                  <use href="#i-warning"></use>
+                </svg>
+
+                <h4>
+                  Soal ujian gagal dimuat
+                </h4>
+
+                <p>
+                  ${escapeHtml(
+                    cleanError(error)
+                  )}
+                </p>
+              </div>
+            </div>
+          `;
+      }
+    }
+
+    function shuffleArray(items) {
+      const result = [...items];
+
+      for (
+        let index = result.length - 1;
+        index > 0;
+        index -= 1
+      ) {
+        const randomIndex =
+          Math.floor(
+            Math.random() *
+            (index + 1)
+          );
+
+        [
+          result[index],
+          result[randomIndex]
+        ] = [
+          result[randomIndex],
+          result[index]
+        ];
+      }
+
+      return result;
+    }
+
+    function renderExam() {
+      const exam = state.exam;
+
+      if (!exam) {
+        return;
+      }
+
+      document
+        .getElementById("mainModalTitle")
+        .textContent =
+          `Ujian ${exam.item.code}`;
+
+      document
+        .getElementById("mainModalSubtitle")
+        .textContent =
+          exam.item.title;
+
+      if (exam.finished) {
+        renderExamResult();
+        return;
+      }
+
+      const question =
+        exam.questions[exam.index];
+
+      const selected =
+        exam.selected;
+
+      const isCorrect =
+        selected === question.answer;
+
+      document
+        .getElementById("mainModalContent")
+        .innerHTML = `
+          <span class="quiz-code">
+            ${escapeHtml(
+              exam.item.code.toUpperCase()
+            )}
+          </span>
+
+          <p class="quiz-progress-label">
+            Soal ${exam.index + 1}
+            dari ${exam.questions.length}
+          </p>
+
+          <div class="quiz-progress">
+            <span
+              style="width:${
+                (
+                  (exam.index + 1) /
+                  exam.questions.length
+                ) * 100
+              }%"
+            ></span>
+          </div>
+
+          <h4 class="quiz-question">
+            ${escapeHtml(
+              question.question
+            )}
+          </h4>
+
+          <div class="quiz-options">
+            ${Object
+              .entries(question.options)
+              .map(([code, text]) => {
+                let optionClass = "";
+
+                if (
+                  selected &&
+                  code === question.answer
+                ) {
+                  optionClass = " correct";
+                } else if (
+                  selected === code &&
+                  code !== question.answer
+                ) {
+                  optionClass = " wrong";
+                }
+
+                return `
+                  <button
+                    class="quiz-option${optionClass}"
+                    type="button"
+                    data-modal-action="answer"
+                    data-answer="${code}"
+                    ${selected ? "disabled" : ""}
+                  >
+                    <span class="option-letter">
+                      ${code.toUpperCase()}
+                    </span>
+
+                    <span class="option-text">
+                      ${escapeHtml(text)}
+                    </span>
+                  </button>
+                `;
+              })
+              .join("")}
+          </div>
+
+          ${
+            selected
+              ? `
+                <div class="quiz-feedback${isCorrect ? "" : " wrong"}">
+                  ${
+                    isCorrect
+                      ? "Jawaban Anda benar."
+                      : `
+                        Jawaban Anda salah.
+                        Jawaban yang benar adalah
+                        ${question.answer.toUpperCase()}.
+                        ${escapeHtml(
+                          question.options[
+                            question.answer
+                          ]
+                        )}
+                      `
+                  }
+                </div>
+
+                <button
+                  class="primary-button blue quiz-next"
+                  type="button"
+                  data-modal-action="next-question"
+                >
+                  ${
+                    exam.index ===
+                    exam.questions.length - 1
+                      ? "Lihat Hasil"
+                      : "Soal Berikutnya"
+                  }
+                </button>
+              `
+              : ""
+          }
+        `;
+    }
+
+    function selectAnswer(answer) {
+      const exam = state.exam;
+
+      if (
+        !exam ||
+        exam.selected ||
+        exam.finished
+      ) {
+        return;
+      }
+
+      exam.selected = answer;
+
+      if (
+        answer ===
+        exam.questions[exam.index].answer
+      ) {
+        exam.correct += 1;
+      }
+
+      renderExam();
+    }
+
+    function nextQuestion() {
+      const exam = state.exam;
+
+      if (
+        !exam ||
+        !exam.selected
+      ) {
+        return;
+      }
+
+      if (
+        exam.index ===
+        exam.questions.length - 1
+      ) {
+        exam.score = Math.floor(
+          (
+            exam.correct /
+            exam.questions.length
+          ) * 100
+        );
+
+        exam.finished = true;
+
+        const code =
+          exam.item.code
+            .trim()
+            .toUpperCase();
+
+        const previousScore =
+          state.examScores[code] || 0;
+
+        state.examScores[code] =
+          Math.max(
+            previousScore,
+            exam.score
+          );
+
+        renderExamResult();
+        return;
+      }
+
+      exam.index += 1;
+      exam.selected = null;
+
+      renderExam();
+    }
+
+    function restartExam() {
+      const exam = state.exam;
+
+      if (!exam) {
+        return;
+      }
+
+      exam.questions =
+        shuffleArray(exam.questions);
+
+      exam.index = 0;
+      exam.correct = 0;
+      exam.selected = null;
+      exam.finished = false;
+      exam.score = 0;
+
+      renderExam();
+    }
+
+    function renderExamResult() {
+      const exam = state.exam;
+
+      if (!exam) {
+        return;
+      }
+
+      const passed =
+        exam.score >= 80;
+
+      document
+        .getElementById("mainModalContent")
+        .innerHTML = `
+          <div class="quiz-result">
+            <div class="result-icon${passed ? "" : " failed"}">
+              <svg
+                class="icon"
+                style="width:38px;height:38px"
+              >
+                <use href="#${passed ? "i-certificate" : "i-refresh"}"></use>
+              </svg>
+            </div>
+
+            <h4>Hasil Ujian</h4>
+
+            <span
+              class="quiz-code"
+              style="margin-top:7px"
+            >
+              ${escapeHtml(
+                exam.item.code.toUpperCase()
+              )}
+            </span>
+
+            <p class="score-label">
+              Nilai Anda
+            </p>
+
+            <p class="score-number${passed ? "" : " failed"}">
+              ${exam.score}
+            </p>
+
+            <p
+              class="score-label"
+              style="margin-top:4px"
+            >
+              ${exam.correct}
+              dari
+              ${exam.questions.length}
+              soal benar
+            </p>
+
+            <div class="result-message${passed ? "" : " failed"}">
+              ${
+                passed
+                  ? `
+                    Selamat! Nilai Anda sudah
+                    80 ke atas. Sertifikat
+                    sekarang dapat diklaim.
+                  `
+                  : `
+                    Nilai Anda di bawah 80.
+                    Silakan ujian kembali dan
+                    dapatkan nilai 80 ke atas
+                    untuk klaim sertifikat.
+                  `
+              }
+            </div>
+
+            <div class="result-actions">
+              ${
+                passed
+                  ? `
+                    <button
+                      class="primary-button"
+                      type="button"
+                      data-modal-action="claim-certificate"
+                    >
+                      Klaim Sertifikat
+                    </button>
+                  `
+                  : `
+                    <button
+                      class="primary-button blue"
+                      type="button"
+                      data-modal-action="restart-exam"
+                    >
+                      Ujian Kembali
+                    </button>
+                  `
+              }
+
+              <button
+                class="secondary-button"
+                type="button"
+                data-close-modal="mainModal"
+              >
+                Tutup
+              </button>
+            </div>
+          </div>
+        `;
+    }
+
+    function openCertificate(item) {
+      const code =
+        item.code
+          .trim()
+          .toUpperCase();
+
+      const score =
+        state.examScores[code] || 0;
+
+      if (score < 80) {
+        openMainModal({
+          title:
+            "Sertifikat Belum Dapat Diklaim",
+
+          subtitle:
+            `${code} · Nilai tertinggi ${score}`,
+
+          icon: "i-warning",
+
+          content: `
+            <div class="modal-state">
+              <div>
+                <svg
+                  class="icon"
+                  style="width:48px;height:48px;color:#f59e0b"
+                >
+                  <use href="#i-warning"></use>
+                </svg>
+
+                <h4>
+                  Nilai minimal adalah 80
+                </h4>
+
+                <p>
+                  Silakan mengikuti ujian dan
+                  dapatkan nilai 80 ke atas
+                  untuk klaim sertifikat.
+                </p>
+              </div>
+            </div>
+          `,
+
+          footer: `
+            <button
+              class="secondary-button"
+              type="button"
+              data-close-modal="mainModal"
+            >
+              Tutup
+            </button>
+
+            <button
+              class="primary-button blue"
+              type="button"
+              data-modal-action="start-exam"
+              data-index="${item.index}"
+            >
+              Ujian Sekarang
+            </button>
+          `
+        });
+
+        return;
+      }
+
+      if (!item.certificateLink.trim()) {
+        showToast(
+          "Link sertifikat belum tersedia."
+        );
+        return;
+      }
+
+      openExternalUrl(
+        item.certificateLink
+      );
+    }
+
+    function handleWebinarAction(
+      action,
+      item
+    ) {
+      if (!item) {
+        return;
+      }
+
+      switch (action) {
+        case "info":
+          showInfo(item);
+          break;
+
+        case "buy":
+          buyWebinar(item);
+          break;
+
+        case "material":
+          openMaterials(item);
+          break;
+
+        case "video":
+          openVideo(item);
+          break;
+
+        case "exam":
+          openExam(item);
+          break;
+
+        case "certificate":
+          openCertificate(item);
+          break;
+      }
+    }
+
+    function openLogoutConfirmation() {
+      closeDrawer();
+
+      document
+        .getElementById("logoutModal")
+        .classList.add("show");
+    }
+
+    function logout() {
+      localStorage.removeItem(
+        STORAGE.session
+      );
+
+      localStorage.setItem(
+        STORAGE.logoutNotice,
+        "Anda berhasil logout."
+      );
+
+      window.location.replace(
+        "index.html"
+      );
+    }
+
+    function bindGlobalEvents() {
+      document
+        .getElementById("menuButton")
+        .addEventListener(
+          "click",
+          openDrawer
+        );
+
+      document
+        .getElementById("drawerBackdrop")
+        .addEventListener(
+          "click",
+          closeDrawer
+        );
+
+      document
+        .getElementById("logoutButton")
+        .addEventListener(
+          "click",
+          openLogoutConfirmation
+        );
+
+      document
+        .getElementById("drawerLogoutButton")
+        .addEventListener(
+          "click",
+          openLogoutConfirmation
+        );
+
+      document
+        .getElementById("confirmLogoutButton")
+        .addEventListener(
+          "click",
+          logout
+        );
+
+      document
+        .getElementById("drawerAccessList")
+        .addEventListener(
+          "click",
+          event => {
+            const button =
+              event.target.closest(
+                "[data-access]"
+              );
+
+            if (button) {
+              openAccess(
+                button.dataset.access
+              );
+            }
+          }
+        );
+
+      document
+        .getElementById("appMain")
+        .addEventListener(
+          "click",
+          event => {
+            const button =
+              event.target.closest(
+                "[data-action][data-index]"
+              );
+
+            if (!button) {
+              return;
+            }
+
+            handleWebinarAction(
+              button.dataset.action,
+              state.webinars[
+                Number(
+                  button.dataset.index
+                )
+              ]
+            );
+          }
+        );
+
+      document
+        .getElementById("mainModal")
+        .addEventListener(
+          "click",
+          event => {
+            if (
+              event.target ===
+              event.currentTarget
+            ) {
+              closeModal("mainModal");
+              return;
+            }
+
+            const closeButton =
+              event.target.closest(
+                '[data-close-modal="mainModal"]'
+              );
+
+            if (closeButton) {
+              closeModal("mainModal");
+              return;
+            }
+
+            const actionButton =
+              event.target.closest(
+                "[data-modal-action]"
+              );
+
+            if (!actionButton) {
+              return;
+            }
+
+            const action =
+              actionButton.dataset.modalAction;
+
+            if (action === "buy") {
+              const item =
+                state.webinars[
+                  Number(
+                    actionButton.dataset.index
+                  )
+                ];
+
+              if (item) {
+                buyWebinar(item);
+              }
+            }
+
+            if (
+              action === "select-video" &&
+              state.activeVideoItem
+            ) {
+              openVideo(
+                state.activeVideoItem,
+                Number(
+                  actionButton
+                    .dataset
+                    .videoIndex
+                )
+              );
+            }
+
+            if (
+              action === "open-video-link"
+            ) {
+              openExternalUrl(
+                actionButton.dataset.url
+              );
+            }
+
+            if (action === "answer") {
+              selectAnswer(
+                actionButton.dataset.answer
+              );
+            }
+
+            if (
+              action === "next-question"
+            ) {
+              nextQuestion();
+            }
+
+            if (
+              action === "restart-exam"
+            ) {
+              restartExam();
+            }
+
+            if (
+              action === "claim-certificate" &&
+              state.exam?.item
+            ) {
+              openCertificate(
+                state.exam.item
+              );
+            }
+
+            if (
+              action === "start-exam"
+            ) {
+              const item =
+                state.webinars[
+                  Number(
+                    actionButton.dataset.index
+                  )
+                ];
+
+              if (item) {
+                openExam(item);
+              }
+            }
+          }
+        );
+
+      document
+        .querySelectorAll(
+          '[data-close-modal="logoutModal"]'
+        )
+        .forEach(button => {
+          button.addEventListener(
+            "click",
+            () => closeModal("logoutModal")
+          );
+        });
+
+      document
+        .getElementById("logoutModal")
+        .addEventListener(
+          "click",
+          event => {
+            if (
+              event.target ===
+              event.currentTarget
+            ) {
+              closeModal("logoutModal");
+            }
+          }
+        );
+
+      document.addEventListener(
+        "keydown",
+        event => {
+          if (event.key !== "Escape") {
+            return;
+          }
+
+          closeDrawer();
+          closeModal("mainModal");
+          closeModal("logoutModal");
+        }
+      );
+
+      document.addEventListener(
+        "visibilitychange",
+        () => {
+          if (document.hidden) {
+            clearInterval(
+              state.carouselTimer
+            );
+          } else {
+            startCarouselTimer();
+          }
+        }
+      );
+    }
+
+    async function initialize() {
+      if (!requireSession()) {
+        return;
+      }
+
+      fillSessionUI();
+      bindGlobalEvents();
+
+      await loadPageData();
+    }
+
+    initialize();
+  </script>
+</body>
+</html>

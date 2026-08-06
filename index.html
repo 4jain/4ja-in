@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#087bd8">
+  <meta name="description" content="4ja in - temukan kebutuhan lokal di sekitar Anda.">
 
-  <title>4ja in - Beranda UMKM</title>
+  <title>4ja in | Beranda UMKM</title>
 
   <style>
     :root {
@@ -12,653 +14,654 @@
       --green: #42a93b;
       --yellow: #f5b700;
       --brown: #8b5e34;
-      --soft-bg: #f7fafc;
-      --text-dark: #1e293b;
-      --text-grey: #64748b;
+      --bg: #f7fafc;
       --white: #ffffff;
-      --border: #e5e7eb;
-      --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-      --radius-sm: 14px;
-      --radius-md: 20px;
-      --radius-lg: 28px;
-      --bottom-height: 72px;
+      --dark: #1e293b;
+      --grey: #64748b;
+      --line: #e5e7eb;
+      --shadow: 0 12px 34px rgba(15, 23, 42, 0.09);
     }
 
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     html {
       scroll-behavior: smooth;
     }
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #e5e7eb;
-      color: var(--text-dark);
-      display: flex;
-      justify-content: center;
+    
+  body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  color: var(--dark);
+  background:
+    radial-gradient(circle at top left, #e8f5ff, transparent 30rem),
+    #dfe5ec;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+    body.modal-open {
+      overflow: hidden;
     }
 
     button,
     input {
-      font-family: inherit;
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
     }
 
     button {
-      border: none;
+      border: 0;
       cursor: pointer;
     }
 
-    .page {
-      width: 100%;
-      max-width: 430px;
-      min-height: 100vh;
-      background: var(--soft-bg);
-      padding-bottom: calc(var(--bottom-height) + 34px);
-      overflow-x: hidden;
+    img {
+      display: block;
+      max-width: 100%;
     }
 
-    .container {
-      width: 100%;
-      max-width: 430px;
-      margin: 0 auto;
-      overflow-x: hidden;
-    }
+    
+.app {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 14px 14px 110px;
+  background: var(--bg);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.05), 0 20px 60px rgba(15, 23, 42, 0.18);
+}
 
-    .header-card {
-      margin: 14px 16px 12px;
-      padding: 16px;
-      border-radius: var(--radius-lg);
+
+@media (min-width: 768px) {
+  .app {
+    min-height: calc(100vh - 24px);
+    margin: 12px auto;
+    border-radius: 32px;
+    overflow: hidden;
+  }
+}
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .hero {
+      overflow: hidden;
+      position: relative;
+      padding: 18px;
+      border: 1px solid rgba(8, 123, 216, 0.08);
+      border-radius: 28px;
       background:
         linear-gradient(
           135deg,
-          rgba(8, 123, 216, 0.36),
+          rgba(8, 123, 216, 0.34),
           rgba(8, 123, 216, 0.08),
-          rgba(66, 169, 59, 0.08)
-        );
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+          rgba(66, 169, 59, 0.09)
+        ),
+        #ffffff;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
     }
 
-    .header-top {
+    .hero-top,
+    .location,
+    .heading,
+    .card-meta,
+    .modal-top,
+    .modal-actions,
+    .socials {
       display: flex;
       align-items: center;
+    }
+
+    .hero-top {
       gap: 10px;
     }
 
-    .logo-wrap {
-      flex: 1;
-      min-width: 0;
-      height: clamp(48px, 13vw, 86px);
-      display: flex;
-      align-items: center;
+    .logo-link {
+      margin-right: auto;
+      text-decoration: none;
     }
 
-    .logo-img {
-      width: clamp(120px, 36vw, 230px);
-      max-height: 100%;
+    .logo {
+      width: clamp(125px, 34vw, 220px);
+      height: 58px;
       object-fit: contain;
-      object-position: left center;
-      display: block;
+      object-position: left;
     }
 
-    .logo-fallback {
+    .logo-text {
       display: none;
-      font-size: 32px;
-      font-weight: 900;
       color: var(--blue);
-      letter-spacing: -1px;
+      font-size: 30px;
+      font-weight: 950;
     }
 
-    .circle-btn {
+    .round-btn {
       width: 42px;
       height: 42px;
-      flex: 0 0 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--yellow);
-      font-size: 21px;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      display: grid;
+      place-items: center;
+      color: #9a7200;
+      border-radius: 15px;
+      background: rgba(245, 183, 0, 0.17);
+      font-size: 20px;
     }
 
-    .login-btn {
-      height: 42px;
-      padding: 0 14px;
-      display: inline-flex;
+    .login {
+      min-height: 42px;
+      display: flex;
       align-items: center;
-      gap: 6px;
-      border-radius: 999px;
-      background: var(--blue);
-      color: #fff;
+      gap: 7px;
+      padding: 0 14px;
+      color: #ffffff;
+      border-radius: 17px;
+      background: linear-gradient(135deg, var(--blue), #0a9be8);
+      box-shadow: 0 7px 15px rgba(8, 123, 216, 0.24);
       font-size: 13px;
       font-weight: 800;
-      box-shadow: 0 8px 16px rgba(8, 123, 216, 0.24);
+      text-decoration: none;
     }
 
-    .header-title {
-      margin-top: 14px;
-      font-size: 21px;
-      line-height: 1.18;
-      font-weight: 900;
-      color: var(--text-dark);
+    .hero h1 {
+      max-width: 680px;
+      margin: 17px 0 7px;
+      font-size: clamp(22px, 4vw, 38px);
+      line-height: 1.16;
     }
 
-    .header-subtitle {
-      margin-top: 7px;
+    .hero-copy {
+      margin: 0;
+      color: var(--grey);
       font-size: 13px;
-      line-height: 1.45;
       font-weight: 600;
-      color: var(--text-grey);
+      line-height: 1.5;
     }
 
-    .animated-info {
-      margin-top: 14px;
-      padding: 12px;
+    .notice {
+      max-width: 720px;
+      min-height: 64px;
       display: flex;
       align-items: center;
       gap: 12px;
+      margin-top: 15px;
+      padding: 11px 12px;
+      border: 1px solid #e2e8f0;
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.9);
-      border: 1px solid #e5e7eb;
     }
 
-    .animated-icon {
+    .notice-icon {
       width: 42px;
       height: 42px;
+      display: grid;
+      place-items: center;
       flex: 0 0 42px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       border-radius: 14px;
-      background: rgba(245, 183, 0, 0.18);
-      color: var(--yellow);
-      font-size: 22px;
+      background: #fff3c4;
     }
 
-    .animated-text {
-      min-height: 22px;
+    #animatedText {
+      margin: 0;
       font-size: 14px;
-      color: var(--text-dark);
       font-weight: 800;
-      opacity: 1;
-      transition: opacity 0.28s ease;
+      transition: 0.2s;
     }
 
-    .animated-text.hide {
+    #animatedText.hide {
       opacity: 0;
+      transform: translateY(5px);
     }
 
-    .search-card {
-      margin: 4px 16px 12px;
+    /* =========================================================
+       PENCARIAN DAN LOKASI
+       ========================================================= */
+
+    .search {
       display: flex;
       align-items: center;
-      border-radius: 22px;
-      background: var(--white);
-      box-shadow: 0 7px 16px rgba(15, 23, 42, 0.045);
-      overflow: hidden;
-    }
-
-    .search-icon {
-      width: 52px;
-      color: var(--blue);
-      text-align: center;
-      font-size: 20px;
-    }
-
-    .search-input {
-      flex: 1;
-      min-width: 0;
-      height: 54px;
-      border: none;
-      outline: none;
-      font-size: 13px;
-      color: var(--text-dark);
-      background: transparent;
-    }
-
-    .search-input::placeholder {
-      color: #9ca3af;
-    }
-
-    .clear-btn {
-      width: 46px;
-      height: 54px;
-      background: transparent;
-      color: #94a3b8;
-      font-size: 20px;
-      display: none;
-    }
-
-    .clear-btn.show {
-      display: block;
-    }
-
-    .location-card {
-  margin: 0 16px 12px;
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-radius: 18px;
-  background: var(--white);
-  border: 1px solid #e5e7eb;
-}
-
-.location-icon {
-  color: var(--blue);
-  font-size: 20px;
-}
-
-.location-message {
-  flex: 1;
-  font-size: 11.5px;
-  line-height: 1.3;
-  color: var(--text-grey);
-  font-weight: 600;
-}
-
-.location-refresh {
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  background: #eff6ff;
-  color: var(--blue);
-  font-size: 17px;
-}
-
-    .category-scroll {
-      height: 104px;
-      display: flex;
       gap: 10px;
-      overflow-x: auto;
-      padding: 0 16px;
-      scrollbar-width: none;
+      margin-top: 14px;
+      padding: 5px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+      background: #ffffff;
+      box-shadow: 0 7px 18px rgba(15, 23, 42, 0.05);
     }
 
-    .category-scroll::-webkit-scrollbar {
+    .search input {
+      width: 100%;
+      min-width: 0;
+      padding: 13px 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+    }
+
+    .clear {
+      width: 36px;
+      height: 36px;
+      color: var(--grey);
+      border-radius: 12px;
+      background: transparent;
+    }
+
+    .location {
+      gap: 10px;
+      margin-top: 12px;
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #ffffff;
+    }
+
+    #locationText {
+      margin: 0 auto 0 0;
+      color: var(--grey);
+      font-size: 12px;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .refresh {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      color: var(--blue);
+      border-radius: 12px;
+      background: #eaf5fe;
+    }
+
+    .spin {
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* =========================================================
+       SECTION
+       ========================================================= */
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .heading {
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .heading h2 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .heading p {
+      margin: 4px 0 0;
+      color: var(--grey);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .text-btn {
+      padding: 8px;
+      color: var(--blue);
+      border-radius: 11px;
+      background: transparent;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .text-btn:hover {
+      background: #eaf5fe;
+    }
+
+    /* =========================================================
+       KATEGORI
+       ========================================================= */
+
+    .categories,
+    .horizontal {
+      display: grid;
+      grid-auto-flow: column;
+      overflow-x: auto;
+      scrollbar-width: none;
+      scroll-snap-type: x proximity;
+    }
+
+    .categories::-webkit-scrollbar,
+    .horizontal::-webkit-scrollbar {
       display: none;
     }
 
-    .category-card {
-      width: 112px;
-      min-width: 112px;
-      height: 92px;
+    .categories {
+      grid-auto-columns: minmax(102px, 26vw);
+      gap: 10px;
+      margin: 0 -14px;
+      padding: 2px 14px 12px;
+    }
+
+    .category {
+      min-height: 104px;
       padding: 12px;
+      color: var(--color);
+      border: 1px solid var(--line);
       border-radius: 22px;
-      background: var(--white);
-      border: 1px solid #e5e7eb;
+      background: #ffffff;
       box-shadow: 0 7px 14px rgba(15, 23, 42, 0.035);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: 0.22s ease;
+      scroll-snap-align: start;
+      transition: 0.18s;
     }
 
-    .category-card.active {
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 7px 18px rgba(15, 23, 42, 0.13);
+    .category:hover {
+      transform: translateY(-2px);
     }
 
-    .category-icon {
-      font-size: 25px;
-      line-height: 1;
-      margin-bottom: 8px;
+    .category.active {
+      color: #ffffff;
+      border-color: var(--color);
+      background: var(--color);
+      box-shadow: 0 10px 22px rgba(8, 123, 216, 0.18);
     }
 
-    .category-name {
+    .category .emoji {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 27px;
+    }
+
+    .category strong {
+      color: var(--dark);
       font-size: 12px;
-      line-height: 1.15;
-      font-weight: 800;
-      text-align: center;
     }
 
-    .promo-section {
-      margin-top: 8px;
+    .category.active strong {
+      color: #ffffff;
     }
+
+    /* =========================================================
+       PROMO
+       ========================================================= */
 
     .promo-viewport {
       overflow: hidden;
-      padding-left: 16px;
+      position: relative;
+      border-radius: 28px;
     }
 
     .promo-track {
       display: flex;
-      transition: transform 0.35s ease;
+      transition: transform 0.42s cubic-bezier(0.22, 0.75, 0.2, 1);
     }
 
-    .promo-card {
-      min-width: calc(100% - 32px);
-      height: 148px;
-      margin-right: 10px;
-      padding: 18px;
-      border-radius: var(--radius-lg);
-      color: #fff;
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+    .promo {
+      min-width: 100%;
+      min-height: 170px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 18px;
+      padding: 22px;
+      color: #ffffff;
+      border-radius: 28px;
+      background: var(--color);
     }
 
-    .promo-content {
-      flex: 1;
-      min-width: 0;
+    .promo-copy {
+      margin-right: auto;
     }
 
-    .promo-label {
-      display: inline-flex;
+    .promo small {
       padding: 6px 10px;
-      border-radius: 999px;
+      border-radius: 99px;
       background: rgba(255, 255, 255, 0.18);
-      font-size: 11px;
       font-weight: 800;
     }
 
-    .promo-title {
-      margin-top: 12px;
-      font-size: 18px;
-      font-weight: 900;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .promo h3 {
+      margin: 13px 0 6px;
+      font-size: clamp(19px, 3vw, 25px);
     }
 
-    .promo-subtitle {
-      margin-top: 6px;
+    .promo p {
+      max-width: 600px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.9);
       font-size: 12px;
-      line-height: 1.35;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.88);
-      display: -webkit-box;
-      line-clamp: 2;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      line-height: 1.5;
     }
 
     .promo-icon {
-      width: 64px;
-      height: 64px;
-      flex: 0 0 64px;
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 68px;
       border-radius: 22px;
       background: rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-size: 34px;
     }
 
-    .promo-dots {
-      margin-top: 10px;
+    .promo-arrow {
+      width: 38px;
+      height: 38px;
+      position: absolute;
+      top: 50%;
+      color: #ffffff;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.25);
+      transform: translateY(-50%);
+    }
+
+    .promo-prev {
+      left: 9px;
+    }
+
+    .promo-next {
+      right: 9px;
+    }
+
+    .dots {
       display: flex;
       justify-content: center;
       gap: 6px;
+      margin-top: 11px;
     }
 
-    .promo-dot {
+    .dot {
       width: 7px;
       height: 7px;
-      border-radius: 999px;
-      background: #d1d5db;
-      transition: 0.22s ease;
+      padding: 0;
+      border-radius: 99px;
+      background: #cbd5e1;
+      transition: 0.18s;
     }
 
-    .promo-dot.active {
-      width: 22px;
+    .dot.active {
+      width: 23px;
       background: var(--blue);
     }
 
-    .section-title-row {
-      padding: 22px 16px 12px;
+    /* =========================================================
+       PRODUK
+       ========================================================= */
+
+    .data-note {
+      margin: 0 0 13px;
+      padding: 10px 12px;
+      color: #805f00;
+      border: 1px solid #f8d86f;
+      border-radius: 14px;
+      background: #fff8d9;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .group + .group {
+      margin-top: 22px;
+    }
+
+    .group-title {
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
+      margin-bottom: 9px;
     }
 
-    .section-title-text {
-      flex: 1;
-      min-width: 0;
+    .group-title h3 {
+      margin: 0;
+      font-size: 16px;
     }
 
-    .section-title {
-      font-size: 18px;
-      color: var(--text-dark);
-      font-weight: 900;
-    }
-
-    .section-subtitle {
-      margin-top: 3px;
-      font-size: 12px;
-      color: var(--text-grey);
-      font-weight: 600;
-    }
-
-    .see-all-btn {
-      padding: 8px 0 8px 10px;
-      background: transparent;
+    .group-title button {
       color: var(--blue);
+      background: transparent;
+      font-size: 12px;
       font-weight: 800;
-      font-size: 13px;
     }
 
-    .products-grid {
-      padding: 0 16px;
+    .horizontal {
+      grid-auto-columns: minmax(220px, 76vw);
+      gap: 12px;
+      margin: 0 -14px;
+      padding: 2px 14px 17px;
+    }
+
+    .grid,
+    .skeleton-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px 12px;
-    }
-
-    .product-card {
-      height: 322px;
-      border-radius: 24px;
-      background: var(--white);
-      box-shadow: 0 7px 15px rgba(15, 23, 42, 0.045);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    .horizontal-section {
-      margin-top: 2px;
-    }
-
-    .horizontal-title {
-      padding: 14px 16px 12px;
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--text-dark);
-    }
-
-    .horizontal-scroll {
-      display: flex;
       gap: 12px;
-      overflow-x: auto;
-      padding: 0 16px 22px;
-      scrollbar-width: none;
     }
 
-    .horizontal-scroll::-webkit-scrollbar {
-      display: none;
-    }
-
-    .product-card.horizontal {
-      width: 165px;
-      min-width: 165px;
-      height: 286px;
-      border-radius: 22px;
-    }
-
-    .product-image-wrap {
+    .card {
+      min-width: 0;
+      overflow: hidden;
       position: relative;
-      height: 104px;
-      flex: 0 0 104px;
+      border: 1px solid var(--line);
+      border-radius: 21px;
+      background: #ffffff;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.045);
+      scroll-snap-align: start;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .media {
+      height: 138px;
       overflow: hidden;
-      background: #eff6ff;
+      position: relative;
+      display: grid;
+      place-items: center;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--color), #91c8ee);
+      font-size: 45px;
     }
 
-    .product-card.horizontal .product-image-wrap {
-      height: 96px;
-      flex-basis: 96px;
-    }
-
-    .product-image {
+    .media img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .image-placeholder {
-      width: 100%;
-      height: 100%;
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.55), transparent 30%),
-        linear-gradient(135deg, rgba(8, 123, 216, 0.16), rgba(66, 169, 59, 0.16));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-    }
-
-    .category-badge {
       position: absolute;
-      top: 8px;
-      left: 8px;
+      inset: 0;
+      object-fit: cover;
+    }
+
+    .badge,
+    .promo-badge {
+      position: absolute;
+      z-index: 1;
       padding: 5px 8px;
-      border-radius: 999px;
-      color: #fff;
+      border-radius: 99px;
       font-size: 10px;
-      font-weight: 900;
-      max-width: calc(100% - 72px);
+      font-weight: 850;
+    }
+
+    .badge {
+      max-width: calc(100% - 20px);
       overflow: hidden;
-      white-space: nowrap;
+      top: 10px;
+      left: 10px;
+      color: #ffffff;
+      background: var(--color);
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .promo-badge {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      padding: 5px 8px;
-      border-radius: 999px;
-      background: var(--yellow);
+      right: 10px;
+      bottom: 10px;
       color: var(--brown);
-      font-size: 10px;
-      font-weight: 900;
-      max-width: 62px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      background: #fff3c4;
     }
 
-    .product-body {
-      padding: 10px 12px 12px;
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
+    .card-body {
+      padding: 12px;
     }
 
-    .product-card.horizontal .product-body {
-      padding: 9px 10px 10px;
-    }
-
-    .product-name {
-      height: 36px;
-      font-size: 14px;
-      line-height: 1.15;
-      color: var(--text-dark);
-      font-weight: 900;
-      display: -webkit-box;
-      line-clamp: 2;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .product-card.horizontal .product-name {
-      font-size: 13px;
-    }
-
-    .product-desc {
-      height: 32px;
-      margin-top: 6px;
+    .card-meta {
+      gap: 4px;
+      color: #9a7200;
       font-size: 11px;
-      line-height: 1.25;
-      color: var(--text-grey);
-      font-weight: 500;
+      font-weight: 800;
+    }
+
+    .card h4 {
+      min-height: 39px;
       display: -webkit-box;
-      line-clamp: 2;
-      -webkit-line-clamp: 2;
+      overflow: hidden;
+      margin: 8px 0 6px;
+      font-size: 14px;
+      line-height: 1.38;
       -webkit-box-orient: vertical;
+      line-clamp: 2;
+
+      -webkit-line-clamp: 2;
+    }
+
+    .place {
+      min-height: 32px;
+      display: -webkit-box;
       overflow: hidden;
+      margin: 0;
+      color: var(--grey);
+      font-size: 11px;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+
+      -webkit-line-clamp: 2;
     }
 
-    .product-card.horizontal .product-desc {
-      margin-top: 5px;
-      font-size: 10px;
-    }
-
-    .product-location {
-      height: 18px;
-      margin-top: 7px;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      font-size: 10.5px;
-      color: var(--text-grey);
-      font-weight: 600;
-      overflow: hidden;
-    }
-
-    .product-card.horizontal .product-location {
-      margin-top: 6px;
-      font-size: 9.8px;
-    }
-
-    .product-location span:last-child {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .product-spacer {
-      flex: 1;
-    }
-
-    .price-rating-row {
-      height: 36px;
+    .price-row {
+      min-height: 39px;
       display: flex;
       align-items: flex-end;
+      justify-content: space-between;
       gap: 8px;
+      margin-top: 9px;
     }
 
-    .price-box {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .old-price {
+    .old {
       display: block;
-      color: var(--text-grey);
+      color: #94a3b8;
       font-size: 10px;
-      font-weight: 600;
       text-decoration: line-through;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .product-card.horizontal .old-price {
-      font-size: 9px;
     }
 
     .price {
@@ -666,679 +669,1068 @@
       color: var(--blue);
       font-size: 13px;
       font-weight: 900;
-      white-space: nowrap;
+    }
+
+    .go {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 30px;
+      color: #ffffff;
+      border-radius: 10px;
+      background: var(--color);
+    }
+
+    /* =========================================================
+       LOADING DAN EMPTY
+       ========================================================= */
+
+    .state {
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      padding: 25px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: #ffffff;
+    }
+
+    .state h3 {
+      margin: 10px 0 6px;
+    }
+
+    .state p {
+      margin: 0;
+      color: var(--grey);
+      font-size: 13px;
+    }
+
+    .skeleton {
+      height: 265px;
       overflow: hidden;
-      text-overflow: ellipsis;
+      border-radius: 21px;
+      background: #ffffff;
     }
 
-    .product-card.horizontal .price {
-      font-size: 12px;
+    .shimmer {
+      background: linear-gradient(90deg, #edf2f7, #ffffff, #edf2f7);
+      background-size: 220% 100%;
+      animation: shimmer 1.2s linear infinite;
     }
 
-    .rating {
-      flex: 0 0 auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 2px;
-      color: var(--text-dark);
-      font-size: 11px;
-      font-weight: 800;
+    .sk-img {
+      height: 138px;
     }
 
-    .order-btn {
-      margin-top: 9px;
-      width: 100%;
-      height: 36px;
-      border-radius: 13px;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    .product-card.horizontal .order-btn {
-      height: 34px;
-      margin-top: 8px;
-    }
-
-    .loading-section {
-      padding: 26px 16px 16px;
-    }
-
-    .skeleton-row {
-      height: 86px;
-      margin-bottom: 12px;
-      border-radius: 22px;
-      background: #fff;
-      display: flex;
-      overflow: hidden;
-    }
-
-    .skeleton-img {
-      width: 86px;
-      height: 86px;
-      background: #e5e7eb;
-    }
-
-    .skeleton-body {
-      flex: 1;
-      padding: 14px;
-    }
-
-    .skeleton-line {
+    .sk-line {
       height: 12px;
-      margin-bottom: 10px;
-      border-radius: 999px;
-      background: #e5e7eb;
+      margin: 14px 12px 0;
+      border-radius: 8px;
     }
 
-    .skeleton-line.short {
+    .sk-short {
       width: 55%;
     }
 
-    .skeleton-line.tiny {
-      width: 34%;
-      margin-top: 20px;
+    @keyframes shimmer {
+      to {
+        background-position: -220% 0;
+      }
     }
 
-    .info-section {
-      margin: 22px 16px 16px;
-      padding: 18px;
-      border-radius: 24px;
-      background: #fff;
-      border: 1px solid #fecaca;
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    footer {
+      margin-top: 34px;
+      padding: 24px 18px;
+      color: #ffffff;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      box-shadow: var(--shadow);
     }
 
-    .info-icon {
-      font-size: 32px;
-      margin-bottom: 10px;
+    footer h2 {
+      margin: 0;
+      font-size: 20px;
     }
 
-    .info-title {
-      font-size: 16px;
-      font-weight: 900;
-      color: var(--text-dark);
-    }
-
-    .info-text {
-      margin-top: 6px;
-      font-size: 12px;
-      line-height: 1.4;
-      color: var(--text-grey);
-    }
-
-    .retry-btn {
-      margin-top: 14px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: var(--blue);
-      color: #fff;
+    footer p {
+      max-width: 650px;
+      margin: 7px 0 17px;
+      color: #cbd5e1;
       font-size: 13px;
-      font-weight: 800;
+      line-height: 1.5;
     }
 
-    .empty-section {
-      margin: 6px 16px 16px;
-      padding: 22px;
-      border-radius: 24px;
-      background: #fff;
-      text-align: center;
+    .socials {
+      flex-wrap: wrap;
+      gap: 9px;
     }
 
-    .empty-icon {
-      font-size: 42px;
-      color: var(--text-grey);
-    }
-
-    .empty-title {
-      margin-top: 10px;
-      font-size: 16px;
-      font-weight: 900;
-      color: var(--text-dark);
-    }
-
-    .empty-text {
-      margin-top: 5px;
+    .social {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 13px;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
       font-size: 12px;
-      line-height: 1.4;
-      color: var(--text-grey);
-    }
-
-    .footer-card {
-      margin: 24px 16px 12px;
-      padding: 18px;
-      border-radius: 26px;
-      background: #fff;
-    }
-
-    .footer-title {
-      font-size: 16px;
-      font-weight: 900;
-      color: var(--text-dark);
-    }
-
-    .footer-text {
-      margin-top: 6px;
-      font-size: 12px;
-      line-height: 1.4;
-      color: var(--text-grey);
-    }
-
-    .footer-actions {
-      margin-top: 14px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .footer-btn {
-      flex: 1;
-      min-height: 44px;
-      padding: 11px 10px;
-      border-radius: 16px;
-      font-size: 13px;
       font-weight: 800;
+      text-decoration: none;
     }
 
-    .footer-btn.outline {
-      color: var(--blue);
-      background: #fff;
-      border: 1px solid rgba(8, 123, 216, 0.35);
-    }
-
-    .footer-btn.fill {
-      color: #fff;
-      background: var(--green);
-    }
+    /* =========================================================
+       NAVIGASI BAWAH
+       ========================================================= */
 
     .bottom-nav {
-      position: fixed;
-      z-index: 20;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 430px;
-      height: var(--bottom-height);
-      background: #ffffff;
-      border-top: 1px solid var(--border);
+      height: 74px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.06);
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 30;
+      padding: 7px 10px max(7px, env(safe-area-inset-bottom));
+      border-top: 1px solid #e2e8f0;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.08);
+      backdrop-filter: blur(16px);
     }
 
-    .nav-item {
-      background: transparent;
-      color: #9ca3af;
+    .bottom-nav button,
+    .bottom-nav a {
+      min-width: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      font-size: 11px;
-      font-weight: 700;
+      gap: 3px;
+      color: #94a3b8;
+      border-radius: 12px;
+      background: transparent;
+      font-size: 10px;
+      font-weight: 750;
+      text-decoration: none;
     }
 
-    .nav-item .nav-icon {
-      font-size: 21px;
-      line-height: 1;
-    }
-
-    .nav-item.active {
+    .bottom-nav .active,
+    .bottom-nav button:hover,
+    .bottom-nav a:hover {
       color: var(--blue);
+      background: #eaf5fe;
     }
+
+    .nav-icon {
+      font-size: 20px;
+    }
+
+    /* =========================================================
+       TOAST
+       ========================================================= */
 
     .toast {
+      max-width: calc(100vw - 28px);
       position: fixed;
-      z-index: 60;
       left: 50%;
-      bottom: calc(var(--bottom-height) + 16px);
-      transform: translateX(-50%) translateY(20px);
-      width: min(calc(100% - 32px), 398px);
-      padding: 13px 14px;
+      bottom: 90px;
+      z-index: 100;
+      padding: 11px 14px;
+      color: #ffffff;
       border-radius: 14px;
-      background: #111827;
-      color: #fff;
-      font-size: 13px;
-      line-height: 1.4;
+      background: #0f172a;
+      box-shadow: var(--shadow);
       opacity: 0;
       pointer-events: none;
-      transition: 0.25s ease;
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+      transform: translate(-50%, 12px);
+      transition: 0.18s;
+      font-size: 13px;
+      text-align: center;
     }
 
     .toast.show {
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      transform: translate(-50%, 0);
     }
 
-    .modal-backdrop {
-      position: fixed;
-      z-index: 50;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
+    /* =========================================================
+       MODAL DETAIL PRODUK
+       ========================================================= */
+
+    .modal {
       display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 80;
       align-items: flex-end;
       justify-content: center;
       padding: 12px;
+      background: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(4px);
     }
 
-    .modal-backdrop.show {
+    .modal.open {
       display: flex;
     }
 
-    .modal-sheet {
-      width: 100%;
-      max-width: 430px;
-      max-height: calc(100vh - 24px);
+    .sheet {
+      width: min(100%, 620px);
+      max-height: 88vh;
       overflow-y: auto;
-      border-radius: 28px;
-      background: #fff;
+      position: relative;
       padding: 16px;
-      animation: slideUp 0.22s ease;
+      border-radius: 28px 28px 20px 20px;
+      background: #ffffff;
     }
 
-    @keyframes slideUp {
-      from {
-        transform: translateY(24px);
-        opacity: 0;
-      }
-
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .modal-handle {
+    .handle {
       width: 48px;
       height: 5px;
-      margin: 0 auto 16px;
-      border-radius: 999px;
+      margin: 0 auto 14px;
+      border-radius: 99px;
       background: #d1d5db;
     }
 
-    .modal-image {
-      width: 100%;
-      height: 190px;
+    .modal-close {
+      width: 42px;
+      height: 42px;
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      z-index: 3;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 7px 18px rgba(15, 23, 42, 0.13);
+    }
+
+    .modal-media {
+      height: min(30vh, 230px);
       border-radius: 22px;
-      overflow: hidden;
-      background: #eff6ff;
     }
 
-    .modal-top-row {
-      margin-top: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .modal-content {
+      padding: 15px 2px 2px;
     }
 
-    .modal-rating {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      color: var(--text-dark);
-      font-weight: 700;
-    }
-
-    .modal-title {
-      margin-top: 12px;
-      font-size: 22px;
-      line-height: 1.25;
-      font-weight: 900;
-      color: var(--text-dark);
-    }
-
-    .modal-desc {
-      margin-top: 8px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--text-grey);
-    }
-
-    .modal-info {
-      margin-top: 14px;
-      display: flex;
-      gap: 6px;
-      align-items: flex-start;
-      font-size: 13px;
-      line-height: 1.35;
-      color: var(--text-grey);
-      font-weight: 600;
-    }
-
-    .modal-price-row {
-      margin-top: 18px;
-      display: flex;
-      align-items: center;
+    .modal-top {
+      justify-content: space-between;
       gap: 12px;
     }
 
+    .modal-category {
+      padding: 5px 9px;
+      color: #ffffff;
+      border-radius: 99px;
+      background: var(--color);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .modal-content h2 {
+      margin: 13px 0 8px;
+      font-size: 23px;
+    }
+
+    .description {
+      margin: 0;
+      color: var(--grey);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .info {
+      display: grid;
+      gap: 9px;
+      margin: 16px 0;
+      color: var(--grey);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
     .modal-price {
-      flex: 1;
-      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
     }
 
     .modal-price .price {
-      font-size: 18px;
+      font-size: 19px;
     }
 
     .modal-promo {
       padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(245, 183, 0, 0.18);
       color: var(--brown);
+      border-radius: 99px;
+      background: #fff3c4;
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 850;
     }
 
     .modal-actions {
-      margin-top: 20px;
-      display: flex;
-      gap: 12px;
+      gap: 11px;
+      margin-top: 19px;
     }
 
-    .modal-btn {
+    .primary,
+    .secondary {
+      min-height: 47px;
       flex: 1;
-      min-height: 48px;
-      border-radius: 16px;
-      font-size: 14px;
-      font-weight: 800;
+      border-radius: 15px;
+      font-size: 13px;
+      font-weight: 850;
     }
 
-    .modal-btn.close {
-      background: #fff;
-      color: var(--text-dark);
-      border: 1px solid #d1d5db;
-    }
-
-    .modal-btn.order {
+    .primary {
+      color: #ffffff;
       background: var(--green);
-      color: #fff;
     }
 
-    @media (max-width: 420px) {
-      
+    .secondary {
+      color: var(--dark);
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+    }
 
-      .footer-actions,
-      .modal-actions {
-        flex-direction: column;
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (min-width: 680px) {
+      .app {
+        padding: 20px 20px 120px;
+      }
+
+      .hero {
+        padding: 24px;
+      }
+
+      .categories {
+        grid-template-columns: repeat(5, 1fr);
+        grid-auto-flow: initial;
+        overflow: visible;
+        margin: 0;
+        padding: 2px 0 12px;
+      }
+
+      .promo {
+        min-height: 190px;
+        padding: 25px 52px;
+      }
+
+      .horizontal {
+        grid-auto-columns: minmax(240px, 34vw);
+        margin: 0;
+        padding-inline: 0;
+      }
+
+      .grid,
+      .skeleton-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .media {
+        height: 160px;
+      }
+
+      .modal {
+        align-items: center;
+      }
+
+      .sheet {
+        border-radius: 28px;
+      }
+    }
+
+    @media (min-width: 980px) {
+      .grid,
+      .skeleton-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+
+      .horizontal {
+        grid-auto-columns: minmax(250px, 24%);
+      }
+
+      .bottom-nav {
+        width: min(680px, calc(100vw - 28px));
+        right: auto;
+        bottom: 12px;
+        left: 50%;
+        border: 1px solid #e2e8f0;
+        border-radius: 22px;
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="page">
-    <div class="container">
-      <section class="header-card">
-        <div class="header-top">
-          <div class="logo-wrap">
+  <div class="app">
+    <main>
+      <header class="hero" id="home">
+        <div class="hero-top">
+          <a class="logo-link" href="#home" aria-label="Kembali ke atas">
             <img
-              id="logoImage"
-              class="logo-img"
+              id="logo"
+              class="logo"
               src="https://drive.google.com/thumbnail?id=1ykScuLGr05dAlIcBU0LJHGcRf19SiDbB&sz=w1000"
-              alt="4ja in"
-            />
-            <div id="logoFallback" class="logo-fallback">4ja in</div>
-          </div>
+              alt="Logo 4ja in"
+            >
+            <span id="logoText" class="logo-text">4ja in</span>
+          </a>
 
-          <button class="circle-btn" type="button" id="notificationBtn" aria-label="Notifikasi">
+          <button
+            id="notification"
+            class="round-btn"
+            type="button"
+            aria-label="Notifikasi"
+          >
             🔔
           </button>
 
-          <button class="login-btn" type="button" id="loginBtn">
-            👤 <span class="login-text">Login</span>
-          </button>
+          <a class="login" href="login.html">
+            <span>↪</span>
+            Login
+          </a>
         </div>
 
-        <h1 class="header-title">Temukan kebutuhan lokal di sekitar Anda</h1>
-        <p class="header-subtitle">
+        <h1>Temukan kebutuhan lokal di sekitar Anda</h1>
+
+        <p class="hero-copy">
           Makanan, jasa, jamu, dan kerajinan dari pelaku usaha sekitar.
         </p>
 
-        <div class="animated-info">
-          <div class="animated-icon">📣</div>
-          <div id="animatedText" class="animated-text">
-            Belanja produk lokal lebih dekat
-          </div>
+        <div class="notice" aria-live="polite">
+          <span class="notice-icon">📣</span>
+          <p id="animatedText">Belanja produk lokal lebih dekat</p>
         </div>
-      </section>
+      </header>
 
-      <section class="search-card">
-        <div class="search-icon">🔎</div>
+      <label class="search" for="searchInput">
+        <span aria-hidden="true">🔎</span>
+
         <input
           id="searchInput"
-          class="search-input"
-          type="text"
+          type="search"
+          autocomplete="off"
           placeholder="Cari makanan, jasa, jamu, kerajinan..."
-        />
-        <button id="clearSearchBtn" class="clear-btn" type="button" aria-label="Hapus pencarian">
-          ×
+        >
+
+        <button
+          id="clearSearch"
+          class="clear"
+          type="button"
+          aria-label="Hapus pencarian"
+          hidden
+        >
+          ✕
         </button>
-      </section>
+      </label>
 
-      <section class="location-card">
-  <div id="locationIcon" class="location-icon">📍</div>
-  <p id="locationMessage" class="location-message">
-    Mengurutkan produk berdasarkan lokasi perangkat.
-  </p>
-  <button id="locationRefreshBtn" class="location-refresh" type="button" aria-label="Refresh lokasi">
-    ↻
-  </button>
-</section>
+      <section class="location" aria-label="Lokasi perangkat">
+        <span aria-hidden="true">📍</span>
 
-      <section id="categoryList" class="category-scroll"></section>
-
-      <section class="promo-section">
-        <div class="promo-viewport">
-          <div id="promoTrack" class="promo-track"></div>
-        </div>
-        <div id="promoDots" class="promo-dots"></div>
-      </section>
-
-      <section class="section-title-row">
-        <div class="section-title-text">
-          <h2 class="section-title">Rekomendasi untuk Anda</h2>
-          <p id="sectionSubtitle" class="section-subtitle">0 layanan tersedia</p>
-        </div>
-
-        <button id="seeAllBtn" class="see-all-btn" type="button">
-          Lihat semua
-        </button>
-      </section>
-
-      <section id="productArea"></section>
-
-      <section class="footer-card">
-        <h2 class="footer-title">Terhubung dengan 4ja in</h2>
-        <p class="footer-text">
-          Ikuti sosial media atau hubungi admin untuk informasi layanan terbaru.
+        <p id="locationText">
+          Mengurutkan produk berdasarkan lokasi perangkat.
         </p>
 
-        <div class="footer-actions">
-          <button id="instagramBtn" class="footer-btn outline" type="button">
-            📷 Instagram
+        <button
+          id="locationButton"
+          class="refresh"
+          type="button"
+          aria-label="Baca ulang lokasi"
+        >
+          ↻
+        </button>
+      </section>
+
+      <section class="section" aria-labelledby="categoryTitle">
+        <div class="heading">
+          <div>
+            <h2 id="categoryTitle">Pilih Kategori</h2>
+            <p>Temukan kebutuhan sesuai kategori.</p>
+          </div>
+        </div>
+
+        <div id="categoryList" class="categories"></div>
+      </section>
+
+      <section class="section" aria-labelledby="promoTitle">
+        <div class="heading">
+          <div>
+            <h2 id="promoTitle">Promo &amp; Informasi</h2>
+            <p>Penawaran pilihan dari 4ja in.</p>
+          </div>
+        </div>
+
+        <div id="promoViewport" class="promo-viewport">
+          <div id="promoTrack" class="promo-track"></div>
+
+          <button
+            id="promoPrev"
+            class="promo-arrow promo-prev"
+            type="button"
+            aria-label="Promo sebelumnya"
+          >
+            ‹
           </button>
-          <button id="whatsappFooterBtn" class="footer-btn fill" type="button">
+
+          <button
+            id="promoNext"
+            class="promo-arrow promo-next"
+            type="button"
+            aria-label="Promo berikutnya"
+          >
+            ›
+          </button>
+        </div>
+
+        <div id="promoDots" class="dots"></div>
+      </section>
+
+      <section
+        class="section"
+        id="productsSection"
+        aria-labelledby="productsTitle"
+      >
+        <div class="heading">
+          <div>
+            <h2 id="productsTitle">Rekomendasi untuk Anda</h2>
+            <p id="productCount">Memuat layanan...</p>
+          </div>
+
+          <div>
+            <button
+              id="reloadButton"
+              class="text-btn"
+              type="button"
+              aria-label="Muat ulang"
+            >
+              ↻
+            </button>
+
+            <button
+              id="showAllButton"
+              class="text-btn"
+              type="button"
+            >
+              Lihat semua →
+            </button>
+          </div>
+        </div>
+
+        <div id="dataNotice"></div>
+        <div id="productContent"></div>
+      </section>
+
+      <footer>
+        <h2>Terhubung dengan 4ja in</h2>
+
+        <p>
+          Ikuti informasi produk lokal, pelaku UMKM, dan promo terbaru melalui
+          kanal resmi kami.
+        </p>
+
+        <div class="socials">
+          <a
+            class="social"
+            href="https://instagram.com/4jain"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ◎ Instagram
+          </a>
+
+          <a
+            class="social"
+            href="https://tiktok.com/@4jain"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ♪ TikTok
+          </a>
+
+          <button id="footerChat" class="social" type="button">
             💬 WhatsApp
           </button>
         </div>
-      </section>
-    </div>
-  </main>
+      </footer>
+    </main>
+  </div>
 
-  <nav class="bottom-nav">
-    <button class="nav-item active" type="button" data-nav="0">
-      <span class="nav-icon">🏠</span>
+  <nav class="bottom-nav" aria-label="Navigasi utama">
+    <button id="navHome" class="active" type="button">
+      <span class="nav-icon">⌂</span>
       <span>Beranda</span>
     </button>
 
-    <button class="nav-item" type="button" data-nav="1">
-      <span class="nav-icon">🔎</span>
+    <button id="navSearch" type="button">
+      <span class="nav-icon">⌕</span>
       <span>Cari</span>
     </button>
 
-    <button class="nav-item" type="button" data-nav="2">
-      <span class="nav-icon">💬</span>
+    <button id="navChat" type="button">
+      <span class="nav-icon">◌</span>
       <span>Chat</span>
     </button>
 
-    <button class="nav-item" type="button" data-nav="3">
-      <span class="nav-icon">👤</span>
+    <a href="login.html">
+      <span class="nav-icon">♙</span>
       <span>Profil</span>
-    </button>
+    </a>
   </nav>
 
-  <div id="toast" class="toast"></div>
+  <div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+  ></div>
 
-  <div id="detailModal" class="modal-backdrop">
-    <div class="modal-sheet">
-      <div class="modal-handle"></div>
-      <div id="modalContent"></div>
+  <div
+    id="productModal"
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="modalName"
+  >
+    <div class="sheet">
+      <div class="handle"></div>
+
+      <button
+        id="modalX"
+        class="modal-close"
+        type="button"
+        aria-label="Tutup"
+      >
+        ✕
+      </button>
+
+      <div id="modalBody"></div>
     </div>
   </div>
 
   <script>
+    "use strict";
+
+    // =============================================================
+    // KONFIGURASI UTAMA
+    // =============================================================
+
     const CONFIG = {
-      whatsappAdmin: "6281234567890",
-      instagramUrl: "https://instagram.com/4jain",
-      tiktokUrl: "https://tiktok.com/@4jain",
-      defaultLocation: "Surabaya, Jawa Timur",
+      spreadsheetId: "1NdtvPXBSnK_jJUdvVSfNEcopRhrD5yoFsOWvYYkUawU",
+      allSheetName: "SemuaProduk",
+      whatsappAdmin: "6281298542192",
 
-      wilayahSpreadsheetId: "1Mz10SIO8ECCuyRHyRtsCRqYdXDN3ngak6D-T24qunmY",
-      wilayahSheetGid: "0",
+      animatedTextSpreadsheetId:
+        "1_oa2rmplmV1lPQU066DoGlhcrsvaWHs_k1WYWshTbjs",
 
-      animatedTextSpreadsheetId: "1_oa2rmplmV1lPQU066DoGlhcrsvaWHs_k1WYWshTbjs",
-      animatedTextSheetGid: "0",
+      animatedTextGid: "0",
+      cacheMs: 5 * 60 * 1000,
+      timeoutMs: 8000,
 
-      sources: {
-        Jajan: {
-          spreadsheetId: "1NdtvPXBSnK_jJUdvVSfNEcopRhrD5yoFsOWvYYkUawU",
-          gid: "396669239",
-          defaultKategori: "Jajan"
-        },
-        Jasa: {
-          spreadsheetId: "1NdtvPXBSnK_jJUdvVSfNEcopRhrD5yoFsOWvYYkUawU",
-          gid: "1948932216",
-          defaultKategori: "Jasa"
-        },
-        Jamu: {
-          spreadsheetId: "1NdtvPXBSnK_jJUdvVSfNEcopRhrD5yoFsOWvYYkUawU",
-          gid: "196150476",
-          defaultKategori: "Jamu"
-        },
-        Jarik: {
-          spreadsheetId: "1NdtvPXBSnK_jJUdvVSfNEcopRhrD5yoFsOWvYYkUawU",
-          gid: "41810502",
-          defaultKategori: "Jarik"
-        }
+      sheets: {
+        Jajan: "396669239",
+        Jasa: "1948932216",
+        Jamu: "196150476",
+        Jarik: "41810502"
       }
     };
 
     const COLORS = {
-      blue: "#087bd8",
-      green: "#42a93b",
-      yellow: "#f5b700",
-      brown: "#8b5e34"
+      Semua: "#087bd8",
+      Jajan: "#f5b700",
+      Jasa: "#087bd8",
+      Jamu: "#42a93b",
+      Jarik: "#8b5e34"
     };
 
-    const defaultAnimatedTexts = [
+    const CATEGORIES = [
+      {
+        label: "Semua",
+        icon: "▦"
+      },
+      {
+        label: "Jajan",
+        icon: "🍽"
+      },
+      {
+        label: "Jasa",
+        icon: "🎧"
+      },
+      {
+        label: "Jamu",
+        icon: "🌿"
+      },
+      {
+        label: "Jarik",
+        icon: "👕"
+      }
+    ];
+
+    const PROMOS = [
+      {
+        title: "Promo lokal pilihan",
+        subtitle:
+          "Temukan makanan, jasa, jamu, dan kerajinan dari sekitar Anda.",
+        icon: "🏷",
+        color: "#087bd8"
+      },
+      {
+        title: "Dukung UMKM sekitar",
+        subtitle:
+          "Belanja lebih dekat, cepat, dan mudah lewat 4ja in.",
+        icon: "🏪",
+        color: "#42a93b"
+      },
+      {
+        title: "Pesan langsung via WA",
+        subtitle:
+          "Hubungi penjual atau penyedia jasa tanpa ribet.",
+        icon: "💬",
+        color: "#8b5e34"
+      }
+    ];
+
+    const DEFAULT_TEXTS = [
       "Belanja produk lokal lebih dekat",
       "Cari jasa dan kuliner sekitar Anda",
       "Dukung UMKM Indonesia bersama 4ja in"
     ];
 
-    const categories = [
-      { label: "Semua", icon: "▦", color: COLORS.blue },
-      { label: "Jajan", icon: "🍽️", color: COLORS.yellow },
-      { label: "Jasa", icon: "🎧", color: COLORS.blue },
-      { label: "Jamu", icon: "🌿", color: COLORS.green },
-      { label: "Jarik", icon: "🧵", color: COLORS.brown }
-    ];
-
-    const promos = [
+    // Data cadangan apabila Google Sheet gagal diakses.
+    const FALLBACK = [
       {
-        title: "Promo lokal pilihan",
-        subtitle: "Temukan makanan, jasa, jamu, dan kerajinan dari sekitar Anda.",
-        icon: "🏷️",
-        color: COLORS.blue
+        kategori: "Jajan",
+        nama: "Nasi Ayam Geprek Sambal Bawang",
+        deskripsi:
+          "Paket ayam geprek pedas dengan nasi hangat dan lalapan.",
+        harga: "Rp18.000",
+        oldHarga: "Rp20.000",
+        promo: "10%",
+        rating: 4.9,
+        lokasi: "Waru, Sidoarjo",
+        imageUrl: "",
+        whatsapp: CONFIG.whatsappAdmin,
+        stockLabel: "STOK TERBATAS",
+        stok: "100",
+        kurang: "30",
+        total: "70",
+        provinsi: "Jawa Timur",
+        kabupatenKota: "Sidoarjo",
+        kecamatan: "Waru",
+        kelurahanDesa: ""
       },
       {
-        title: "Dukung UMKM sekitar",
-        subtitle: "Belanja lebih dekat, cepat, dan mudah lewat 4ja in.",
-        icon: "🏪",
-        color: COLORS.green
+        kategori: "Jasa",
+        nama: "Jasa Cuci Sepatu",
+        deskripsi:
+          "Cuci sepatu cepat, bersih, dan rapi untuk sepatu harian.",
+        harga: "Mulai Rp25.000",
+        oldHarga: "",
+        promo: "",
+        rating: 4.8,
+        lokasi: "Surabaya Timur",
+        imageUrl: "",
+        whatsapp: CONFIG.whatsappAdmin,
+        stockLabel: "",
+        stok: "",
+        kurang: "",
+        total: "",
+        provinsi: "Jawa Timur",
+        kabupatenKota: "Surabaya",
+        kecamatan: "",
+        kelurahanDesa: ""
       },
       {
-        title: "Pesan langsung via WA",
-        subtitle: "Hubungi penjual atau penyedia jasa tanpa ribet.",
-        icon: "💬",
-        color: COLORS.brown
+        kategori: "Jamu",
+        nama: "Jamu Kunyit Asam Segar",
+        deskripsi:
+          "Minuman herbal tradisional dengan rasa segar dan alami.",
+        harga: "Rp10.000",
+        oldHarga: "",
+        promo: "Baru",
+        rating: 4.7,
+        lokasi: "Sidoarjo",
+        imageUrl: "",
+        whatsapp: CONFIG.whatsappAdmin,
+        stockLabel: "",
+        stok: "",
+        kurang: "",
+        total: "",
+        provinsi: "Jawa Timur",
+        kabupatenKota: "Sidoarjo",
+        kecamatan: "",
+        kelurahanDesa: ""
+      },
+      {
+        kategori: "Jarik",
+        nama: "Tas Anyaman Handmade",
+        deskripsi:
+          "Kerajinan tangan lokal dengan desain modern minimalis.",
+        harga: "Rp65.000",
+        oldHarga: "",
+        promo: "",
+        rating: 4.9,
+        lokasi: "Gresik",
+        imageUrl: "",
+        whatsapp: CONFIG.whatsappAdmin,
+        stockLabel: "",
+        stok: "",
+        kurang: "",
+        total: "",
+        provinsi: "Jawa Timur",
+        kabupatenKota: "Gresik",
+        kecamatan: "",
+        kelurahanDesa: ""
       }
     ];
 
     const state = {
-      selectedCategory: "Semua",
+      category: "Semua",
       keyword: "",
-      bottomIndex: 0,
-      promoIndex: 0,
+      products: [],
       loading: true,
-      error: false,
-      errorMessage: "",
-      items: [],
-      filteredItems: [],
-      wilayahItems: [],
-      animatedTexts: defaultAnimatedTexts,
-      animatedIndex: 0,
-      currentAreaLocation: null
+      notice: "",
+      location: null,
+      showAll: false,
+      promoIndex: 0,
+      texts: [...DEFAULT_TEXTS],
+      textIndex: 0
     };
 
-    const els = {
-      logoImage: document.getElementById("logoImage"),
-      logoFallback: document.getElementById("logoFallback"),
-      notificationBtn: document.getElementById("notificationBtn"),
-      loginBtn: document.getElementById("loginBtn"),
-      animatedText: document.getElementById("animatedText"),
-      searchInput: document.getElementById("searchInput"),
-      clearSearchBtn: document.getElementById("clearSearchBtn"),
-      locationIcon: document.getElementById("locationIcon"),
-      locationMessage: document.getElementById("locationMessage"),
-      locationRefreshBtn: document.getElementById("locationRefreshBtn"),
-      categoryList: document.getElementById("categoryList"),
-      promoTrack: document.getElementById("promoTrack"),
-      promoDots: document.getElementById("promoDots"),
-      sectionSubtitle: document.getElementById("sectionSubtitle"),
-      seeAllBtn: document.getElementById("seeAllBtn"),
-      productArea: document.getElementById("productArea"),
-      instagramBtn: document.getElementById("instagramBtn"),
-      whatsappFooterBtn: document.getElementById("whatsappFooterBtn"),
-      toast: document.getElementById("toast"),
-      detailModal: document.getElementById("detailModal"),
-      modalContent: document.getElementById("modalContent")
-    };
+    const cache = new Map();
 
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    const $ = (id) => document.getElementById(id);
+
+    let toastTimer;
+    let promoTimer;
+    let textTimer;
+    let lastFocus;
+
+    // =============================================================
+    // UTILITAS
+    // =============================================================
+
+    function esc(value = "") {
+      return String(value).replace(
+        /[&<>'"]/g,
+        (character) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          "'": "&#039;",
+          "\"": "&quot;"
+        })[character]
+      );
     }
 
-    function cleanHeader(value) {
-      return String(value ?? "")
+    function safeUrl(value = "") {
+      try {
+        const url = new URL(String(value).trim());
+
+        return ["http:", "https:"].includes(url.protocol)
+          ? url.href
+          : "";
+      } catch {
+        return "";
+      }
+    }
+
+    function showToast(message) {
+      clearTimeout(toastTimer);
+
+      const safeMessage =
+        /(drive|docs)\.google\.com|https?:\/\//i.test(String(message || ""))
+          ? "data tidak terbaca silakan refresh kembali"
+          : message;
+
+      $("toast").textContent = safeMessage;
+      $("toast").classList.add("show");
+
+      toastTimer = setTimeout(() => {
+        $("toast").classList.remove("show");
+      }, 2800);
+    }
+
+    function cleanPhone(value = "") {
+      const digits = String(value).replace(/\D/g, "");
+
+      if (!digits) {
+        return CONFIG.whatsappAdmin;
+      }
+
+      return digits.startsWith("0")
+        ? `62${digits.slice(1)}`
+        : digits;
+    }
+
+    function openWA(phone, message) {
+      const url =
+        `https://wa.me/${cleanPhone(phone)}` +
+        `?text=${encodeURIComponent(message)}`;
+
+      window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    }
+
+    function categoryOf(value = "") {
+      const category = String(value).toLowerCase();
+
+      if (/jajan|makanan|minuman/.test(category)) {
+        return "Jajan";
+      }
+
+      if (category.includes("jasa")) {
+        return "Jasa";
+      }
+
+      if (/jamu|herbal/.test(category)) {
+        return "Jamu";
+      }
+
+      if (/jarik|kerajinan/.test(category)) {
+        return "Jarik";
+      }
+
+      return "Semua";
+    }
+
+    function productIcon(category) {
+      return {
+        Jajan: "🍽",
+        Jasa: "👤",
+        Jamu: "🌿",
+        Jarik: "🧵",
+        Semua: "🏪"
+      }[categoryOf(category)];
+    }
+
+    function productId(item, index) {
+      const slug = `${item.kategori}-${item.nama}`
+        .toLowerCase()
+        .normalize("NFKD")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "")
+        .slice(0, 45);
+
+      return `${slug || "produk"}-${index}`;
+    }
+
+    // =============================================================
+    // CSV PARSER
+    // =============================================================
+
+    function parseCSV(text) {
+      const input = String(text || "").replace(/^\uFEFF/, "");
+
+      const rows = [];
+
+      let row = [];
+      let field = "";
+      let quoted = false;
+
+      for (let index = 0; index < input.length; index += 1) {
+        const character = input[index];
+        const nextCharacter = input[index + 1];
+
+        if (character === "\"") {
+          if (quoted && nextCharacter === "\"") {
+            field += "\"";
+            index += 1;
+          } else {
+            quoted = !quoted;
+          }
+        } else if (character === "," && !quoted) {
+          row.push(field);
+          field = "";
+        } else if (
+          (character === "\n" || character === "\r") &&
+          !quoted
+        ) {
+          if (
+            character === "\r" &&
+            nextCharacter === "\n"
+          ) {
+            index += 1;
+          }
+
+          row.push(field);
+
+          if (
+            row.some(
+              (cellValue) =>
+                String(cellValue).trim()
+            )
+          ) {
+            rows.push(row);
+          }
+
+          row = [];
+          field = "";
+        } else {
+          field += character;
+        }
+      }
+
+      row.push(field);
+
+      if (
+        row.some(
+          (cellValue) =>
+            String(cellValue).trim()
+        )
+      ) {
+        rows.push(row);
+      }
+
+      return rows;
+    }
+
+    const cleanHeader = (value) => {
+      return String(value)
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "")
         .trim();
-    }
+    };
 
-    function readCell(row, headers, aliases, fallbackIndex) {
+    function cell(
+      row,
+      headers,
+      aliases,
+      fallbackIndex
+    ) {
       let index = -1;
 
       for (const alias of aliases) {
-        const target = cleanHeader(alias);
-        index = headers.findIndex((header) => header === target);
+        index = headers.indexOf(
+          cleanHeader(alias)
+        );
 
         if (index !== -1) {
           break;
@@ -1349,1503 +1741,1972 @@
         index = fallbackIndex;
       }
 
-      if (index < 0 || index >= row.length) {
+      if (
+        index < 0 ||
+        index >= row.length
+      ) {
         return "";
       }
 
-      return String(row[index] ?? "").trim();
+      return String(
+        row[index] ?? ""
+      ).trim();
     }
 
-    function parseCsv(text) {
-      const rows = [];
-      let row = [];
-      let current = "";
-      let inQuotes = false;
-
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i];
-        const next = text[i + 1];
-
-        if (char === '"') {
-          if (inQuotes && next === '"') {
-            current += '"';
-            i++;
-          } else {
-            inQuotes = !inQuotes;
-          }
-        } else if (char === "," && !inQuotes) {
-          row.push(current);
-          current = "";
-        } else if ((char === "\n" || char === "\r") && !inQuotes) {
-          if (char === "\r" && next === "\n") {
-            i++;
-          }
-
-          row.push(current);
-          rows.push(row);
-          row = [];
-          current = "";
-        } else {
-          current += char;
-        }
-      }
-
-      row.push(current);
-      rows.push(row);
-
-      return rows.filter((item) => {
-        return item.some((cell) => String(cell).trim() !== "");
-      });
+    function titleCase(value = "") {
+      return String(value)
+        .trim()
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(Boolean)
+        .map(
+          (word) =>
+            word[0].toUpperCase() +
+            word.slice(1)
+        )
+        .join(" ");
     }
 
-    function shuffle(source) {
-      const result = [...source];
+    function buildLocationText(product) {
+      return [
+        titleCase(product.kelurahanDesa),
+        titleCase(product.kecamatan),
 
-      for (let i = result.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [result[i], result[j]] = [result[j], result[i]];
-      }
+        titleCase(
+          String(product.kabupatenKota)
+            .replace(
+              /kabupaten|kota/gi,
+              ""
+            )
+        ),
 
-      return result;
+        titleCase(product.provinsi)
+      ]
+        .filter(Boolean)
+        .join(", ");
     }
 
-    function buildCsvUrl(spreadsheetId, gid) {
-      return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv&gid=${gid}`;
-    }
-
-    async function fetchWilayahData() {
-      const url = buildCsvUrl(
-        CONFIG.wilayahSpreadsheetId,
-        CONFIG.wilayahSheetGid
-      );
-
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error("Gagal memuat data wilayah.");
-      }
-
-      const text = await response.text();
-      const rows = parseCsv(text);
-
-      if (rows.length <= 1) {
-        return [];
-      }
-
-      return rows
-        .slice(1)
-        .map((row) => {
-          return {
-            provinsi: String(row[0] ?? "").trim(),
-            kabupatenKota: String(row[1] ?? "").trim(),
-            kecamatan: String(row[2] ?? "").trim(),
-            kelurahanDesa: String(row[3] ?? "").trim()
-          };
-        })
-        .filter((item) => {
-          return (
-            item.provinsi &&
-            item.kabupatenKota &&
-            item.kecamatan &&
-            item.kelurahanDesa
-          );
-        });
-    }
-
-    async function loadWilayahData() {
-      try {
-        state.wilayahItems = await fetchWilayahData();
-      } catch (error) {
-        state.wilayahItems = [];
-        console.warn("Data wilayah gagal dimuat:", error);
-      }
-    }
-
-    function parseRating(value) {
-      const cleanValue = String(value ?? "").replace(",", ".").trim();
-      const number = Number.parseFloat(cleanValue);
-
-      return Number.isFinite(number) ? number : 4.8;
-    }
-
-    function formatRupiah(value) {
-      const cleanValue = String(value ?? "").trim();
+    function rupiah(value = "") {
+      const cleanValue =
+        String(value).trim();
 
       if (!cleanValue) {
         return "";
       }
 
-      if (cleanValue.toLowerCase().includes("rp")) {
+      if (
+        /rp|mulai/i.test(cleanValue)
+      ) {
         return cleanValue;
       }
 
-      const onlyNumber = cleanValue.replace(/[^0-9]/g, "");
+      const number =
+        cleanValue.replace(/\D/g, "");
 
-      if (!onlyNumber) {
+      if (!number) {
         return cleanValue;
       }
 
-      const number = Number.parseInt(onlyNumber, 10);
+      return `Rp${Number(number).toLocaleString("id-ID")}`;
+    }
+
+    function formatPromo(value = "") {
+      const cleanValue =
+        String(value).trim();
+
+      if (
+        !cleanValue ||
+        cleanValue === "0"
+      ) {
+        return "";
+      }
+
+      if (
+        cleanValue.includes("%") ||
+        !/[0-9]/.test(cleanValue)
+      ) {
+        return cleanValue;
+      }
+
+      const number = Number(
+        cleanValue.replace(",", ".")
+      );
 
       if (!Number.isFinite(number)) {
         return cleanValue;
       }
 
-      return "Rp" + number.toLocaleString("id-ID");
+      const result =
+        number > 0 && number < 1
+          ? number * 100
+          : number;
+
+      return `${Math.round(result)}%`;
     }
 
-    function formatPromo(value) {
-      const cleanValue = String(value ?? "").trim();
+    function normalizeImageUrl(value = "") {
+      const image = String(value).trim();
 
-      if (!cleanValue || cleanValue === "0") {
+      if (!image) {
         return "";
       }
 
-      if (cleanValue.includes("%")) {
-        return cleanValue;
+      const fileMatch =
+        image.match(
+          /\/d\/([\w-]+)/
+        );
+
+      const idMatch =
+        image.includes("drive.google.com")
+          ? image.match(
+              /[?&]id=([\w-]+)/
+            )
+          : null;
+
+      const driveId =
+        fileMatch?.[1] ||
+        idMatch?.[1] ||
+        "";
+
+      if (driveId) {
+        return (
+          "https://drive.google.com/thumbnail" +
+          `?id=${driveId}&sz=w1000`
+        );
       }
 
-      const normalized = cleanValue.replace(",", ".");
-      const number = Number.parseFloat(normalized);
+      return safeUrl(image);
+    }
 
-      if (Number.isFinite(number)) {
-        if (number > 0 && number < 1) {
-          return `${Math.round(number * 100)}%`;
+    function rowToProduct(
+      row,
+      headers,
+      defaultCategory,
+      index
+    ) {
+      const get = (
+        aliases,
+        fallbackIndex
+      ) => {
+        return cell(
+          row,
+          headers,
+          aliases,
+          fallbackIndex
+        );
+      };
+
+      const item = {
+        kategori:
+          get(
+            [
+              "status",
+              "kategori",
+              "category",
+              "jenis"
+            ],
+            15
+          ) || defaultCategory,
+
+        nama: get(
+          [
+            "name",
+            "nama",
+            "nama_produk",
+            "produk",
+            "layanan"
+          ],
+          1
+        ),
+
+        deskripsi: get(
+          [
+            "deskripsi",
+            "description",
+            "keterangan"
+          ],
+          2
+        ),
+
+        oldHarga: rupiah(
+          get(
+            [
+              "oldprice",
+              "old_price",
+              "harga_lama",
+              "hargaawal"
+            ],
+            3
+          )
+        ),
+
+        harga: rupiah(
+          get(
+            [
+              "price_klien",
+              "priceklien",
+              "harga",
+              "price",
+              "harga_klien"
+            ],
+            4
+          )
+        ),
+
+        promo: formatPromo(
+          get(
+            [
+              "discount_kawan",
+              "discountkawan",
+              "discount_klien",
+              "diskon",
+              "discount",
+              "promo"
+            ],
+            5
+          )
+        ),
+
+        stockLabel: get(
+          [
+            "stocklabel",
+            "stock_label",
+            "labelstok",
+            "statusstok"
+          ],
+          6
+        ),
+
+        imageUrl: normalizeImageUrl(
+          get(
+            [
+              "image",
+              "gambar",
+              "foto",
+              "thumbnail"
+            ],
+            7
+          )
+        ),
+
+        stok: get(
+          [
+            "stok",
+            "stock"
+          ],
+          8
+        ),
+
+        kurang: get(
+          [
+            "kurang",
+            "terjual",
+            "sold"
+          ],
+          9
+        ),
+
+        total: get(
+          [
+            "total",
+            "sisa",
+            "sisastok"
+          ],
+          10
+        ),
+
+        provinsi: get(
+          [
+            "provinsi",
+            "province"
+          ],
+          11
+        ),
+
+        kabupatenKota: get(
+          [
+            "kabupatenkota",
+            "kabupaten",
+            "kota",
+            "city",
+            "regency"
+          ],
+          12
+        ),
+
+        kecamatan: get(
+          [
+            "kecamatan",
+            "district"
+          ],
+          13
+        ),
+
+        kelurahanDesa: get(
+          [
+            "kelurahandesa",
+            "kelurahan",
+            "desa",
+            "village"
+          ],
+          14
+        ),
+
+        whatsapp: get(
+          [
+            "nohp",
+            "no_hp",
+            "nomorhp",
+            "nomor_hp",
+            "whatsapp",
+            "wa",
+            "phone"
+          ],
+          0
+        ),
+
+        rating:
+          Number(
+            String(
+              get(
+                [
+                  "rating",
+                  "nilai"
+                ],
+                -1
+              )
+            ).replace(",", ".")
+          ) || 4.8
+      };
+
+      if (!item.nama) {
+        return null;
+      }
+
+      item.lokasi =
+        buildLocationText(item);
+
+      if (!item.deskripsi) {
+        const descriptionParts = [];
+
+        if (item.stockLabel) {
+          descriptionParts.push(
+            item.stockLabel
+          );
         }
 
-        return `${Math.round(number)}%`;
-      }
-
-      const onlyNumber = cleanValue.replace(/[^0-9]/g, "");
-
-      if (onlyNumber) {
-        return `${onlyNumber}%`;
-      }
-
-      return cleanValue;
-    }
-
-    function titleCase(value) {
-      const cleanValue = String(value ?? "").trim();
-
-      if (!cleanValue) {
-        return "";
-      }
-
-      return cleanValue
-        .toLowerCase()
-        .split(/\s+/)
-        .map((word) => {
-          if (!word) return word;
-          return word[0].toUpperCase() + word.slice(1);
-        })
-        .join(" ");
-    }
-
-    function cleanKabupatenKota(value) {
-      let result = String(value ?? "").trim();
-
-      if (!result) {
-        return "";
-      }
-
-      result = result.replace(/KABUPATEN/gi, "");
-      result = result.replace(/KAB\./gi, "");
-      result = result.replace(/KOTA/gi, "");
-
-      return titleCase(result.trim());
-    }
-
-    function buildLokasi({ provinsi, kabupatenKota, kecamatan, kelurahanDesa }) {
-      const parts = [];
-
-      const cleanKelurahan = titleCase(kelurahanDesa);
-      const cleanKecamatan = titleCase(kecamatan);
-      const cleanKabupaten = cleanKabupatenKota(kabupatenKota);
-      const cleanProvinsi = titleCase(provinsi);
-
-      if (cleanKelurahan) parts.push(cleanKelurahan);
-      if (cleanKecamatan) parts.push(cleanKecamatan);
-      if (cleanKabupaten) parts.push(cleanKabupaten);
-      if (cleanProvinsi) parts.push(cleanProvinsi);
-
-      return parts.join(", ");
-    }
-
-    function buildAreaLabel(area) {
-      if (!area) {
-        return "";
-      }
-
-      return buildLokasi({
-        provinsi: area.provinsi,
-        kabupatenKota: area.kabupatenKota,
-        kecamatan: area.kecamatan,
-        kelurahanDesa: area.kelurahanDesa
-      });
-    }
-
-    function buildAutoDescription({ stockLabel, stok, total }) {
-      const parts = [];
-
-      if (stockLabel) {
-        parts.push(stockLabel);
-      }
-
-      if (total && stok) {
-        parts.push(`Sisa stok ${total} dari ${stok}`);
-      } else if (total) {
-        parts.push(`Sisa stok ${total}`);
-      } else if (stok) {
-        parts.push(`Stok ${stok}`);
-      }
-
-      return parts.join(" • ");
-    }
-
-    function normalizeImageUrl(url) {
-      const value = String(url ?? "").trim();
-
-      if (!value) {
-        return "";
-      }
-
-      const driveFileMatch = value.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      const driveIdMatch = value.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-
-      if (driveFileMatch) {
-        return `https://drive.google.com/thumbnail?id=${driveFileMatch[1]}&sz=w1000`;
-      }
-
-      if (driveIdMatch && value.includes("drive.google.com")) {
-        return `https://drive.google.com/thumbnail?id=${driveIdMatch[1]}&sz=w1000`;
-      }
-
-      return value;
-    }
-
-    function getCategoryColor(kategori) {
-      const value = String(kategori ?? "").toLowerCase();
-
-      if (
-        value.includes("jajan") ||
-        value.includes("makanan") ||
-        value.includes("minuman")
-      ) {
-        return COLORS.yellow;
-      }
-
-      if (value.includes("jasa")) {
-        return COLORS.blue;
-      }
-
-      if (value.includes("jamu") || value.includes("herbal")) {
-        return COLORS.green;
-      }
-
-      if (value.includes("kerajinan") || value.includes("jarik")) {
-        return COLORS.brown;
-      }
-
-      return COLORS.blue;
-    }
-
-    function getCategoryIcon(kategori) {
-      const value = String(kategori ?? "").toLowerCase();
-
-      if (
-        value.includes("jajan") ||
-        value.includes("makanan") ||
-        value.includes("minuman")
-      ) {
-        return "🍽️";
-      }
-
-      if (value.includes("jasa")) {
-        return "🎧";
-      }
-
-      if (value.includes("jamu") || value.includes("herbal")) {
-        return "🌿";
-      }
-
-      if (value.includes("kerajinan") || value.includes("jarik")) {
-        return "🧵";
-      }
-
-      return "🛍️";
-    }
-
-    function getGroupTitle(kategori) {
-      const value = String(kategori ?? "").toLowerCase();
-
-      if (
-        value.includes("jajan") ||
-        value.includes("makanan") ||
-        value.includes("minuman")
-      ) {
-        return "Jajan";
-      }
-
-      if (value.includes("jasa")) {
-        return "Jasa";
-      }
-
-      if (value.includes("jamu") || value.includes("herbal")) {
-        return "Jamu";
-      }
-
-      if (value.includes("jarik") || value.includes("kerajinan")) {
-        return "Jarik";
-      }
-
-      return kategori || "Lainnya";
-    }
-
-    function buildStockInfo(item) {
-      const values = [];
-
-      if (item.stockLabel) {
-        values.push(item.stockLabel);
-      }
-
-      if (item.total && item.stok) {
-        values.push(`Sisa ${item.total} dari ${item.stok}`);
-      } else if (item.total) {
-        values.push(`Sisa stok ${item.total}`);
-      } else if (item.stok) {
-        values.push(`Stok ${item.stok}`);
-      }
-
-      return values.join(" • ");
-    }
-
-    function openUrl(url) {
-      const cleanUrl = String(url ?? "").trim();
-
-      if (!cleanUrl) {
-        showToast("Link tidak valid.");
-        return;
-      }
-
-      window.open(cleanUrl, "_blank", "noopener,noreferrer");
-    }
-
-    function openWhatsApp(phone, message) {
-      const cleanPhone = String(phone || CONFIG.whatsappAdmin).replace(/[^0-9]/g, "");
-      const text = encodeURIComponent(
-        message || "Halo admin 4ja in, saya ingin bertanya tentang layanan."
-      );
-
-      openUrl(`https://wa.me/${cleanPhone}?text=${text}`);
-    }
-
-    function showToast(message) {
-      els.toast.textContent = message;
-      els.toast.classList.add("show");
-
-      window.clearTimeout(showToast.timer);
-
-      showToast.timer = window.setTimeout(() => {
-        els.toast.classList.remove("show");
-      }, 2600);
-    }
-
-    async function fetchAnimatedTexts() {
-      const url = buildCsvUrl(
-        CONFIG.animatedTextSpreadsheetId,
-        CONFIG.animatedTextSheetGid
-      );
-
-      try {
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          return shuffle(defaultAnimatedTexts);
+        if (
+          item.total &&
+          item.stok
+        ) {
+          descriptionParts.push(
+            `Sisa stok ${item.total} dari ${item.stok}`
+          );
+        } else if (item.total) {
+          descriptionParts.push(
+            `Sisa stok ${item.total}`
+          );
+        } else if (item.stok) {
+          descriptionParts.push(
+            `Stok ${item.stok}`
+          );
         }
 
-        const text = await response.text();
-        const rows = parseCsv(text);
-
-        const data = rows
-          .map((row) => String(row[0] ?? "").trim())
-          .filter(Boolean);
-
-        return data.length ? shuffle(data) : shuffle(defaultAnimatedTexts);
-      } catch (error) {
-        return shuffle(defaultAnimatedTexts);
+        item.deskripsi =
+          descriptionParts.join(" • ");
       }
+
+      item.id =
+        productId(item, index);
+
+      return item;
     }
 
-    async function fetchFromGoogleSheet(source) {
-      const url = buildCsvUrl(source.spreadsheetId, source.gid);
-      const response = await fetch(url);
+    // =============================================================
+    // GOOGLE SHEETS
+    // =============================================================
 
-      if (!response.ok) {
-        throw new Error("Gagal memuat data.");
+    function csvUrl({
+      sheetName = "",
+      gid = "",
+      spreadsheetId =
+        CONFIG.spreadsheetId
+    }) {
+      if (sheetName) {
+        return (
+          "https://docs.google.com/spreadsheets/d/" +
+          `${spreadsheetId}/gviz/tq` +
+          "?tqx=out%3Acsv" +
+          `&sheet=${encodeURIComponent(sheetName)}`
+        );
       }
 
-      const text = await response.text();
-      const rows = parseCsv(text);
+      return (
+        "https://docs.google.com/spreadsheets/d/" +
+        `${spreadsheetId}/export` +
+        "?format=csv" +
+        `&gid=${encodeURIComponent(gid || "0")}`
+      );
+    }
+
+    async function fetchText(
+      url,
+      tries = 2
+    ) {
+      let lastError;
+
+      for (
+        let attempt = 0;
+        attempt < tries;
+        attempt += 1
+      ) {
+        const controller =
+          new AbortController();
+
+        const timer = setTimeout(
+          () => controller.abort(),
+          CONFIG.timeoutMs
+        );
+
+        try {
+          const response =
+            await fetch(url, {
+              headers: {
+                Accept:
+                  "text/csv,text/plain,*/*"
+              },
+              signal:
+                controller.signal
+            });
+
+          if (!response.ok) {
+            throw new Error(
+              `HTTP ${response.status}`
+            );
+          }
+
+          return await response.text();
+        } catch (error) {
+          lastError = error;
+
+          if (
+            attempt <
+            tries - 1
+          ) {
+            await new Promise(
+              (resolve) =>
+                setTimeout(
+                  resolve,
+                  300
+                )
+            );
+          }
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+
+      throw lastError;
+    }
+
+    async function fetchSheet({
+      category,
+      sheetName = "",
+      gid = "",
+      force = false
+    }) {
+      const cacheKey =
+        `${sheetName}|${gid}|${category}`;
+
+      const saved =
+        cache.get(cacheKey);
+
+      if (
+        !force &&
+        saved &&
+        Date.now() - saved.time <
+          CONFIG.cacheMs
+      ) {
+        return saved.items;
+      }
+
+      const csvText =
+        await fetchText(
+          csvUrl({
+            sheetName,
+            gid
+          })
+        );
+
+      const rows =
+        parseCSV(csvText);
 
       if (rows.length <= 1) {
         return [];
       }
 
-      const headers = rows[0].map((cell) => cleanHeader(cell));
-      const items = [];
+      const headers =
+        rows[0].map(cleanHeader);
 
-      rows.slice(1).forEach((row, index) => {
-        const emptyRow = row.every((cell) => String(cell ?? "").trim() === "");
+      const items = rows
+        .slice(1)
+        .map(
+          (row, index) =>
+            rowToProduct(
+              row,
+              headers,
+              category,
+              index
+            )
+        )
+        .filter(Boolean);
 
-        if (emptyRow) {
-          return;
+      cache.set(
+        cacheKey,
+        {
+          items,
+          time: Date.now()
         }
-
-        const kategori = readCell(
-          row,
-          headers,
-          ["status", "kategori", "category", "jenis"],
-          14
-        );
-
-        const nama = readCell(
-          row,
-          headers,
-          ["name", "nama", "nama_produk", "produk", "layanan"],
-          1
-        );
-
-        const oldPriceRaw = readCell(
-          row,
-          headers,
-          ["oldprice", "old_price", "harga_lama", "hargaawal"],
-          2
-        );
-
-        const priceRaw = readCell(
-          row,
-          headers,
-          ["price_klien", "priceklien", "harga", "price", "harga_klien"],
-          3
-        );
-
-        const discountRaw = readCell(
-          row,
-          headers,
-          [
-            "discount_kawan",
-            "discountkawan",
-            "discount_klien",
-            "diskon",
-            "discount",
-            "promo"
-          ],
-          4
-        );
-
-        const stockLabel = readCell(
-          row,
-          headers,
-          ["stocklabel", "stock_label", "labelstok", "statusstok"],
-          5
-        );
-
-        const image = readCell(
-          row,
-          headers,
-          ["image", "gambar", "foto", "thumbnail"],
-          6
-        );
-
-        const stok = readCell(
-          row,
-          headers,
-          ["stok", "stock"],
-          7
-        );
-
-        const kurang = readCell(
-          row,
-          headers,
-          ["kurang", "terjual", "sold"],
-          8
-        );
-
-        const total = readCell(
-          row,
-          headers,
-          ["total", "sisa", "sisastok"],
-          9
-        );
-
-        const provinsi = readCell(
-          row,
-          headers,
-          ["provinsi", "province"],
-          10
-        );
-
-        const kabupatenKota = readCell(
-          row,
-          headers,
-          ["kabupatenkota", "kabupaten", "kota", "city", "regency"],
-          11
-        );
-
-        const kecamatan = readCell(
-          row,
-          headers,
-          ["kecamatan", "district"],
-          12
-        );
-
-        const kelurahanDesa = readCell(
-          row,
-          headers,
-          ["kelurahandesa", "kelurahan", "desa", "village"],
-          13
-        );
-
-        const whatsapp = readCell(
-          row,
-          headers,
-          ["nohp", "no_hp", "nomorhp", "nomor_hp", "whatsapp", "wa", "phone"],
-          0
-        );
-
-        const deskripsi = readCell(
-          row,
-          headers,
-          ["deskripsi", "description", "keterangan"],
-          -1
-        );
-
-        const ratingRaw = readCell(
-          row,
-          headers,
-          ["rating", "nilai"],
-          -1
-        );
-
-        const lokasi = buildLokasi({
-          provinsi,
-          kabupatenKota,
-          kecamatan,
-          kelurahanDesa
-        });
-
-        const finalDeskripsi = deskripsi || buildAutoDescription({
-          stockLabel,
-          stok,
-          total
-        });
-
-        const item = {
-          id: `${source.defaultKategori}-${index}-${nama}`,
-          kategori: kategori || source.defaultKategori,
-          nama,
-          deskripsi: finalDeskripsi,
-          harga: formatRupiah(priceRaw),
-          oldHarga: formatRupiah(oldPriceRaw),
-          promo: formatPromo(discountRaw),
-          rating: parseRating(ratingRaw),
-          lokasi,
-          imageUrl: normalizeImageUrl(image),
-          whatsapp,
-          stockLabel,
-          stok,
-          kurang,
-          total,
-          provinsi,
-          kabupatenKota,
-          kecamatan,
-          kelurahanDesa
-        };
-
-        if (item.nama) {
-          items.push(item);
-        }
-      });
+      );
 
       return items;
     }
 
-    async function fetchLayananByCategory(category) {
-      const selected = String(category ?? "").toLowerCase().trim();
-
-      if (selected === "semua") {
-        const results = await Promise.all([
-          fetchFromGoogleSheet(CONFIG.sources.Jajan),
-          fetchFromGoogleSheet(CONFIG.sources.Jasa),
-          fetchFromGoogleSheet(CONFIG.sources.Jamu),
-          fetchFromGoogleSheet(CONFIG.sources.Jarik)
-        ]);
-
-        return results.flat();
+    async function fetchProducts(
+      category,
+      force = false
+    ) {
+      if (
+        category !== "Semua"
+      ) {
+        return fetchSheet({
+          category,
+          gid:
+            CONFIG.sheets[category],
+          force
+        });
       }
 
-      if (selected === "jajan") {
-        return fetchFromGoogleSheet(CONFIG.sources.Jajan);
-      }
+      try {
+        const combined =
+          await fetchSheet({
+            category: "Semua",
+            sheetName:
+              CONFIG.allSheetName,
+            force
+          });
 
-      if (selected === "jasa") {
-        return fetchFromGoogleSheet(CONFIG.sources.Jasa);
-      }
-
-      if (selected === "jamu") {
-        return fetchFromGoogleSheet(CONFIG.sources.Jamu);
-      }
-
-      if (selected === "jarik") {
-        return fetchFromGoogleSheet(CONFIG.sources.Jarik);
-      }
-
-      return fetchLayananByCategory("Semua");
-    }
-
-    function normalizeArea(value) {
-      return String(value || "")
-        .toLowerCase()
-        .replaceAll("provinsi", "")
-        .replaceAll("kabupaten", "")
-        .replaceAll("kab.", "")
-        .replaceAll("kab ", "")
-        .replaceAll("kota", "")
-        .replaceAll("kecamatan", "")
-        .replaceAll("kec.", "")
-        .replaceAll("kec ", "")
-        .replaceAll("kelurahan", "")
-        .replaceAll("kel.", "")
-        .replaceAll("kel ", "")
-        .replaceAll("desa", "")
-        .replaceAll("regency", "")
-        .replaceAll("city", "")
-        .replaceAll("district", "")
-        .replaceAll("subdistrict", "")
-        .replaceAll("village", "")
-        .replaceAll("eastjava", "jawatimur")
-        .replaceAll("east java", "jawatimur")
-        .replace(/[^a-z0-9]+/g, "")
-        .trim();
-    }
-
-    function areaMatch(sheetValue, deviceValue) {
-      const a = normalizeArea(sheetValue);
-      const b = normalizeArea(deviceValue);
-
-      if (!a || !b) {
-        return false;
-      }
-
-      return a === b || a.includes(b) || b.includes(a);
-    }
-
-    function findBestWilayahMatch(area) {
-      const targetKelurahan = normalizeArea(area.kelurahanDesa);
-      const targetKecamatan = normalizeArea(area.kecamatan);
-      const targetKabupaten = normalizeArea(area.kabupatenKota);
-      const targetProvinsi = normalizeArea(area.provinsi);
-
-      if (!state.wilayahItems.length) {
-        return null;
-      }
-
-      let bestMatch = null;
-      let bestScore = 0;
-
-      state.wilayahItems.forEach((wilayah) => {
-        let score = 0;
-
-        const matchKelurahan =
-          targetKelurahan &&
-          areaMatch(wilayah.kelurahanDesa, area.kelurahanDesa);
-
-        const matchKecamatan =
-          targetKecamatan &&
-          areaMatch(wilayah.kecamatan, area.kecamatan);
-
-        const matchKabupaten =
-          targetKabupaten &&
-          areaMatch(wilayah.kabupatenKota, area.kabupatenKota);
-
-        const matchProvinsi =
-          targetProvinsi &&
-          areaMatch(wilayah.provinsi, area.provinsi);
-
-        if (matchKelurahan) score += 1000;
-        if (matchKecamatan) score += 600;
-        if (matchKabupaten) score += 300;
-        if (matchProvinsi) score += 100;
-
-        const hasSpecificMatch = matchKelurahan || matchKecamatan;
-        const hasValidKabupaten = !targetKabupaten || matchKabupaten;
-
-        if (hasSpecificMatch && hasValidKabupaten && score > bestScore) {
-          bestScore = score;
-          bestMatch = wilayah;
+        if (combined.length) {
+          return combined;
         }
-      });
-
-      return bestMatch;
-    }
-
-    function fixAreaIndonesia(area) {
-      const wilayah = findBestWilayahMatch(area);
-
-      if (!wilayah) {
-        return area;
+      } catch {
+        // Jika SemuaProduk tidak tersedia,
+        // lanjutkan mengambil empat sheet.
       }
 
-      return {
-        provinsi: wilayah.provinsi,
-        kabupatenKota: wilayah.kabupatenKota,
-        kecamatan: wilayah.kecamatan,
-        kelurahanDesa: wilayah.kelurahanDesa
-      };
+      const requests =
+        Object.entries(
+          CONFIG.sheets
+        ).map(
+          ([sheetCategory, gid]) =>
+            fetchSheet({
+              category:
+                sheetCategory,
+              gid,
+              force
+            })
+        );
+
+      const results =
+        await Promise.allSettled(
+          requests
+        );
+
+      const items = results
+        .filter(
+          (result) =>
+            result.status ===
+            "fulfilled"
+        )
+        .flatMap(
+          (result) =>
+            result.value
+        );
+
+      const allFailed =
+        results.every(
+          (result) =>
+            result.status ===
+            "rejected"
+        );
+
+      if (
+        !items.length &&
+        allFailed
+      ) {
+        throw new Error(
+          "Semua Google Sheet gagal dibaca."
+        );
+      }
+
+      return items;
     }
 
-    function locationScore(item, area) {
+    async function loadProducts(
+      force = false
+    ) {
+      state.loading = true;
+      state.notice = "";
+
+      renderProducts();
+
+      $("reloadButton")
+        .classList
+        .add("spin");
+
+      try {
+        const products =
+          await fetchProducts(
+            state.category,
+            force
+          );
+
+        state.products =
+          products.map(
+            (product, index) => ({
+              ...product,
+              id:
+                product.id ||
+                productId(
+                  product,
+                  index
+                )
+            })
+          );
+
+        if (
+          !state.products.length
+        ) {
+          state.notice =
+            "Belum ada data pada kategori ini.";
+        }
+      } catch (error) {
+        console.error(error);
+
+        state.notice =
+          "Google Sheet tidak dapat diakses. " +
+          "Sementara ditampilkan data contoh agar halaman tetap dapat diuji.";
+
+        state.products =
+          FALLBACK
+            .filter(
+              (product) =>
+                state.category ===
+                  "Semua" ||
+                categoryOf(
+                  product.kategori
+                ) ===
+                  state.category
+            )
+            .map(
+              (product, index) => ({
+                ...product,
+                id:
+                  productId(
+                    product,
+                    index
+                  )
+              })
+            );
+      } finally {
+        state.loading = false;
+
+        $("reloadButton")
+          .classList
+          .remove("spin");
+
+        renderProducts();
+      }
+    }
+
+    // =============================================================
+    // LOKASI
+    // =============================================================
+
+    function normalizeArea(
+      value = ""
+    ) {
+      return String(value)
+        .toLowerCase()
+        .replace(
+          /provinsi|kabupaten|kab\.|\bkab\b|kota|kecamatan|kec\.|\bkec\b|kelurahan|kel\.|\bkel\b|desa/g,
+          ""
+        )
+        .replace(
+          /[^a-z0-9]+/g,
+          ""
+        );
+    }
+
+    function matchArea(
+      first,
+      second
+    ) {
+      const areaA =
+        normalizeArea(first);
+
+      const areaB =
+        normalizeArea(second);
+
+      return Boolean(
+        areaA &&
+        areaB &&
+        (
+          areaA === areaB ||
+          areaA.includes(areaB) ||
+          areaB.includes(areaA)
+        )
+      );
+    }
+
+    function locationScore(
+      product,
+      area
+    ) {
+      if (!area) {
+        return 0;
+      }
+
       let score = 0;
 
-      if (areaMatch(item.provinsi, area.provinsi)) {
+      if (
+        matchArea(
+          product.provinsi,
+          area.provinsi
+        )
+      ) {
         score += 100;
       }
 
-      if (areaMatch(item.kabupatenKota, area.kabupatenKota)) {
+      if (
+        matchArea(
+          product.kabupatenKota,
+          area.kabupatenKota
+        )
+      ) {
         score += 300;
       }
 
-      if (areaMatch(item.kecamatan, area.kecamatan)) {
+      if (
+        matchArea(
+          product.kecamatan,
+          area.kecamatan
+        )
+      ) {
         score += 600;
       }
 
-      if (areaMatch(item.kelurahanDesa, area.kelurahanDesa)) {
+      if (
+        matchArea(
+          product.kelurahanDesa,
+          area.kelurahanDesa
+        )
+      ) {
         score += 1000;
       }
 
       return score;
     }
 
-    function sortLayananByCurrentLocation(items) {
-      const area = state.currentAreaLocation;
+    async function reverseGeocode(
+      latitude,
+      longitude
+    ) {
+      const url =
+        "https://nominatim.openstreetmap.org/reverse" +
+        "?format=jsonv2" +
+        "&accept-language=id" +
+        `&lat=${latitude}` +
+        `&lon=${longitude}`;
 
-      if (!area) {
-        return items;
-      }
-
-      return [...items]
-        .map((item, index) => ({
-          item,
-          index,
-          score: locationScore(item, area)
-        }))
-        .sort((a, b) => {
-          if (a.score !== b.score) {
-            return b.score - a.score;
+      const response =
+        await fetch(url, {
+          headers: {
+            Accept:
+              "application/json"
           }
+        });
 
-          return a.index - b.index;
-        })
-        .map((entry) => entry.item);
-    }
-
-    function filterLayanan(items) {
-      const keyword = state.keyword.trim().toLowerCase();
-
-      return items.filter((item) => {
-        const matchKeyword =
-          !keyword ||
-          item.nama.toLowerCase().includes(keyword) ||
-          item.deskripsi.toLowerCase().includes(keyword) ||
-          item.kategori.toLowerCase().includes(keyword) ||
-          item.lokasi.toLowerCase().includes(keyword);
-
-        return matchKeyword;
-      });
-    }
-
-    async function loadData(category = state.selectedCategory) {
-      state.loading = true;
-      state.error = false;
-      state.errorMessage = "";
-
-      renderProducts();
-
-      try {
-        state.items = await fetchLayananByCategory(category);
-
-        const sortedItems = sortLayananByCurrentLocation(state.items);
-        state.filteredItems = filterLayanan(sortedItems);
-      } catch (error) {
-        state.error = true;
-        state.errorMessage = error.message || "Data gagal dimuat";
-        state.items = [];
-        state.filteredItems = [];
-      } finally {
-        state.loading = false;
-        renderProducts();
+      if (!response.ok) {
+        throw new Error(
+          "Reverse geocode gagal."
+        );
       }
+
+      const data =
+        await response.json();
+
+      const address =
+        data.address || {};
+
+      return {
+        provinsi:
+          address.state ||
+          address.region ||
+          "",
+
+        kabupatenKota:
+          address.city ||
+          address.regency ||
+          address.county ||
+          address.town ||
+          "",
+
+        kecamatan:
+          address.city_district ||
+          address.district ||
+          address.municipality ||
+          address.suburb ||
+          "",
+
+        kelurahanDesa:
+          address.village ||
+          address.quarter ||
+          address.neighbourhood ||
+          address.hamlet ||
+          ""
+      };
     }
 
-    async function loadCurrentLocation() {
-      els.locationIcon.textContent = "📡";
-      els.locationMessage.textContent = "Membaca lokasi perangkat...";
+    async function loadLocation() {
+      if (
+        !navigator.geolocation
+      ) {
+        $("locationText").textContent =
+          "Browser tidak mendukung lokasi.";
 
-      if (!navigator.geolocation) {
-        els.locationIcon.textContent = "📍";
-        els.locationMessage.textContent =
-          "Browser belum mendukung GPS. Produk tampil sesuai urutan data.";
         return;
       }
 
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
+      $("locationButton")
+        .classList
+        .add("spin");
 
-          try {
-            const reverseUrl =
-              `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&accept-language=id`;
+      $("locationText").textContent =
+        "Membaca lokasi perangkat...";
 
-            const response = await fetch(reverseUrl);
-            const data = await response.json();
-            const address = data.address || {};
+      try {
+        const position =
+          await new Promise(
+            (
+              resolve,
+              reject
+            ) => {
+              navigator.geolocation
+                .getCurrentPosition(
+                  resolve,
+                  reject,
+                  {
+                    enableHighAccuracy:
+                      true,
 
-            let area = {
-              provinsi:
-                address.state ||
-                address.region ||
-                "",
+                    timeout: 12000,
 
-              kabupatenKota:
-                address.city ||
-                address.town ||
-                address.county ||
-                address.municipality ||
-                "",
+                    maximumAge:
+                      300000
+                  }
+                );
+            }
+          );
 
-              kecamatan:
-                address.city_district ||
-                address.district ||
-                "",
+        const {
+          latitude,
+          longitude
+        } = position.coords;
 
-              kelurahanDesa:
-                address.village ||
-                address.hamlet ||
-                address.neighbourhood ||
-                address.quarter ||
-                address.suburb ||
-                ""
-            };
+        try {
+          state.location =
+            await reverseGeocode(
+              latitude,
+              longitude
+            );
 
-            area = fixAreaIndonesia(area);
+          const label =
+            buildLocationText(
+              state.location
+            );
 
-            state.currentAreaLocation = area;
+          $("locationText").textContent =
+            "Produk diurutkan dari lokasi: " +
+            (
+              label ||
+              `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`
+            );
+        } catch {
+          state.location = null;
 
-            const label = buildAreaLabel(area);
-
-            els.locationIcon.textContent = "📍";
-            els.locationMessage.textContent = label
-              ? `Produk diurutkan dari lokasi: ${label}`
-              : "Lokasi terbaca, tetapi detail wilayah tidak ditemukan.";
-
-            renderProducts();
-          } catch (error) {
-            state.currentAreaLocation = null;
-
-            els.locationIcon.textContent = "📍";
-            els.locationMessage.textContent =
-              "Lokasi terbaca, tetapi gagal membaca detail alamat. Produk tampil sesuai urutan data.";
-          }
-        },
-        () => {
-          state.currentAreaLocation = null;
-
-          els.locationIcon.textContent = "📍";
-          els.locationMessage.textContent =
-            "Lokasi belum bisa dibaca. Produk tampil sesuai urutan data.";
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 12000,
-          maximumAge: 60000
+          $("locationText").textContent =
+            `Lokasi terbaca (${latitude.toFixed(4)}, ${longitude.toFixed(4)}), ` +
+            "tetapi detail wilayah belum tersedia.";
         }
-      );
+
+        renderProducts();
+      } catch (error) {
+        const messages = {
+          1:
+            "Izin lokasi ditolak. Produk tampil sesuai urutan data.",
+
+          2:
+            "Lokasi belum tersedia. Produk tampil sesuai urutan data.",
+
+          3:
+            "Pembacaan lokasi terlalu lama. Silakan coba kembali."
+        };
+
+        $("locationText").textContent =
+          messages[error.code] ||
+          "Lokasi belum bisa dibaca.";
+      } finally {
+        $("locationButton")
+          .classList
+          .remove("spin");
+      }
     }
+
+    // =============================================================
+    // RENDER KATEGORI
+    // =============================================================
 
     function renderCategories() {
-      els.categoryList.innerHTML = categories
-        .map((category) => {
-          const active = category.label === state.selectedCategory;
+      $("categoryList").innerHTML =
+        CATEGORIES.map(
+          (category) => {
+            const active =
+              state.category ===
+              category.label;
 
-          return `
-            <button
-              class="category-card ${active ? "active" : ""}"
-              type="button"
-              data-category="${escapeHtml(category.label)}"
-              style="${active ? `background:${category.color};` : `color:${category.color};`}"
-            >
-              <div class="category-icon">${category.icon}</div>
-              <div class="category-name">${escapeHtml(category.label)}</div>
-            </button>
-          `;
-        })
-        .join("");
+            return `
+              <button
+                class="category${active ? " active" : ""}"
+                style="--color:${COLORS[category.label]}"
+                data-category="${category.label}"
+                aria-pressed="${active}"
+              >
+                <span class="emoji">${category.icon}</span>
+                <strong>${category.label}</strong>
+              </button>
+            `;
+          }
+        ).join("");
     }
 
-    function renderPromo() {
-      els.promoTrack.innerHTML = promos
-        .map((promo) => {
-          return `
-            <article
-              class="promo-card"
-              style="background: linear-gradient(135deg, ${promo.color}, ${promo.color}cc);"
-            >
-              <div class="promo-content">
-                <span class="promo-label">4ja in</span>
-                <h2 class="promo-title">${escapeHtml(promo.title)}</h2>
-                <p class="promo-subtitle">${escapeHtml(promo.subtitle)}</p>
-              </div>
-              <div class="promo-icon">${promo.icon}</div>
-            </article>
-          `;
-        })
-        .join("");
+    // =============================================================
+    // RENDER PROMO
+    // =============================================================
 
-      els.promoDots.innerHTML = promos
-        .map((_, index) => {
-          return `
+    function renderPromos() {
+      $("promoTrack").innerHTML =
+        PROMOS.map(
+          (promo) => `
+            <article
+              class="promo"
+              style="--color:${promo.color}"
+            >
+              <div class="promo-copy">
+                <small>4ja in</small>
+                <h3>${esc(promo.title)}</h3>
+                <p>${esc(promo.subtitle)}</p>
+              </div>
+
+              <span class="promo-icon">
+                ${promo.icon}
+              </span>
+            </article>
+          `
+        ).join("");
+
+      $("promoDots").innerHTML =
+        PROMOS.map(
+          (_, index) => `
             <button
-              class="promo-dot ${index === state.promoIndex ? "active" : ""}"
-              type="button"
+              class="dot${index === state.promoIndex ? " active" : ""}"
               data-promo="${index}"
               aria-label="Promo ${index + 1}"
             ></button>
-          `;
-        })
-        .join("");
+          `
+        ).join("");
 
-      updatePromoPosition();
+      updatePromo();
     }
 
-    function updatePromoPosition() {
-      const firstCard = els.promoTrack.querySelector(".promo-card");
+    function updatePromo() {
+      state.promoIndex =
+        (
+          state.promoIndex +
+          PROMOS.length
+        ) % PROMOS.length;
 
-      if (!firstCard) {
-        return;
-      }
+      $("promoTrack").style.transform =
+        `translateX(-${state.promoIndex * 100}%)`;
 
-      const cardWidth = firstCard.getBoundingClientRect().width + 10;
-      els.promoTrack.style.transform = `translateX(-${state.promoIndex * cardWidth}px)`;
-
-      els.promoDots.querySelectorAll(".promo-dot").forEach((dot, index) => {
-        dot.classList.toggle("active", index === state.promoIndex);
-      });
+      document
+        .querySelectorAll(".dot")
+        .forEach(
+          (dot, index) => {
+            dot.classList.toggle(
+              "active",
+              index ===
+                state.promoIndex
+            );
+          }
+        );
     }
 
-    function productImageHtml(item) {
-      const icon = getCategoryIcon(item.kategori);
+    function changePromo(step) {
+      state.promoIndex += step;
 
-      if (!item.imageUrl) {
-        return `<div class="image-placeholder">${icon}</div>`;
-      }
+      updatePromo();
+      startPromo();
+    }
+
+    function startPromo() {
+      clearInterval(promoTimer);
+
+      promoTimer =
+        setInterval(
+          () => changePromo(1),
+          5200
+        );
+    }
+
+    // =============================================================
+    // FILTER PRODUK
+    // =============================================================
+
+    function visibleProducts() {
+      const keyword =
+        state.keyword
+          .trim()
+          .toLowerCase();
+
+      return state.products
+        .map(
+          (product, index) => ({
+            product,
+            index,
+
+            score:
+              locationScore(
+                product,
+                state.location
+              )
+          })
+        )
+        .filter(
+          ({ product }) => {
+            const categoryMatch =
+              state.category ===
+                "Semua" ||
+              categoryOf(
+                product.kategori
+              ) ===
+                state.category;
+
+            const searchableText = [
+              product.nama,
+              product.deskripsi,
+              product.kategori,
+              product.lokasi
+            ]
+              .join(" ")
+              .toLowerCase();
+
+            return (
+              categoryMatch &&
+              (
+                !keyword ||
+                searchableText.includes(
+                  keyword
+                )
+              )
+            );
+          }
+        )
+        .sort(
+          (first, second) =>
+            second.score -
+              first.score ||
+            first.index -
+              second.index
+        )
+        .map(
+          ({ product }) =>
+            product
+        );
+    }
+
+    // =============================================================
+    // KARTU PRODUK
+    // =============================================================
+
+    function productCard(product) {
+      const color =
+        COLORS[
+          categoryOf(
+            product.kategori
+          )
+        ] || COLORS.Semua;
+
+      const image =
+        safeUrl(
+          product.imageUrl
+        );
+
+      const oldPrice =
+        product.oldHarga &&
+        product.oldHarga !==
+          product.harga
+          ? `
+              <span class="old">
+                ${esc(product.oldHarga)}
+              </span>
+            `
+          : "";
 
       return `
-        <img
-          class="product-image"
-          src="${escapeHtml(item.imageUrl)}"
-          alt="${escapeHtml(item.nama)}"
-          loading="lazy"
-          onerror="this.outerHTML='<div class=&quot;image-placeholder&quot;>${icon}</div>'"
-        />
-      `;
-    }
+        <article
+          class="card"
+          tabindex="0"
+          role="button"
+          data-product="${esc(product.id)}"
+          style="--color:${color}"
+          aria-label="Buka detail ${esc(product.nama)}"
+        >
+          <div
+            class="media"
+            style="--color:${color}"
+          >
+            ${productIcon(product.kategori)}
 
-    function renderProductCard(item, options = {}) {
-      const horizontal = options.horizontal === true;
-      const color = getCategoryColor(item.kategori);
-      const price = item.harga || "Harga menyesuaikan";
-      const desc = item.deskripsi || "Layanan lokal pilihan dari 4ja in.";
-      const lokasi = item.lokasi || CONFIG.defaultLocation;
+            ${
+              image
+                ? `
+                    <img
+                      src="${esc(image)}"
+                      alt="${esc(product.nama)}"
+                      loading="lazy"
+                    >
+                  `
+                : ""
+            }
 
-      return `
-        <article class="product-card ${horizontal ? "horizontal" : ""}" data-detail-id="${escapeHtml(item.id)}">
-          <div class="product-image-wrap">
-            ${productImageHtml(item)}
-
-            <span class="category-badge" style="background:${color};">
-              ${escapeHtml(item.kategori)}
+            <span class="badge">
+              ${esc(product.kategori || "Produk")}
             </span>
 
             ${
-              item.promo
-                ? `<span class="promo-badge">${escapeHtml(item.promo)}</span>`
+              product.promo
+                ? `
+                    <span class="promo-badge">
+                      ${esc(product.promo)}
+                    </span>
+                  `
                 : ""
             }
           </div>
 
-          <div class="product-body">
-            <h3 class="product-name">${escapeHtml(item.nama)}</h3>
-
-            <p class="product-desc">${escapeHtml(desc)}</p>
-
-            <div class="product-location">
-              <span>📍</span>
-              <span>${escapeHtml(lokasi)}</span>
+          <div class="card-body">
+            <div class="card-meta">
+              ★ ${Number(product.rating || 44.8).toFixed(1)}
             </div>
 
-            <div class="product-spacer"></div>
+            <h4>${esc(product.nama)}</h4>
 
-            <div class="price-rating-row">
-              <div class="price-box">
-                ${
-                  item.oldHarga && item.oldHarga !== item.harga
-                    ? `<span class="old-price">${escapeHtml(item.oldHarga)}</span>`
-                    : ""
-                }
+            <p class="place">
+              ${esc(product.lokasi || "Surabaya, Jawa Timur")}
+            </p>
 
-                <span class="price">${escapeHtml(price)}</span>
+            <div class="price-row">
+              <div>
+                ${oldPrice}
+
+                <span class="price">
+                  ${esc(product.harga || "Harga menyesuaikan")}
+                </span>
               </div>
 
-              <div class="rating">
-                <span>⭐</span>
-                <span>${Number(item.rating || 4.8).toFixed(1)}</span>
-              </div>
+              <span class="go">→</span>
             </div>
-
-            <button
-              class="order-btn"
-              type="button"
-              data-order-id="${escapeHtml(item.id)}"
-              style="background:${color};"
-            >
-              Pesan
-            </button>
           </div>
         </article>
       `;
     }
 
-    function renderGroupedSections(items) {
-      const grouped = {};
-
-      items.forEach((item) => {
-        const groupTitle = getGroupTitle(item.kategori);
-
-        if (!grouped[groupTitle]) {
-          grouped[groupTitle] = [];
-        }
-
-        grouped[groupTitle].push(item);
-      });
-
-      return Object.entries(grouped)
-        .map(([title, groupItems]) => {
-          if (!groupItems.length) {
-            return "";
+    function skeleton() {
+      return `
+        <div class="skeleton-grid">
+          ${
+            Array.from(
+              { length: 4 },
+              () => `
+                <div class="skeleton">
+                  <div class="sk-img shimmer"></div>
+                  <div class="sk-line shimmer"></div>
+                  <div class="sk-line sk-short shimmer"></div>
+                  <div class="sk-line shimmer"></div>
+                </div>
+              `
+            ).join("")
           }
-
-          return `
-            <section class="horizontal-section">
-              <h2 class="horizontal-title">${escapeHtml(title)}</h2>
-
-              <div class="horizontal-scroll">
-                ${groupItems
-                  .map((item) => renderProductCard(item, { horizontal: true }))
-                  .join("")}
-              </div>
-            </section>
-          `;
-        })
-        .join("");
+        </div>
+      `;
     }
 
     function renderProducts() {
-      renderCategories();
-
       if (state.loading) {
-        els.sectionSubtitle.textContent = "Memuat data layanan...";
+        $("productCount").textContent =
+          "Memuat layanan...";
 
-        els.productArea.innerHTML = `
-          <div class="loading-section">
-            ${Array.from({ length: 4 })
-              .map(() => `
-                <div class="skeleton-row">
-                  <div class="skeleton-img"></div>
-                  <div class="skeleton-body">
-                    <div class="skeleton-line"></div>
-                    <div class="skeleton-line short"></div>
-                    <div class="skeleton-line tiny"></div>
-                  </div>
-                </div>
-              `)
-              .join("")}
+        $("productContent").innerHTML =
+          skeleton();
+
+        return;
+      }
+
+      const products =
+        visibleProducts();
+
+      $("productsTitle").textContent =
+        state.showAll
+          ? "Semua Layanan"
+          : "Rekomendasi untuk Anda";
+
+      $("productCount").textContent =
+        `${products.length} layanan tersedia`;
+
+      $("showAllButton").textContent =
+        state.showAll
+          ? "Ringkas ↑"
+          : "Lihat semua →";
+
+      $("dataNotice").innerHTML =
+        state.notice
+          ? `
+              <p class="data-note">
+                ${esc(state.notice)}
+              </p>
+            `
+          : "";
+
+      if (!products.length) {
+        $("productContent").innerHTML = `
+          <div class="state">
+            <div>
+              <div style="font-size:42px">
+                📦
+              </div>
+
+              <h3>Produk belum ditemukan</h3>
+
+              <p>
+                Coba kata pencarian lain atau pilih kategori berbeda.
+              </p>
+            </div>
           </div>
         `;
 
         return;
       }
 
-      if (state.error) {
-        els.sectionSubtitle.textContent = "Data belum bisa dimuat";
+      if (
+        state.category === "Semua" &&
+        !state.showAll
+      ) {
+        const categories = [
+          "Jajan",
+          "Jasa",
+          "Jamu",
+          "Jarik"
+        ];
 
-        els.productArea.innerHTML = `
-          <div class="info-section">
-            <div class="info-icon">⚠️</div>
-            <h3 class="info-title">Data belum bisa dimuat</h3>
-            <p class="info-text">
-              Terjadi gangguan saat memuat data. Silakan coba lagi beberapa saat lagi.
-            </p>
-            <button id="retryBtn" class="retry-btn" type="button">↻ Coba lagi</button>
-          </div>
-        `;
+        $("productContent").innerHTML =
+          categories
+            .map(
+              (category) => {
+                const items =
+                  products.filter(
+                    (product) =>
+                      categoryOf(
+                        product.kategori
+                      ) === category
+                  );
 
-        return;
-      }
+                if (!items.length) {
+                  return "";
+                }
 
-      const sortedItems = sortLayananByCurrentLocation(state.items);
-      state.filteredItems = filterLayanan(sortedItems);
+                return `
+                  <section class="group">
+                    <div class="group-title">
+                      <h3>${category}</h3>
 
-      els.sectionSubtitle.textContent = `${state.filteredItems.length} layanan tersedia`;
+                      <button
+                        data-pick="${category}"
+                        type="button"
+                      >
+                        Lihat ${category}
+                      </button>
+                    </div>
 
-      if (!state.filteredItems.length) {
-        els.productArea.innerHTML = `
-          <div class="empty-section">
-            <div class="empty-icon">🔎</div>
-            <h3 class="empty-title">Layanan tidak ditemukan</h3>
-            <p class="empty-text">
-              Coba gunakan kata kunci lain atau pilih kategori berbeda.
-            </p>
-          </div>
-        `;
-
-        return;
-      }
-
-      if (state.selectedCategory === "Semua") {
-        els.productArea.innerHTML = renderGroupedSections(state.filteredItems);
+                    <div class="horizontal">
+                      ${items.map(productCard).join("")}
+                    </div>
+                  </section>
+                `;
+              }
+            )
+            .join("");
       } else {
-        els.productArea.innerHTML = `
-          <div class="products-grid">
-            ${state.filteredItems
-              .map((item) => renderProductCard(item))
-              .join("")}
+        $("productContent").innerHTML = `
+          <div class="grid">
+            ${products.map(productCard).join("")}
           </div>
         `;
       }
+
+      document
+        .querySelectorAll(".media img")
+        .forEach(
+          (image) => {
+            image.addEventListener(
+              "error",
+              () => image.remove(),
+              { once: true }
+            );
+          }
+        );
     }
 
-    function showDetailProduk(item) {
-      const color = getCategoryColor(item.kategori);
-      const desc = item.deskripsi || "Belum ada deskripsi produk atau layanan.";
-      const lokasi = item.lokasi || CONFIG.defaultLocation;
-      const stockInfo = buildStockInfo(item);
+    // =============================================================
+    // DETAIL PRODUK
+    // =============================================================
 
-      els.modalContent.innerHTML = `
-        <div class="modal-image">
-          ${productImageHtml(item)}
-        </div>
+    function stockText(product) {
+      const values = [];
 
-        <div class="modal-top-row">
-          <span class="category-badge" style="position:static; background:${color}; max-width:none;">
-            ${escapeHtml(item.kategori)}
-          </span>
+      if (product.stockLabel) {
+        values.push(
+          product.stockLabel
+        );
+      }
 
-          <div class="modal-rating">
-            <span>⭐</span>
-            <span>${Number(item.rating || 4.8).toFixed(1)}</span>
-          </div>
-        </div>
+      if (
+        product.total &&
+        product.stok
+      ) {
+        values.push(
+          `Sisa ${product.total} dari ${product.stok}`
+        );
+      } else if (product.total) {
+        values.push(
+          `Sisa stok ${product.total}`
+        );
+      } else if (product.stok) {
+        values.push(
+          `Stok ${product.stok}`
+        );
+      }
 
-        <h2 class="modal-title">${escapeHtml(item.nama)}</h2>
+      return values.join(" • ");
+    }
 
-        <p class="modal-desc">${escapeHtml(desc)}</p>
+    function openModal(product) {
+      if (!product) {
+        return;
+      }
 
-        <div class="modal-info">
-          <span>📍</span>
-          <span>${escapeHtml(lokasi)}</span>
-        </div>
+      lastFocus =
+        document.activeElement;
 
-        ${
-          stockInfo
-            ? `
-              <div class="modal-info">
-                <span>📦</span>
-                <span>${escapeHtml(stockInfo)}</span>
-              </div>
+      const color =
+        COLORS[
+          categoryOf(
+            product.kategori
+          )
+        ] || COLORS.Semua;
+
+      const stock =
+        stockText(product);
+
+      const image =
+        safeUrl(
+          product.imageUrl
+        );
+
+      const oldPrice =
+        product.oldHarga &&
+        product.oldHarga !==
+          product.harga
+          ? `
+              <span class="old">
+                ${esc(product.oldHarga)}
+              </span>
             `
-            : ""
-        }
+          : "";
 
-        <div class="modal-price-row">
-          <div class="modal-price">
-            ${
-              item.oldHarga && item.oldHarga !== item.harga
-                ? `<span class="old-price">${escapeHtml(item.oldHarga)}</span>`
-                : ""
-            }
-
-            <span class="price">${escapeHtml(item.harga || "Harga menyesuaikan")}</span>
-          </div>
+      $("modalBody").innerHTML = `
+        <div
+          class="media modal-media"
+          style="--color:${color}"
+        >
+          ${productIcon(product.kategori)}
 
           ${
-            item.promo
-              ? `<div class="modal-promo">${escapeHtml(item.promo)}</div>`
+            image
+              ? `
+                  <img
+                    src="${esc(image)}"
+                    alt="${esc(product.nama)}"
+                  >
+                `
               : ""
           }
         </div>
 
-        <div class="modal-actions">
-          <button class="modal-btn close" type="button" id="closeModalBtn">
-            Tutup
-          </button>
+        <div class="modal-content">
+          <div class="modal-top">
+            <span
+              class="modal-category"
+              style="--color:${color}"
+            >
+              ${esc(product.kategori || "Produk")}
+            </span>
 
-          <button class="modal-btn order" type="button" id="modalOrderBtn">
-            💬 Pesan
-          </button>
+            <strong>
+              ★ ${Number(product.rating || 4.8).toFixed(1)}
+            </strong>
+          </div>
+
+          <h2 id="modalName">
+            ${esc(product.nama)}
+          </h2>
+
+          <p class="description">
+            ${
+              esc(
+                product.deskripsi ||
+                "Belum ada deskripsi produk atau layanan."
+              )
+            }
+          </p>
+
+          <div class="info">
+            <span>
+              📍 ${esc(product.lokasi || "Surabaya, Jawa Timur")}
+            </span>
+
+            ${
+              stock
+                ? `
+                    <span>
+                      📦 ${esc(stock)}
+                    </span>
+                  `
+                : ""
+            }
+          </div>
+
+          <div class="modal-price">
+            <div>
+              ${oldPrice}
+
+              <span class="price">
+                ${esc(product.harga || "Harga menyesuaikan")}
+              </span>
+            </div>
+
+            ${
+              product.promo
+                ? `
+                    <span class="modal-promo">
+                      ${esc(product.promo)}
+                    </span>
+                  `
+                : ""
+            }
+          </div>
+
+          <div class="modal-actions">
+            <button
+              id="closeModalButton"
+              class="secondary"
+              type="button"
+            >
+              Tutup
+            </button>
+
+            <button
+              id="orderButton"
+              class="primary"
+              type="button"
+            >
+              💬 Pesan
+            </button>
+          </div>
         </div>
       `;
 
-      els.detailModal.classList.add("show");
+      $("productModal")
+        .classList
+        .add("open");
 
-      document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-
-      document.getElementById("modalOrderBtn").addEventListener("click", () => {
-        closeModal();
-
-        openWhatsApp(
-          item.whatsapp,
-          `Halo, saya tertarik dengan ${item.nama} di aplikasi 4ja in.`
+      $("productModal")
+        .setAttribute(
+          "aria-hidden",
+          "false"
         );
-      });
+
+      document.body
+        .classList
+        .add("modal-open");
+
+      $("modalX").focus();
+
+      $("modalBody")
+        .querySelector("img")
+        ?.addEventListener(
+          "error",
+          (event) =>
+            event.currentTarget.remove(),
+          { once: true }
+        );
+
+      $("closeModalButton").onclick =
+        closeModal;
+
+      $("orderButton").onclick =
+        () => {
+          closeModal();
+
+          openWA(
+            product.whatsapp,
+            `Halo, saya tertarik dengan ${product.nama} di aplikasi 4ja in.`
+          );
+        };
     }
 
     function closeModal() {
-      els.detailModal.classList.remove("show");
-    }
+      $("productModal")
+        .classList
+        .remove("open");
 
-    function startAnimatedText() {
-      if (!state.animatedTexts.length) {
-        return;
-      }
-
-      els.animatedText.textContent = state.animatedTexts[0];
-
-      window.setInterval(() => {
-        els.animatedText.classList.add("hide");
-
-        window.setTimeout(() => {
-          state.animatedIndex = (state.animatedIndex + 1) % state.animatedTexts.length;
-          els.animatedText.textContent = state.animatedTexts[state.animatedIndex];
-          els.animatedText.classList.remove("hide");
-        }, 280);
-      }, 5000);
-    }
-
-    function setBottomIndex(index) {
-      state.bottomIndex = index;
-
-      document.querySelectorAll(".nav-item").forEach((item) => {
-        item.classList.toggle("active", Number(item.dataset.nav) === index);
-      });
-
-      if (index === 0) {
-        return;
-      }
-
-      if (index === 1) {
-        els.searchInput.focus();
-        showToast("Silakan cari layanan yang dibutuhkan.");
-      }
-
-      if (index === 2) {
-        openWhatsApp();
-      }
-
-      if (index === 3) {
-        window.location.href = "login.html";
-      }
-    }
-
-    function setupEvents() {
-      els.logoImage.addEventListener("error", () => {
-        els.logoImage.style.display = "none";
-        els.logoFallback.style.display = "block";
-      });
-
-      els.notificationBtn.addEventListener("click", () => {
-        showToast("Belum ada notifikasi baru.");
-      });
-
-      els.loginBtn.addEventListener("click", () => {
-  const isLoggedIn = localStorage.getItem("is_logged_in");
-  const status = localStorage.getItem("logged_in_status");
-
-  if (isLoggedIn === "true" && status === "umkm") {
-    window.location.href = "halaman_umkm.html";
-    return;
-  }
-
-  if (isLoggedIn === "true" && status === "client") {
-    window.location.href = "halaman_client.html";
-    return;
-  }
-
-  window.location.href = "login.html";
-});
-
-
-      els.searchInput.addEventListener("input", (event) => {
-        state.keyword = event.target.value;
-
-        els.clearSearchBtn.classList.toggle(
-          "show",
-          state.keyword.trim() !== ""
+      $("productModal")
+        .setAttribute(
+          "aria-hidden",
+          "true"
         );
 
-        renderProducts();
-      });
+      document.body
+        .classList
+        .remove("modal-open");
 
-      els.clearSearchBtn.addEventListener("click", () => {
-        state.keyword = "";
-        els.searchInput.value = "";
-        els.clearSearchBtn.classList.remove("show");
+      if (
+        lastFocus instanceof
+        HTMLElement
+      ) {
+        lastFocus.focus();
+      }
+    }
 
-        renderProducts();
-      });
+    // =============================================================
+    // TEKS ANIMASI
+    // =============================================================
 
-      els.locationRefreshBtn.addEventListener("click", loadCurrentLocation);
+    async function loadTexts() {
+      try {
+        const text =
+          await fetchText(
+            csvUrl({
+              spreadsheetId:
+                CONFIG.animatedTextSpreadsheetId,
 
-      els.categoryList.addEventListener("click", async (event) => {
-        const button = event.target.closest("[data-category]");
+              gid:
+                CONFIG.animatedTextGid
+            })
+          );
 
-        if (!button) {
-          return;
-        }
+        const rows =
+          parseCSV(text);
 
-        const category = button.dataset.category;
+        const texts = rows
+          .map(
+            (row) =>
+              String(
+                row[0] || ""
+              ).trim()
+          )
+          .filter(Boolean);
 
-        if (!category || category === state.selectedCategory) {
-          return;
-        }
+        state.texts =
+          texts.length
+            ? texts
+            : DEFAULT_TEXTS;
+      } catch {
+        state.texts =
+          [...DEFAULT_TEXTS];
+      }
 
-        state.selectedCategory = category;
+      state.textIndex = 0;
 
-        await loadData(category);
-      });
+      $("animatedText").textContent =
+        state.texts[0];
 
-      els.promoDots.addEventListener("click", (event) => {
-        const dot = event.target.closest("[data-promo]");
+      clearInterval(textTimer);
 
-        if (!dot) {
-          return;
-        }
+      textTimer =
+        setInterval(
+          () => {
+            $("animatedText")
+              .classList
+              .add("hide");
 
-        state.promoIndex = Number(dot.dataset.promo);
-        updatePromoPosition();
-      });
+            setTimeout(
+              () => {
+                state.textIndex =
+                  (
+                    state.textIndex +
+                    1
+                  ) %
+                  state.texts.length;
 
-      els.seeAllBtn.addEventListener("click", async () => {
-        state.selectedCategory = "Semua";
-        state.keyword = "";
-        els.searchInput.value = "";
-        els.clearSearchBtn.classList.remove("show");
+                $("animatedText").textContent =
+                  state.texts[
+                    state.textIndex
+                  ];
 
-        await loadData("Semua");
-      });
+                $("animatedText")
+                  .classList
+                  .remove("hide");
+              },
+              220
+            );
+          },
+          5000
+        );
+    }
 
-      els.productArea.addEventListener("click", (event) => {
-        const retryBtn = event.target.closest("#retryBtn");
+    // =============================================================
+    // EVENT
+    // =============================================================
 
-        if (retryBtn) {
-          loadData(state.selectedCategory);
-          return;
-        }
+    function selectCategory(
+      category,
+      scroll = false
+    ) {
+      state.category = category;
+      state.showAll = false;
 
-        const orderBtn = event.target.closest("[data-order-id]");
+      renderCategories();
+      loadProducts();
 
-        if (orderBtn) {
-          event.stopPropagation();
-
-          const item = state.filteredItems.find((data) => {
-            return data.id === orderBtn.dataset.orderId;
+      if (scroll) {
+        $("productsSection")
+          .scrollIntoView({
+            behavior: "smooth"
           });
+      }
+    }
 
-          if (!item) {
+    function bindEvents() {
+      $("logo").addEventListener(
+        "error",
+        () => {
+          $("logo").style.display =
+            "none";
+
+          $("logoText").style.display =
+            "inline-block";
+        },
+        { once: true }
+      );
+
+      $("notification").onclick =
+        () => {
+          showToast(
+            "Belum ada notifikasi baru."
+          );
+        };
+
+      $("searchInput").oninput =
+        (event) => {
+          state.keyword =
+            event.target.value;
+
+          $("clearSearch").hidden =
+            !state.keyword;
+
+          renderProducts();
+        };
+
+      $("clearSearch").onclick =
+        () => {
+          state.keyword = "";
+
+          $("searchInput").value =
+            "";
+
+          $("clearSearch").hidden =
+            true;
+
+          $("searchInput").focus();
+
+          renderProducts();
+        };
+
+      $("locationButton").onclick =
+        loadLocation;
+
+      $("categoryList").onclick =
+        (event) => {
+          const button =
+            event.target.closest(
+              "[data-category]"
+            );
+
+          if (button) {
+            selectCategory(
+              button.dataset.category
+            );
+          }
+        };
+
+      $("promoPrev").onclick =
+        () => changePromo(-1);
+
+      $("promoNext").onclick =
+        () => changePromo(1);
+
+      $("promoDots").onclick =
+        (event) => {
+          const dot =
+            event.target.closest(
+              "[data-promo]"
+            );
+
+          if (!dot) {
             return;
           }
 
-          openWhatsApp(
-            item.whatsapp,
-            `Halo, saya tertarik dengan ${item.nama} di aplikasi 4ja in.`
+          state.promoIndex =
+            Number(
+              dot.dataset.promo
+            );
+
+          updatePromo();
+          startPromo();
+        };
+
+      let touchStart = 0;
+
+      $("promoViewport").ontouchstart =
+        (event) => {
+          touchStart =
+            event.changedTouches[0]
+              .clientX;
+        };
+
+      $("promoViewport").ontouchend =
+        (event) => {
+          const difference =
+            event.changedTouches[0]
+              .clientX -
+            touchStart;
+
+          if (
+            Math.abs(difference) >
+            45
+          ) {
+            changePromo(
+              difference > 0
+                ? -1
+                : 1
+            );
+          }
+        };
+
+      $("reloadButton").onclick =
+        () => {
+          cache.clear();
+
+          loadProducts(true);
+          loadTexts();
+        };
+
+      $("showAllButton").onclick =
+        () => {
+          state.showAll =
+            !state.showAll;
+
+          renderProducts();
+        };
+
+      $("productContent").onclick =
+        (event) => {
+          const categoryButton =
+            event.target.closest(
+              "[data-pick]"
+            );
+
+          if (categoryButton) {
+            selectCategory(
+              categoryButton
+                .dataset
+                .pick,
+              true
+            );
+
+            return;
+          }
+
+          const card =
+            event.target.closest(
+              "[data-product]"
+            );
+
+          if (!card) {
+            return;
+          }
+
+          const product =
+            state.products.find(
+              (item) =>
+                item.id ===
+                card.dataset.product
+            );
+
+          openModal(product);
+        };
+
+      $("productContent").onkeydown =
+        (event) => {
+          if (
+            event.key !== "Enter" &&
+            event.key !== " "
+          ) {
+            return;
+          }
+
+          const card =
+            event.target.closest(
+              "[data-product]"
+            );
+
+          if (!card) {
+            return;
+          }
+
+          event.preventDefault();
+          card.click();
+        };
+
+      $("modalX").onclick =
+        closeModal;
+
+      $("productModal").onclick =
+        (event) => {
+          if (
+            event.target ===
+            $("productModal")
+          ) {
+            closeModal();
+          }
+        };
+
+      document.addEventListener(
+        "keydown",
+        (event) => {
+          if (
+            event.key === "Escape" &&
+            $("productModal")
+              .classList
+              .contains("open")
+          ) {
+            closeModal();
+          }
+        }
+      );
+
+      const adminChat =
+        () => {
+          openWA(
+            CONFIG.whatsappAdmin,
+            "Halo admin 4ja in, saya ingin bertanya tentang layanan."
+          );
+        };
+
+      $("footerChat").onclick =
+        adminChat;
+
+      $("navChat").onclick =
+        adminChat;
+
+      $("navHome").onclick =
+        () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+        };
+
+      $("navSearch").onclick =
+        () => {
+          $("searchInput")
+            .scrollIntoView({
+              behavior: "smooth",
+              block: "center"
+            });
+
+          setTimeout(
+            () =>
+              $("searchInput").focus(),
+            350
           );
 
-          return;
-        }
-
-        const card = event.target.closest("[data-detail-id]");
-
-        if (!card) {
-          return;
-        }
-
-        const item = state.filteredItems.find((data) => {
-          return data.id === card.dataset.detailId;
-        });
-
-        if (item) {
-          showDetailProduk(item);
-        }
-      });
-
-      els.instagramBtn.addEventListener("click", () => {
-        openUrl(CONFIG.instagramUrl);
-      });
-
-      els.whatsappFooterBtn.addEventListener("click", () => {
-        openWhatsApp();
-      });
-
-      document.querySelectorAll(".nav-item").forEach((item) => {
-        item.addEventListener("click", () => {
-          setBottomIndex(Number(item.dataset.nav));
-        });
-      });
-
-      els.detailModal.addEventListener("click", (event) => {
-        if (event.target === els.detailModal) {
-          closeModal();
-        }
-      });
-
-      window.addEventListener("resize", updatePromoPosition);
+          showToast(
+            "Silakan cari layanan yang dibutuhkan."
+          );
+        };
     }
 
-    async function init() {
-      setupEvents();
+    // =============================================================
+    // INISIALISASI
+    // =============================================================
+
+    function runDeferred(task, delay = 0) {
+      window.setTimeout(task, delay);
+    }
+
+    function init() {
       renderCategories();
-      renderPromo();
-      renderProducts();
+      renderPromos();
+      bindEvents();
+      startPromo();
 
-      await loadWilayahData();
+      loadProducts();
+      runDeferred(loadTexts, 180);
 
-      loadCurrentLocation();
-
-      fetchAnimatedTexts().then((texts) => {
-        state.animatedTexts = texts;
-        startAnimatedText();
-      });
-
-      await loadData("Semua");
-
-      window.setInterval(() => {
-        state.promoIndex = (state.promoIndex + 1) % promos.length;
-        updatePromoPosition();
-      }, 4200);
+      // Sama seperti Flutter:
+      // lokasi dibaca sesudah halaman tampil.
+      setTimeout(
+        loadLocation,
+        450
+      );
     }
 
-    init();
+    document.addEventListener(
+      "DOMContentLoaded",
+      init
+    );
   </script>
 </body>
 </html>
