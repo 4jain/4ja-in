@@ -1518,7 +1518,8 @@
       showAll: false,
       promoIndex: 0,
       texts: [...DEFAULT_TEXTS],
-      textIndex: 0
+      textIndex: 0,
+      quantities: {} // Track quantity per product ID
     };
 
     const cache = new Map();
@@ -1878,6 +1879,22 @@
       return safeUrl(image);
     }
 
+    // Helper: map kategori ke satuan
+    function mapSatuan(kategori) {
+      const normalized = (kategori || "").toLowerCase().trim();
+      if (normalized.includes("jasa") || normalized.includes("akupunktur")) {
+        return "sesi";
+      }
+      if (normalized.includes("jamu")) {
+        return "pcs";
+      }
+      if (normalized.includes("jarik")) {
+        return "pcs";
+      }
+      // Default: jajan, dll
+      return "pcs";
+    }
+
     function rowToProduct(
       row,
       headers,
@@ -2050,6 +2067,16 @@
             "village"
           ],
           14
+        ),
+
+        satuan: mapSatuan(
+          get(
+            [
+              "satuan",
+              "unit"
+            ],
+            18
+          ) || defaultCategory
         ),
 
         whatsapp: get(
@@ -3220,8 +3247,8 @@
             <div>
               ${oldPrice}
 
-              <span class="price">
-                ${esc(product.harga || "Harga menyesuaikan")}
+              <span class="price" id="dynamicPrice">
+                ${esc(product.harga || "Harga menyesuaikan")}/${esc(product.satuan || "pcs")}
               </span>
             </div>
 
@@ -3244,6 +3271,13 @@
             >
               Tutup
             </button>
+
+            <!-- Quantity Controls -->
+            <div style="display: flex; gap: 8px; align-items: center; flex: 1;">
+              <button id="qtyMinus" style="width: 36px; height: 36px; border: 1px solid #ddd; border-radius: 6px; background: #f7fafc; cursor: pointer;">−</button>
+              <span id="qtyDisplay" style="flex: 1; text-align: center; font-weight: 600;">1</span>
+              <button id="qtyPlus" style="width: 36px; height: 36px; border: 1px solid #ddd; border-radius: 6px; background: #f7fafc; cursor: pointer;">+</button>
+            </div>
 
             <button
               id="orderButton"
@@ -3281,6 +3315,46 @@
           { once: true }
         );
 
+      // Initialize quantity
+      const productId = product.id || product.nama;
+      let currentQty = state.quantities[productId] || 1;
+      state.quantities[productId] = currentQty;
+
+      // Helper: calculate & display dynamic price
+      function updateDynamicPrice() {
+        const basePrice = parseInt(
+          product.harga
+            .replace(/Rp\s?/g, "")
+            .replace(/\./g, "")
+            .trim()
+        ) || 0;
+        
+        const total = basePrice * currentQty;
+        const formatted = new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0
+        }).format(total);
+
+        $("dynamicPrice").textContent = 
+          formatted + "/" + product.satuan;
+        $("qtyDisplay").textContent = currentQty;
+      }
+
+      $("qtyMinus").onclick = () => {
+        if (currentQty > 1) {
+          currentQty--;
+          state.quantities[productId] = currentQty;
+          updateDynamicPrice();
+        }
+      };
+
+      $("qtyPlus").onclick = () => {
+        currentQty++;
+        state.quantities[productId] = currentQty;
+        updateDynamicPrice();
+      };
+
       $("closeModalButton").onclick =
         closeModal;
 
@@ -3288,9 +3362,26 @@
         () => {
           closeModal();
 
+          const basePrice = parseInt(
+            product.harga
+              .replace(/Rp\s?/g, "")
+              .replace(/\./g, "")
+              .trim()
+          ) || 0;
+          
+          const totalPrice = basePrice * currentQty;
+          const formatted = new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0
+          }).format(totalPrice);
+
+          const message = 
+            `Halo, saya mau pesan ${product.nama} dengan harga ${formatted}/${product.satuan} untuk ${currentQty} ${product.satuan}`;
+
           openWA(
             product.whatsapp,
-            `Halo, saya tertarik dengan ${product.nama} di aplikasi 4ja in.`
+            message
           );
         };
     }
