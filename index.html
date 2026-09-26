@@ -672,14 +672,21 @@
     }
 
     .go {
-      width: 30px;
-      height: 30px;
-      display: grid;
-      place-items: center;
-      flex: 0 0 30px;
-      color: #ffffff;
-      border-radius: 10px;
-      background: var(--color);
+       min-width: 100px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 22px;
+  flex: 0 0 auto;
+
+  color: #ffffff;
+  background: var(--color);
+  border-radius: 14px;
+
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
     }
 
     /* =========================================================
@@ -2962,7 +2969,7 @@
                 </span>
               </div>
 
-              <span class="go">→</span>
+              <span class="go">Pesan</span>
             </div>
           </div>
         </article>
